@@ -15,15 +15,8 @@
 
    <extension abstractclassprefix="Generated" classprefix="Epamfacades" managername="EpamfacadesManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="epamfacades">
                
-      <!-- you should add all required extensions to this list, except platform extensions which are automatically required -->         
-      <!-- <requires-extension name="cms"/> -->         
-      
-
-      <coremodule generated="true" manager="com.epam.jalo.EpamfacadesManager" packageroot="com.epam"/>
-
-      <webmodule jspcompile="false" webroot="/epamfacades"/>
-					
-	
+      <requires-extension name="epamccore" />
+      <requires-extension name="epamservices" />                
 
    </extension>
       
