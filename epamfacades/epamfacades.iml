@@ -17,15 +17,5 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="commercesearchserver" level="project" />
-    <orderEntry type="library" name="bin1" level="project" />
-    <orderEntry type="library" name="ext" level="project" />
-    <orderEntry type="library" name="coreserver" level="project" />
-    <orderEntry type="library" name="lib22" level="project" />
-    <orderEntry type="library" name="lib57" level="project" />
-    <orderEntry type="module" module-name="financialacceleratorstorefront" />
-    <orderEntry type="module" module-name="web12" />
-    <orderEntry type="module" module-name="core" />
-    <orderEntry type="module" module-name="commercesearch" />
   </component>
 </module>
