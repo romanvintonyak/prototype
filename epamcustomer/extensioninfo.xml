@@ -13,10 +13,17 @@
   
 --><extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
 
-   <extension abstractclassprefix="Generated" classprefix="Epamfacades" managername="EpamfacadesManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="epamfacades">
+   <extension abstractclassprefix="Generated" classprefix="Epamcustomer" managername="EpamcustomerManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="epamcustomer">
                
-      <requires-extension name="epamccore" />
-      <requires-extension name="epamservices" />                
+      <!-- you should add all required extensions to this list, except platform extensions which are automatically required -->         
+      <!-- <requires-extension name="cms"/> -->         
+      
+
+      <coremodule generated="true" manager="com.epam.customer.jalo.EpamcustomerManager" packageroot="com.epam.customer"/>
+
+      <webmodule jspcompile="false" webroot="/epamcustomer"/>
+					
+	
 
    </extension>
       

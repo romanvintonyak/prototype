@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="javadoc2">
+    <CLASSES>
+      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/testweb/web/webroot/WEB-INF/doc/javadoc/jstl-api-1.2-javadoc.jar!/" />
+      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/testweb/web/webroot/WEB-INF/doc/javadoc/sitemesh-3.0-alpha-2-javadoc.jar!/" />
+      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/testweb/web/webroot/WEB-INF/doc/javadoc/jstl-impl-1.2-javadoc.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,22 @@
+<component name="libraryTable">
+  <library name="sources6">
+    <CLASSES>
+      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/hac/web/webroot/WEB-INF/doc/sources/jsp-api-2.1-sources.jar!/" />
+      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/hac/web/webroot/WEB-INF/doc/sources/log4j-1.2.13-sources.jar!/" />
+      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/hac/web/webroot/WEB-INF/doc/sources/commons-beanutils-1.7.0-sources.jar!/" />
+      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/hac/web/webroot/WEB-INF/doc/sources/jcl104-over-slf4j-1.4.2-sources.jar!/" />
+      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/hac/web/webroot/WEB-INF/doc/sources/commons-collections-3.1-sources.jar!/" />
+      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/hac/web/webroot/WEB-INF/doc/sources/displaytag-1.2-sources.jar!/" />
+      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/hac/web/webroot/WEB-INF/doc/sources/sitemesh-3.0-alpha-2-sources.jar!/" />
+      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/hac/web/webroot/WEB-INF/doc/sources/jstl-impl-1.2-sources.jar!/" />
+      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/hac/web/webroot/WEB-INF/doc/sources/commons-lang-2.3-sources.jar!/" />
+      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/hac/web/webroot/WEB-INF/doc/sources/servlet-api-2.5-sources.jar!/" />
+      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/hac/web/webroot/WEB-INF/doc/sources/jstl-api-1.2-sources.jar!/" />
+      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/hac/web/webroot/WEB-INF/doc/sources/slf4j-api-1.4.2-sources.jar!/" />
+      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/hac/web/webroot/WEB-INF/doc/sources/slf4j-log4j12-1.4.2-sources.jar!/" />
+      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/hac/web/webroot/WEB-INF/doc/sources/itext-1.3-sources.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

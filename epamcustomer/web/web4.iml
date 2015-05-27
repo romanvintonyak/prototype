@@ -14,7 +14,7 @@
     <facet type="Spring" name="Spring">
       <configuration>
         <fileset id="fileset" name="Spring Application Context" removed="false">
-          <file>file://$MODULE_DIR$/webroot/WEB-INF/epamfacades-web-spring.xml</file>
+          <file>file://$MODULE_DIR$/webroot/WEB-INF/epamcustomer-web-spring.xml</file>
         </fileset>
       </configuration>
     </facet>

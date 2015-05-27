@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="scriptingserver1">
+    <CLASSES>
+      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/scripting/bin/scriptingserver.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

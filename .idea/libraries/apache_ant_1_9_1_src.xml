@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="apache-ant-1.9.1-src">
+    <CLASSES>
+      <root url="jar://$HYBRIS_DIR$/bin/platform/apache-ant-1.9.1/docs/apache-ant-1.9.1-src.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

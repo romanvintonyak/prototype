@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="paymentstandardserver1">
+    <CLASSES>
+      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/paymentstandard/bin/paymentstandardserver.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

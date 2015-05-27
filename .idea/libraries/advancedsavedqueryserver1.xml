@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="advancedsavedqueryserver1">
+    <CLASSES>
+      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/advancedsavedquery/bin/advancedsavedqueryserver.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

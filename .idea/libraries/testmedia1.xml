@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="testmedia1">
+    <CLASSES>
+      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/impex/resources/impex/testfiles/testmedia.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
