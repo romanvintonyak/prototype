@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="ant-bootstrap">
+    <CLASSES>
+      <root url="jar://$HYBRIS_DIR$/bin/platform/apache-ant-1.9.1/etc/ant-bootstrap.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

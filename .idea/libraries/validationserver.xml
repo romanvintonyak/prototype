@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="validationserver">
+    <CLASSES>
+      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/validation/bin/validationserver.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

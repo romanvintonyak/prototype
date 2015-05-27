@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="processingserver1">
+    <CLASSES>
+      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/processing/bin/processingserver.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

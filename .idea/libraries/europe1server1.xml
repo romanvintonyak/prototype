@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="europe1server1">
+    <CLASSES>
+      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/europe1/bin/europe1server.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

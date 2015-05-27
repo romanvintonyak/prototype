@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="mediawebserver1">
+    <CLASSES>
+      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/mediaweb/bin/mediawebserver.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

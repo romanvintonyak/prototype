@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="lib9">
+    <CLASSES>
+      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/processing/lib/quartz-2.1.2.jar!/" />
+      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/processing/lib/mvel2-2.0.19.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

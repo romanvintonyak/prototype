@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="impexserver">
+    <CLASSES>
+      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/impex/bin/impexserver.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

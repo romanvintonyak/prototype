@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="workflowserver1">
+    <CLASSES>
+      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/workflow/bin/workflowserver.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
