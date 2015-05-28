@@ -14,10 +14,9 @@
 --><extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
 
    <extension abstractclassprefix="Generated" classprefix="Epamcustomer" managername="EpamcustomerManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="epamcustomer">
-               
-      <!-- you should add all required extensions to this list, except platform extensions which are automatically required -->         
-      <!-- <requires-extension name="cms"/> -->         
-      
+
+       <requires-extension name="commercefacades" />
+       <requires-extension name="commerceservices" />
 
       <coremodule generated="true" manager="com.epam.customer.jalo.EpamcustomerManager" packageroot="com.epam.customer"/>
 
