@@ -1,0 +1,31 @@
+{
+	"id": "531c7669-adfb-846d-e4b3-5b588ebb8f7b",
+	"name": "test_country_list",
+	"requests": [
+		{
+			"id": "701e885d-24ce-4a08-0990-903ef145b154",
+			"headers": "Authorization: Basic YWRtaW46bmltZGE=\n",
+			"url": " http://localhost:9001/ws410/rest/countries",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1432126151176,
+			"name": " http://localhost:9001/ws410/rest/countries",
+			"description": "",
+			"collectionId": "531c7669-adfb-846d-e4b3-5b588ebb8f7b",
+			"responses": [],
+			"synced": false
+		}
+	],
+	"order": [
+		"701e885d-24ce-4a08-0990-903ef145b154"
+	],
+	"timestamp": 1432126093498,
+	"synced": false
+}
