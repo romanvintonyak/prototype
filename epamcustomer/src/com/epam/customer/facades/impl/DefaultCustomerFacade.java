@@ -42,6 +42,8 @@ public class DefaultCustomerFacade implements CustomerFacade {
         for(AddressModel addressModel : user.getAddresses()) {
             AddressData addressData = new AddressData();
             addressData.setTitle(addressModel.getTitle().getCode());
+            addressData.setCountry(addressData.getCountry());
+            addressData.setTown(addressData.getTown());
             addressDataList.add(addressData);
         }
         return addressDataList;
