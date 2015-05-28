@@ -1,6 +1,6 @@
 package com.epam.customer.facades;
 
-import de.hybris.platform.commercefacades.user.data.AddressData;
+import com.epam.customer.data.CustomerAddressData;
 import de.hybris.platform.commercefacades.user.data.CustomerData;
 
 import java.util.List;
@@ -10,9 +10,9 @@ import java.util.List;
  */
 public interface CustomerFacade {
 
-    List<AddressData> findCustomerAddresses(String customerId);
+    List<CustomerAddressData> findCustomerAddresses(String customerId);
 
-    void createCustomerAddress(CustomerData customer, AddressData address);
+    CustomerAddressData createCustomerAddress(CustomerData customer, CustomerAddressData address);
 
-    void updateCustomerAddress(CustomerData customer, AddressData address);
+    CustomerAddressData updateCustomerAddress(CustomerData customer, CustomerAddressData address);
 }

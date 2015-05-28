@@ -54,9 +54,9 @@
        <property name="userService" ref="userService"/>
        <property name="mediaService" ref="mediaService"/>
       <!-- <property name="secureMediaToken" value="securemedias"/>  securemedias is default but you may overwrite it -->
-     </bean>	
+     </bean>
 
-	<!-- 
+	<!--
 	 WARNING: 
 	 Do NOT override hybris managers or items within the web module!
 	 Use always the core spring configuration file (epamcustomer-spring.xml) in

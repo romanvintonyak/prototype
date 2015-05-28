@@ -1,7 +1,8 @@
 package com.epam.customer.facades.impl;
 
+import com.epam.customer.converter.CustomerAddressConverter;
+import com.epam.customer.data.CustomerAddressData;
 import com.epam.customer.facades.CustomerFacade;
-import de.hybris.platform.commercefacades.user.data.AddressData;
 import de.hybris.platform.commercefacades.user.data.CustomerData;
 import de.hybris.platform.core.model.user.AddressModel;
 import de.hybris.platform.core.model.user.UserModel;
@@ -31,34 +32,37 @@ public class DefaultCustomerFacade implements CustomerFacade {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private CustomerAddressConverter customerAddressConverter;
+
     @Override
-    public List<AddressData> findCustomerAddresses(String customerId) {
+    public List<CustomerAddressData> findCustomerAddresses(String customerId) {
         ServicesUtil.validateParameterNotNull(customerId, CUSTOMER_MODEL_CANNOT_BE_NULL);
         final UserModel user = userService.getUserForUID(customerId);
         if (null == user) {
             throw new UnknownIdentifierException(String.format(USER_NOT_FOUND, user.getUid()));
         }
-        final List<AddressData> addressDataList = new ArrayList<>();
+        final List<CustomerAddressData> addressDataList = new ArrayList<>();
         for(AddressModel addressModel : user.getAddresses()) {
-            AddressData addressData = new AddressData();
-            addressData.setTitle(addressModel.getTitle().getCode());
-            addressData.setCountry(addressData.getCountry());
-            addressData.setTown(addressData.getTown());
-            addressDataList.add(addressData);
+            addressDataList.add(customerAddressConverter.convert(addressModel));
         }
         return addressDataList;
     }
 
     @Override
-    public void createCustomerAddress(CustomerData customer, AddressData address) {
+    public CustomerAddressData createCustomerAddress(CustomerData customer, CustomerAddressData address) {
         ServicesUtil.validateParameterNotNull(customer, ADDRESS_MODEL_CANNOT_BE_NULL);
         ServicesUtil.validateParameterNotNull(address, ADDRESS_MODEL_CANNOT_BE_NULL);
+
+        return null;
     }
 
     @Override
-    public void updateCustomerAddress(CustomerData customer, AddressData address) {
+    public CustomerAddressData updateCustomerAddress(CustomerData customer, CustomerAddressData address) {
         ServicesUtil.validateParameterNotNull(customer, ADDRESS_MODEL_CANNOT_BE_NULL);
         ServicesUtil.validateParameterNotNull(address, ADDRESS_MODEL_CANNOT_BE_NULL);
+
+        return null;
     }
 
 }
