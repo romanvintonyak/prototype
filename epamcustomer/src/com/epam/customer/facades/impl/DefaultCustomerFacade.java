@@ -1,16 +1,16 @@
 package com.epam.customer.facades.impl;
 
 import com.epam.customer.converter.CustomerAddressConverter;
+import com.epam.customer.converter.EpamCustomerPopulator;
+import com.epam.customer.converter.EpamCustomerReversePopulator;
 import com.epam.customer.data.CustomerAddressData;
+import com.epam.customer.data.EpamCustomerData;
 import com.epam.customer.facades.CustomerFacade;
 
-import de.hybris.platform.commercefacades.user.converters.populator.CustomerReversePopulator;
-import de.hybris.platform.commercefacades.user.data.CustomerData;
 import de.hybris.platform.commerceservices.customer.DuplicateUidException;
 import de.hybris.platform.core.model.user.AddressModel;
 import de.hybris.platform.core.model.user.CustomerModel;
 import de.hybris.platform.core.model.user.UserModel;
-import de.hybris.platform.servicelayer.dto.converter.Converter;
 import de.hybris.platform.servicelayer.exceptions.UnknownIdentifierException;
 import de.hybris.platform.servicelayer.model.ModelService;
 import de.hybris.platform.servicelayer.user.UserService;
@@ -42,10 +42,10 @@ public class DefaultCustomerFacade implements CustomerFacade {
     private UserService userService;
     
     @Autowired
-    private Converter<UserModel, CustomerData> customerConverter;
+    private EpamCustomerPopulator customerPopulator;
     
     @Autowired
-    private CustomerReversePopulator customerReversePopulator;
+    private EpamCustomerReversePopulator customerReversePopulator;
     
     @Autowired
     private ModelService modelService;
@@ -68,7 +68,7 @@ public class DefaultCustomerFacade implements CustomerFacade {
     }
 
     @Override
-    public CustomerAddressData createCustomerAddress(CustomerData customer, CustomerAddressData address) {
+    public CustomerAddressData createCustomerAddress(EpamCustomerData customer, CustomerAddressData address) {
         ServicesUtil.validateParameterNotNull(customer, ADDRESS_MODEL_CANNOT_BE_NULL);
         ServicesUtil.validateParameterNotNull(address, ADDRESS_MODEL_CANNOT_BE_NULL);
 
@@ -76,7 +76,7 @@ public class DefaultCustomerFacade implements CustomerFacade {
     }
 
     @Override
-    public CustomerAddressData updateCustomerAddress(CustomerData customer, CustomerAddressData address) {
+    public CustomerAddressData updateCustomerAddress(EpamCustomerData customer, CustomerAddressData address) {
         ServicesUtil.validateParameterNotNull(customer, ADDRESS_MODEL_CANNOT_BE_NULL);
         ServicesUtil.validateParameterNotNull(address, ADDRESS_MODEL_CANNOT_BE_NULL);
 
@@ -84,18 +84,22 @@ public class DefaultCustomerFacade implements CustomerFacade {
     }
     
     @Override
-    public CustomerData findCustomerByUID(String uid) {
+    public EpamCustomerData findCustomerByUID(String uid) {
     	ServicesUtil.validateParameterNotNullStandardMessage("UID", uid); 
     	
-    	UserModel userModel = retrieveCustomerModelByUID(uid);
-        CustomerData customerData = customerConverter.convert(userModel);
+    	CustomerModel customerModel = retrieveCustomerModelByUID(uid);
+    	EpamCustomerData customerData = new EpamCustomerData();
+    	customerPopulator.populate(customerModel, customerData);
+
         return customerData;
     }
     
     @Override
-    public void createCustomer(CustomerData customerData) throws DuplicateUidException {
+    public void createCustomer(EpamCustomerData customerData) throws DuplicateUidException {
     	ServicesUtil.validateParameterNotNullStandardMessage("customerData", customerData); 
     	ServicesUtil.validateParameterNotNullStandardMessage("email", customerData.getEmail()); 
+    	ServicesUtil.validateParameterNotNullStandardMessage("firstName", customerData.getFirstName()); 
+    	ServicesUtil.validateParameterNotNullStandardMessage("lastName", customerData.getLastName()); 
     	
     	customerData.setEmail(customerData.getEmail().toLowerCase());
     	if (userService.isUserExisting(customerData.getEmail())) {
@@ -105,14 +109,17 @@ public class DefaultCustomerFacade implements CustomerFacade {
     	CustomerModel customerModel = new CustomerModel();
     	customerReversePopulator.populate(customerData, customerModel);
     	customerModel.setUid(customerData.getEmail());
+    	customerModel.setCustomerID(customerData.getEmail());
 
     	modelService.save(customerModel);
     }
     
     @Override
-    public void updateCustomer(CustomerData customerData) {
+    public void updateCustomer(EpamCustomerData customerData) {
     	ServicesUtil.validateParameterNotNullStandardMessage("customerData", customerData); 
     	ServicesUtil.validateParameterNotNullStandardMessage("UID", customerData.getUid());
+    	ServicesUtil.validateParameterNotNullStandardMessage("firstName", customerData.getFirstName()); 
+    	ServicesUtil.validateParameterNotNullStandardMessage("lastName", customerData.getLastName()); 
     	
     	String uid = customerData.getUid().toLowerCase();
     	if (!userService.isUserExisting(uid)) {

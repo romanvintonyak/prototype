@@ -1,7 +1,8 @@
 package com.epam.customer.facades;
 
 import com.epam.customer.data.CustomerAddressData;
-import de.hybris.platform.commercefacades.user.data.CustomerData;
+import com.epam.customer.data.EpamCustomerData;
+
 import de.hybris.platform.commerceservices.customer.DuplicateUidException;
 
 import java.util.List;
@@ -13,13 +14,13 @@ public interface CustomerFacade {
 
     List<CustomerAddressData> findCustomerAddresses(String customerId);
 
-    CustomerAddressData createCustomerAddress(CustomerData customer, CustomerAddressData address);
+    CustomerAddressData createCustomerAddress(EpamCustomerData customer, CustomerAddressData address);
 
-    CustomerAddressData updateCustomerAddress(CustomerData customer, CustomerAddressData address);
+    CustomerAddressData updateCustomerAddress(EpamCustomerData customer, CustomerAddressData address);
     
-    CustomerData findCustomerByUID(String uid);
+    EpamCustomerData findCustomerByUID(String uid);
     
-    void createCustomer(CustomerData customerData) throws DuplicateUidException;
+    void createCustomer(EpamCustomerData customerData) throws DuplicateUidException;
     
-    void updateCustomer(CustomerData customerData);
+    void updateCustomer(EpamCustomerData customerData);
 }

@@ -1,9 +1,9 @@
 package com.epam.controllers;
 
 import com.epam.customer.data.CustomerAddressData;
+import com.epam.customer.data.EpamCustomerData;
 import com.epam.customer.facades.CustomerFacade;
 
-import de.hybris.platform.commercefacades.user.data.CustomerData;
 import de.hybris.platform.commerceservices.customer.DuplicateUidException;
 
 import org.apache.commons.codec.binary.Base64;
@@ -36,25 +36,25 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "/address", method = RequestMethod.POST)
-    public  @ResponseBody CustomerAddressData getCustomerAddresses(CustomerData customer, CustomerAddressData addressData){
+    public  @ResponseBody CustomerAddressData getCustomerAddresses(EpamCustomerData customer, CustomerAddressData addressData){
         return customerFacade.createCustomerAddress(customer, addressData);
     }
     
     @RequestMapping(value = "/{customerId}", method = RequestMethod.GET)    
-    public @ResponseBody CustomerData getCustomer(@PathVariable("customerId") String customerId) {
+    public @ResponseBody EpamCustomerData getCustomer(@PathVariable("customerId") String customerId) {
     	String userId = new String(Base64.decodeBase64((customerId.getBytes(StandardCharsets.UTF_8))));
         return customerFacade.findCustomerByUID(userId);
     }
     
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
-    public void createCustomer(@RequestBody CustomerData customerData) throws DuplicateUidException {
+    public void createCustomer(@RequestBody EpamCustomerData customerData) throws DuplicateUidException {
     	customerFacade.createCustomer(customerData);
     }
     
     @RequestMapping(method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
-    public void updateCustomer(@RequestBody CustomerData customerData) {
+    public void updateCustomer(@RequestBody EpamCustomerData customerData) {
     	customerFacade.updateCustomer(customerData);
     }
 }
