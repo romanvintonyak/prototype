@@ -9,6 +9,7 @@ import com.epam.customer.data.EpamCustomerData;
 import com.epam.customer.facades.EpamCustomerFacade;
 import de.hybris.platform.commerceservices.customer.CustomerAccountService;
 import de.hybris.platform.commerceservices.customer.DuplicateUidException;
+import de.hybris.platform.converters.Populator;
 import de.hybris.platform.core.model.user.AddressModel;
 import de.hybris.platform.core.model.user.CustomerModel;
 import de.hybris.platform.core.model.user.UserModel;
@@ -19,6 +20,7 @@ import de.hybris.platform.servicelayer.util.ServicesUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -32,6 +34,8 @@ public class DefaultEpamEpamCustomerFacade implements EpamCustomerFacade {
 
     private static final Logger LOG = LoggerFactory.getLogger(DefaultEpamEpamCustomerFacade.class);
     public static final String CUSTOMER_MODEL_CANNOT_BE_NULL = "Customer model cannot be null";
+    public static final String CUSTOMER_ID_CANNOT_BE_NULL = "Customer uid cannot be null";
+    public static final String ADDRESS_ID_CANNOT_BE_NULL = "Customer address uid cannot be null";
     public static final String ADDRESS_MODEL_CANNOT_BE_NULL = "Address model cannot be null";
     public static final String USER_NOT_FOUND = "User with uid '{0}' not found!";
     public static final String USER_IS_NOT_CUSTOMER = "User with uid '{0}' is not a customer";
@@ -58,6 +62,10 @@ public class DefaultEpamEpamCustomerFacade implements EpamCustomerFacade {
     @Autowired
     private EpamAddressReverseConverter addressReverseConverter;
 
+    @Autowired
+    @Qualifier("reversePopulator")
+    private Populator<EpamAddressData, AddressModel> addressReversePopulator;
+
     @Override
     public List<EpamAddressData> findCustomerAddresses(String customerId) {
         ServicesUtil.validateParameterNotNull(customerId, CUSTOMER_MODEL_CANNOT_BE_NULL);
@@ -74,15 +82,31 @@ public class DefaultEpamEpamCustomerFacade implements EpamCustomerFacade {
     }
 
     @Override
-    public EpamAddressData saveCustomerAddress(final EpamAddressData addressData, final String customerId) {
+    public EpamAddressData createCustomerAddress(final EpamAddressData addressData, final String customerId) {
         ServicesUtil.validateParameterNotNull(addressData, ADDRESS_MODEL_CANNOT_BE_NULL);
-        AddressModel customerAddress = addressReverseConverter.convert(addressData);
+        ServicesUtil.validateParameterNotNull(customerId, CUSTOMER_ID_CANNOT_BE_NULL);
         final CustomerModel customer = (CustomerModel)userService.getUserForUID(customerId);
         if (null == customer) {
             throw new UnknownIdentifierException(String.format(USER_NOT_FOUND, customerId));
         }
+        AddressModel customerAddress = addressReverseConverter.convert(addressData);
         customerAccountService.saveAddressEntry(customer, customerAddress);
-        return addressData;
+        return addressConverter.convert(customerAddress);
+    }
+
+    @Override
+    public EpamAddressData updateCustomerAddress(EpamAddressData addressData, String customerId) {
+        ServicesUtil.validateParameterNotNull(addressData, ADDRESS_MODEL_CANNOT_BE_NULL);
+        ServicesUtil.validateParameterNotNull(customerId, CUSTOMER_ID_CANNOT_BE_NULL);
+        ServicesUtil.validateParameterNotNull(addressData.getPk(), ADDRESS_ID_CANNOT_BE_NULL);
+        final CustomerModel customer = (CustomerModel)userService.getUserForUID(customerId);
+        if (null == customer) {
+            throw new UnknownIdentifierException(String.format(USER_NOT_FOUND, customerId));
+        }
+        AddressModel customerAddress = customerAccountService.getAddressForCode(customer, addressData.getPk() + "");
+        addressReversePopulator.populate(addressData, customerAddress);
+        customerAccountService.saveAddressEntry(customer, customerAddress);
+        return addressConverter.convert(customerAddress);
     }
 
     @Override

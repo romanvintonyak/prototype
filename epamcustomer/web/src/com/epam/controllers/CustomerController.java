@@ -35,13 +35,13 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "/{customerId}/address", method = RequestMethod.POST)
-    public  @ResponseBody EpamAddressData createCustomerAddresses(@PathVariable("customerId") String customerId, EpamAddressData addressData){
-        return epamCustomerFacade.saveCustomerAddress(addressData, customerId);
+    public  @ResponseBody EpamAddressData createCustomerAddresses(@PathVariable("customerId") String customerId, @RequestBody EpamAddressData addressData){
+        return epamCustomerFacade.createCustomerAddress(addressData, customerId);
     }
 
     @RequestMapping(value = "/{customerId}/address", method = RequestMethod.PUT)
-    public  @ResponseBody EpamAddressData updateCustomerAddresses(@PathVariable("customerId") String customerId, EpamAddressData addressData){
-        return epamCustomerFacade.saveCustomerAddress(addressData, customerId);
+    public  @ResponseBody EpamAddressData updateCustomerAddresses(@PathVariable("customerId") String customerId, @RequestBody EpamAddressData addressData){
+        return epamCustomerFacade.updateCustomerAddress(addressData, customerId);
     }
 
     @RequestMapping(value = "/{customerId}", method = RequestMethod.GET)

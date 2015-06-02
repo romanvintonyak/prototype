@@ -13,7 +13,9 @@ public interface EpamCustomerFacade {
 
     List<EpamAddressData> findCustomerAddresses(String customerId);
 
-    EpamAddressData saveCustomerAddress(EpamAddressData address, String customerId);
+    EpamAddressData createCustomerAddress(EpamAddressData address, String customerId);
+
+    EpamAddressData updateCustomerAddress(EpamAddressData address, String customerId);
 
     EpamCustomerData findCustomerByUID(String uid);
     
