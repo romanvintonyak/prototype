@@ -57,5 +57,6 @@
       </library>
     </orderEntry>
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="commerceservicesserver" level="project" />
   </component>
 </module>

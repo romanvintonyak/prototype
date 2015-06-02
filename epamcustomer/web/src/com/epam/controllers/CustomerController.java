@@ -1,15 +1,13 @@
 package com.epam.controllers;
 
-import com.epam.customer.data.CustomerAddressData;
+import com.epam.customer.data.EpamAddressData;
 import com.epam.customer.data.EpamCustomerData;
 import com.epam.customer.facades.CustomerFacade;
-
 import de.hybris.platform.commerceservices.customer.DuplicateUidException;
-
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +20,7 @@ import java.util.Collection;
 
 /**
  * @author Roman_Kovalenko
+ * @author Irina_Vasilyeva
  */
 @Controller
 @RequestMapping("/v1/customers")
@@ -31,30 +30,35 @@ public class CustomerController {
     private CustomerFacade customerFacade;
 
     @RequestMapping(value = "/{customerId}/address", method = RequestMethod.GET)
-    public  @ResponseBody Collection<CustomerAddressData> getCustomerAddresses(@PathVariable("customerId") String customerId){
+    public  @ResponseBody Collection<EpamAddressData> getCustomerAddresses(@PathVariable("customerId") String customerId){
         return customerFacade.findCustomerAddresses(customerId);
     }
 
-    @RequestMapping(value = "/address", method = RequestMethod.POST)
-    public  @ResponseBody CustomerAddressData getCustomerAddresses(EpamCustomerData customer, CustomerAddressData addressData){
-        return customerFacade.createCustomerAddress(customer, addressData);
+    @RequestMapping(value = "/{customerId}/address", method = RequestMethod.POST)
+    public  @ResponseBody EpamAddressData createCustomerAddresses(@PathVariable("customerId") String customerId, EpamAddressData addressData){
+        return customerFacade.saveCustomerAddress(addressData, customerId);
     }
-    
-    @RequestMapping(value = "/{customerId}", method = RequestMethod.GET)    
+
+    @RequestMapping(value = "/{customerId}/address", method = RequestMethod.PUT)
+    public  @ResponseBody EpamAddressData updateCustomerAddresses(@PathVariable("customerId") String customerId, EpamAddressData addressData){
+        return customerFacade.saveCustomerAddress(addressData, customerId);
+    }
+
+    @RequestMapping(value = "/{customerId}", method = RequestMethod.GET)
     public @ResponseBody EpamCustomerData getCustomer(@PathVariable("customerId") String customerId) {
-    	String userId = new String(Base64.decodeBase64((customerId.getBytes(StandardCharsets.UTF_8))));
+        String userId = new String(Base64.decodeBase64((customerId.getBytes(StandardCharsets.UTF_8))));
         return customerFacade.findCustomerByUID(userId);
     }
-    
+
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     public void createCustomer(@RequestBody EpamCustomerData customerData) throws DuplicateUidException {
-    	customerFacade.createCustomer(customerData);
+        customerFacade.createCustomer(customerData);
     }
-    
+
     @RequestMapping(method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     public void updateCustomer(@RequestBody EpamCustomerData customerData) {
-    	customerFacade.updateCustomer(customerData);
+        customerFacade.updateCustomer(customerData);
     }
 }

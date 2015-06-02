@@ -1,4 +1,4 @@
-package com.epam.customer.converter;
+package com.epam.customer.converter.populator;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

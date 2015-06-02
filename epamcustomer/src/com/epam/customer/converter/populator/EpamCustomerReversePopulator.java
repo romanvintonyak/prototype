@@ -1,4 +1,4 @@
-package com.epam.customer.converter;
+package com.epam.customer.converter.populator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

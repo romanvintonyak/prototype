@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * @author Roman_Kovalenko
  */
-public class CustomerAddressData implements Serializable {
+public class EpamAddressData implements Serializable {
 
     private String firstName;
     private String LastName;

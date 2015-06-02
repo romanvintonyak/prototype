@@ -1,12 +1,13 @@
 package com.epam.customer.facades.impl;
 
-import com.epam.customer.converter.CustomerAddressConverter;
-import com.epam.customer.converter.EpamCustomerPopulator;
-import com.epam.customer.converter.EpamCustomerReversePopulator;
-import com.epam.customer.data.CustomerAddressData;
+import com.epam.customer.converter.EpamAddressConverter;
+import com.epam.customer.converter.EpamAddressReverseConverter;
+import com.epam.customer.converter.populator.EpamCustomerPopulator;
+import com.epam.customer.converter.populator.EpamCustomerReversePopulator;
+import com.epam.customer.data.EpamAddressData;
 import com.epam.customer.data.EpamCustomerData;
 import com.epam.customer.facades.CustomerFacade;
-
+import de.hybris.platform.commerceservices.customer.CustomerAccountService;
 import de.hybris.platform.commerceservices.customer.DuplicateUidException;
 import de.hybris.platform.core.model.user.AddressModel;
 import de.hybris.platform.core.model.user.CustomerModel;
@@ -15,7 +16,6 @@ import de.hybris.platform.servicelayer.exceptions.UnknownIdentifierException;
 import de.hybris.platform.servicelayer.model.ModelService;
 import de.hybris.platform.servicelayer.user.UserService;
 import de.hybris.platform.servicelayer.util.ServicesUtil;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,55 +34,57 @@ public class DefaultCustomerFacade implements CustomerFacade {
     public static final String CUSTOMER_MODEL_CANNOT_BE_NULL = "Customer model cannot be null";
     public static final String ADDRESS_MODEL_CANNOT_BE_NULL = "Address model cannot be null";
     public static final String USER_NOT_FOUND = "User with uid '{0}' not found!";
-    public static final String ADDRESS_TYPE_CANNOT_BE_NULL = "Address type cannot be null";
     public static final String USER_IS_NOT_CUSTOMER = "User with uid '{0}' is not a customer";
     public static final String SUCH_USER_ALREADY_EXIST = "User with uid '{0}' already exists";
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private CustomerAccountService customerAccountService;
+
+    @Autowired
+    private ModelService modelService;
     
     @Autowired
     private EpamCustomerPopulator customerPopulator;
     
     @Autowired
     private EpamCustomerReversePopulator customerReversePopulator;
-    
-    @Autowired
-    private ModelService modelService;
 
     @Autowired
-    private CustomerAddressConverter customerAddressConverter;
+    private EpamAddressConverter addressConverter;
+
+    @Autowired
+    private EpamAddressReverseConverter addressReverseConverter;
 
     @Override
-    public List<CustomerAddressData> findCustomerAddresses(String customerId) {
+    public List<EpamAddressData> findCustomerAddresses(String customerId) {
         ServicesUtil.validateParameterNotNull(customerId, CUSTOMER_MODEL_CANNOT_BE_NULL);
-        final UserModel user = userService.getUserForUID(customerId);
+        final CustomerModel user = (CustomerModel)userService.getUserForUID(customerId);
         if (null == user) {
             throw new UnknownIdentifierException(String.format(USER_NOT_FOUND, customerId));
         }
-        final List<CustomerAddressData> addressDataList = new ArrayList<>();
+        final List<EpamAddressData> addressDataList = new ArrayList<>();
         for(AddressModel addressModel : user.getAddresses()) {
-            addressDataList.add(customerAddressConverter.convert(addressModel));
+            EpamAddressData addressData = addressConverter.convert(addressModel);
+            addressDataList.add(addressData);
         }
         return addressDataList;
     }
 
     @Override
-    public CustomerAddressData createCustomerAddress(EpamCustomerData customer, CustomerAddressData address) {
-        ServicesUtil.validateParameterNotNull(customer, ADDRESS_MODEL_CANNOT_BE_NULL);
-        ServicesUtil.validateParameterNotNull(address, ADDRESS_MODEL_CANNOT_BE_NULL);
-
-        return null;
+    public EpamAddressData saveCustomerAddress(final EpamAddressData addressData, final String customerId) {
+        ServicesUtil.validateParameterNotNull(addressData, ADDRESS_MODEL_CANNOT_BE_NULL);
+        AddressModel customerAddress = addressReverseConverter.convert(addressData);
+        final CustomerModel customer = (CustomerModel)userService.getUserForUID(customerId);
+        if (null == customer) {
+            throw new UnknownIdentifierException(String.format(USER_NOT_FOUND, customerId));
+        }
+        customerAccountService.saveAddressEntry(customer, customerAddress);
+        return addressData;
     }
 
-    @Override
-    public CustomerAddressData updateCustomerAddress(EpamCustomerData customer, CustomerAddressData address) {
-        ServicesUtil.validateParameterNotNull(customer, ADDRESS_MODEL_CANNOT_BE_NULL);
-        ServicesUtil.validateParameterNotNull(address, ADDRESS_MODEL_CANNOT_BE_NULL);
-
-        return null;
-    }
-    
     @Override
     public EpamCustomerData findCustomerByUID(String uid) {
     	ServicesUtil.validateParameterNotNullStandardMessage("UID", uid); 
