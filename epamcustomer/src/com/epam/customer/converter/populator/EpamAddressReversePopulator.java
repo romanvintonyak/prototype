@@ -6,7 +6,7 @@ import de.hybris.platform.core.model.user.AddressModel;
 import org.springframework.stereotype.Component;
 
 /**
- * @author Irina_Vasilyeva
+ * @author Roman_Kovalenko
  */
 @Component
 public class EpamAddressReversePopulator implements Populator<EpamAddressData, AddressModel> {

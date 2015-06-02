@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author Roman_Kovalenko
  */
-public interface CustomerFacade {
+public interface EpamCustomerFacade {
 
     List<EpamAddressData> findCustomerAddresses(String customerId);
 

@@ -6,7 +6,7 @@ import com.epam.customer.converter.populator.EpamCustomerPopulator;
 import com.epam.customer.converter.populator.EpamCustomerReversePopulator;
 import com.epam.customer.data.EpamAddressData;
 import com.epam.customer.data.EpamCustomerData;
-import com.epam.customer.facades.CustomerFacade;
+import com.epam.customer.facades.EpamCustomerFacade;
 import de.hybris.platform.commerceservices.customer.CustomerAccountService;
 import de.hybris.platform.commerceservices.customer.DuplicateUidException;
 import de.hybris.platform.core.model.user.AddressModel;
@@ -28,9 +28,9 @@ import java.util.List;
  * @author Roman_Kovalenko
  */
 @Service
-public class DefaultCustomerFacade implements CustomerFacade {
+public class DefaultEpamEpamCustomerFacade implements EpamCustomerFacade {
 
-    private static final Logger LOG = LoggerFactory.getLogger(DefaultCustomerFacade.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DefaultEpamEpamCustomerFacade.class);
     public static final String CUSTOMER_MODEL_CANNOT_BE_NULL = "Customer model cannot be null";
     public static final String ADDRESS_MODEL_CANNOT_BE_NULL = "Address model cannot be null";
     public static final String USER_NOT_FOUND = "User with uid '{0}' not found!";

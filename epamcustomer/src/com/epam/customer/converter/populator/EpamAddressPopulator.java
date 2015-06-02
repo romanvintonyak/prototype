@@ -6,13 +6,14 @@ import de.hybris.platform.core.model.user.AddressModel;
 import org.springframework.stereotype.Component;
 
 /**
- * @author Irina_Vasilyeva
+ * @author Roman_Kovalenko
  */
 @Component
 public class EpamAddressPopulator implements Populator<AddressModel, EpamAddressData> {
 
     @Override
     public void populate(final AddressModel source, final EpamAddressData target) {
+        target.setPk(source.getPk().getLong());
         target.setFirstName(source.getFirstname());
         target.setLastName(source.getLastname());
         target.setPhone(source.getPhone1());

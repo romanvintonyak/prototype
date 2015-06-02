@@ -6,7 +6,7 @@ import java.io.Serializable;
  * @author Roman_Kovalenko
  */
 public class EpamAddressData implements Serializable {
-
+    private Long pk;
     private String firstName;
     private String LastName;
     private String address1;
@@ -20,6 +20,14 @@ public class EpamAddressData implements Serializable {
     private boolean isPrimaryBillingAddress;
     private boolean isDeliveryAddress;
     private boolean isPrimaryDeliveryAddress;
+
+    public Long getPk() {
+        return pk;
+    }
+
+    public void setPk(Long pk) {
+        this.pk = pk;
+    }
 
     public String getFirstName() {
         return firstName;
