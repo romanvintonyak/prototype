@@ -31,17 +31,20 @@ public class CustomerController {
 
     @RequestMapping(value = "/{customerId}/address", method = RequestMethod.GET)
     public  @ResponseBody Collection<EpamAddressData> getCustomerAddresses(@PathVariable("customerId") String customerId){
-        return epamCustomerFacade.findCustomerAddresses(customerId);
+        String userId = new String(Base64.decodeBase64((customerId.getBytes(StandardCharsets.UTF_8))));
+        return epamCustomerFacade.findCustomerAddresses(userId);
     }
 
     @RequestMapping(value = "/{customerId}/address", method = RequestMethod.POST)
     public  @ResponseBody EpamAddressData createCustomerAddresses(@PathVariable("customerId") String customerId, @RequestBody EpamAddressData addressData){
-        return epamCustomerFacade.createCustomerAddress(addressData, customerId);
+        String userId = new String(Base64.decodeBase64((customerId.getBytes(StandardCharsets.UTF_8))));
+        return epamCustomerFacade.createCustomerAddress(addressData, userId);
     }
 
     @RequestMapping(value = "/{customerId}/address", method = RequestMethod.PUT)
     public  @ResponseBody EpamAddressData updateCustomerAddresses(@PathVariable("customerId") String customerId, @RequestBody EpamAddressData addressData){
-        return epamCustomerFacade.updateCustomerAddress(addressData, customerId);
+        String userId = new String(Base64.decodeBase64((customerId.getBytes(StandardCharsets.UTF_8))));
+        return epamCustomerFacade.updateCustomerAddress(addressData, userId);
     }
 
     @RequestMapping(value = "/{customerId}", method = RequestMethod.GET)

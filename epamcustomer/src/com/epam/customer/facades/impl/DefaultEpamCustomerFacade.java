@@ -30,9 +30,9 @@ import java.util.List;
  * @author Roman_Kovalenko
  */
 @Service
-public class DefaultEpamEpamCustomerFacade implements EpamCustomerFacade {
+public class DefaultEpamCustomerFacade implements EpamCustomerFacade {
 
-    private static final Logger LOG = LoggerFactory.getLogger(DefaultEpamEpamCustomerFacade.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DefaultEpamCustomerFacade.class);
     public static final String CUSTOMER_MODEL_CANNOT_BE_NULL = "Customer model cannot be null";
     public static final String CUSTOMER_ID_CANNOT_BE_NULL = "Customer uid cannot be null";
     public static final String ADDRESS_ID_CANNOT_BE_NULL = "Customer address uid cannot be null";
@@ -103,7 +103,7 @@ public class DefaultEpamEpamCustomerFacade implements EpamCustomerFacade {
         if (null == customer) {
             throw new UnknownIdentifierException(String.format(USER_NOT_FOUND, customerId));
         }
-        AddressModel customerAddress = customerAccountService.getAddressForCode(customer, addressData.getPk() + "");
+        AddressModel customerAddress = customerAccountService.getAddressForCode(customer, addressData.getPk().toString());
         addressReversePopulator.populate(addressData, customerAddress);
         customerAccountService.saveAddressEntry(customer, customerAddress);
         return addressConverter.convert(customerAddress);
