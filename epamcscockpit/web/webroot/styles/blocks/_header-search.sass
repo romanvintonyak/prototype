@@ -1,0 +1,62 @@
+.header-search
+    &__fields
+        @include span(4 no-gutter)
+        z-index: 1
+        position: relative
+        margin-top: 4px
+        height: 24px
+        border: 1px solid #4C5F79
+        padding: 0 32px 0 8px
+        border-radius: 12px
+        background: #fff
+
+    &__inp
+        width: 100%
+        height: 22px
+        background: transparent
+        text-transform: uppercase
+
+    &__submit
+        z-index: 2
+        position: absolute
+        top: 5px
+        right: 10px
+        width: 12px
+        height: 12px
+        overflow: hidden
+        text-indent: -100em
+        border: none
+        background: red
+
+    &__cta-wrap
+        @include span(3)
+
+    &__cta
+        margin-left: 8px
+
+        &-link
+            display: inline-block
+            padding: 0 8px
+            color: #879FBA
+            height: 32px
+            line-height: 32px
+            text-decoration: none
+            text-transform: uppercase
+            vertical-align: top
+
+        &-ext-link
+            display: none
+            margin-left: 2px
+            width: 32px
+            height: 32px
+            vertical-align: top
+            background: #4C5F79
+
+        &:hover &
+            &-link
+                background: #4C5F79
+                color: #fff
+
+        &:hover &
+            &-ext-link
+                display: inline-block

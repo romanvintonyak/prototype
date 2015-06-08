@@ -1,0 +1,53 @@
+.filter
+    z-index: 1
+    position: relative
+    padding-bottom: 64px
+
+    &__section
+        padding: 16px 16px 0 16px
+
+    &__title
+        margin: 0
+        font: 9px/13px 'open_sans_semibold'
+        color: #63686E
+        letter-spacing: 1.08px
+        text-transform: uppercase
+
+    &__item
+        margin-top: 4px
+        font-size: 10px
+        @include clearfix
+
+        &-name
+            float: left
+
+        &-checkbox
+            margin-right: 4px
+
+        &-counter
+            float: right
+
+    &__btn-wrap
+        z-index: 2
+        position: absolute
+        bottom: 0
+        left: 0
+        width: 100%
+
+    &__btn
+        float: left
+        border: none
+        height: 32px
+        color: #fff
+        font-weight: bold
+        line-height: 32px
+        text-align: center
+        text-transform: uppercase
+
+        &_clear
+            width: 34%
+            background: #354051
+
+        &_update
+            width: 66%
+            background: #4597D7

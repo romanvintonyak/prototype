@@ -1,0 +1,30 @@
+*, *:before, *:after
+    box-sizing: border-box
+
+html, body
+    height: 100%
+
+body
+    font-family: 'open_sans_regular', sans-serif
+    font-size: 12px
+
+fieldset,
+input,
+ul
+    padding: 0
+    margin: 0
+
+fieldset,
+input
+    border: 0 none
+
+input
+    font-size: 1em
+
+ul
+    list-style: none
+
+//main blocks
+.container
+    @include container
+    @include clearfix

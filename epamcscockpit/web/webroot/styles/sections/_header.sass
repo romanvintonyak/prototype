@@ -1,0 +1,75 @@
+.header
+    height: 40px
+    font-family: 'open_sans_semibold'
+    background: #354051
+
+    .container
+        padding: 4px 16px 0 20px
+
+    &__logo
+        @include span(3)
+        padding-top: 4px
+        text-decoration: none
+
+        img
+            vertical-align: middle
+
+        &-descr
+            margin-left: 16px
+            color: #7085A1
+            //letter-spacing: 1.2px Todo: uncomment
+            line-height: 17px
+            text-transform: uppercase
+
+    &__cta
+        @include span(3)
+
+        &:after
+            content: ''
+            display: block
+            width: 100%
+            height: 1px
+
+        &-inner
+            z-index: 2
+            position: absolute
+
+            &_open,
+            &:hover //TODO: remove after testing
+                background: #FFF
+                box-shadow: 0px 8px 15px 0px rgba(0,0,0,0.14), 0px 2px 3px 0px rgba(0,0,0,0.38)
+
+        &-inner_open &,
+        &:hover & //TODO: remove after testing
+
+            &-btn,
+            &-btn:hover
+                background: #fff
+                color: #A9B2BD
+
+            &-dropdown
+                display: block
+
+        &-btn
+            padding: 8px 30px 8px 16px
+            background: none
+            border: none
+            color: #fff
+            text-transform: uppercase
+
+            &:hover
+                background: #4C5F79
+
+        &-dropdown
+            display: none
+
+            &-link
+                display: block
+                padding: 7px 0 8px
+                color: #303030
+                border-top: 1px solid #E8EAEC
+                text-align: center
+                text-decoration: none
+                &:hover
+                    background: #A9B2BD
+                    color: #fff
