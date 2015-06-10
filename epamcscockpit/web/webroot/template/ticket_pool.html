@@ -1,0 +1,206 @@
+<div class="container">
+       <aside class="sidebar filter">
+           <div class="filter__section">
+               <h3 class="filter__title">agent</h3>
+               <ul>
+                   <li class="filter__item">
+                       <label class="filter__item-name">
+                           <input class="filter__item-checkbox" type="checkbox"/>
+                           Assigned to me
+                       </label>
+                       <span class="filter__item-counter">345</span>
+                   </li>
+                   <li class="filter__item">
+                       <label class="filter__item-name">
+                           <input class="filter__item-checkbox" type="checkbox"/>
+                           All Group Users
+                       </label>
+                       <span class="filter__item-counter">41</span>
+                   </li>
+                   <li class="filter__item">
+                       <label class="filter__item-name">
+                           <input class="filter__item-checkbox" type="checkbox"/>
+                           Unassigned
+                       </label>
+                       <span class="filter__item-counter">2654</span>
+                   </li>
+               </ul>
+           </div>
+
+           <div class="filter__section">
+               <h3 class="filter__title">group</h3>
+               <ul>
+                   <li class="filter__item">
+                       <label class="filter__item-name">
+                           <input class="filter__item-checkbox" type="checkbox"/>
+                           My Group
+                       </label>
+                       <span class="filter__item-counter">3252</span>
+                   </li>
+                   <li class="filter__item">
+                       <label class="filter__item-name">
+                           <input class="filter__item-checkbox" type="checkbox"/>
+                           All Groups
+                       </label>
+                       <span class="filter__item-counter">25</span>
+                   </li>
+                   <li class="filter__item">
+                       <label class="filter__item-name">
+                           <input class="filter__item-checkbox" type="checkbox"/>
+                           Unassigned
+                       </label>
+                       <span class="filter__item-counter">145</span>
+                   </li>
+               </ul>
+           </div>
+
+           <div class="filter__section">
+               <h3 class="filter__title">state</h3>
+               <ul>
+                   <li class="filter__item">
+                       <label class="filter__item-name">
+                           <input class="filter__item-checkbox" type="checkbox"/>
+                           New
+                       </label>
+                       <span class="filter__item-counter">552</span>
+                   </li>
+                   <li class="filter__item">
+                       <label class="filter__item-name">
+                           <input class="filter__item-checkbox" type="checkbox"/>
+                           Open
+                       </label>
+                       <span class="filter__item-counter">2525</span>
+                   </li>
+                   <li class="filter__item">
+                       <label class="filter__item-name">
+                           <input class="filter__item-checkbox" type="checkbox"/>
+                           Closed
+                       </label>
+                       <span class="filter__item-counter">6473</span>
+                   </li>
+               </ul>
+           </div>
+
+           <div class="filter__section">
+               <h3 class="filter__title">level</h3>
+               <ul>
+                   <li class="filter__item">
+                       <label class="filter__item-name">
+                           <input class="filter__item-checkbox" type="checkbox"/>
+                           All
+                       </label>
+                       <span class="filter__item-counter">15113</span>
+                   </li>
+                   <li class="filter__item">
+                       <label class="filter__item-name">
+                           <input class="filter__item-checkbox" type="checkbox"/>
+                           Sales
+                       </label>
+                       <span class="filter__item-counter">124</span>
+                   </li>
+                   <li class="filter__item">
+                       <label class="filter__item-name">
+                           <input class="filter__item-checkbox" type="checkbox"/>
+                           Service
+                       </label>
+                       <span class="filter__item-counter">264</span>
+                   </li>
+                   <li class="filter__item">
+                       <label class="filter__item-name">
+                           <input class="filter__item-checkbox" type="checkbox"/>
+                           Automated
+                       </label>
+                       <span class="filter__item-counter">12441</span>
+                   </li>
+                   <li class="filter__item">
+                       <label class="filter__item-name">
+                           <input class="filter__item-checkbox" type="checkbox"/>
+                           Interactive
+                       </label>
+                       <span class="filter__item-counter">1445</span>
+                   </li>
+                   <li class="filter__item">
+                       <label class="filter__item-name">
+                           <input class="filter__item-checkbox" type="checkbox"/>
+                           Physical store CS transfer
+                       </label>
+                       <span class="filter__item-counter">153</span>
+                   </li>
+               </ul>
+           </div>
+
+           <div class="filter__section">
+               <h3 class="filter__title">priority</h3>
+               <ul>
+                   <li class="filter__item">
+                       <label class="filter__item-name">
+                           <input class="filter__item-checkbox" type="checkbox"/>
+                           Low
+                       </label>
+                       <span class="filter__item-counter">1512</span>
+                   </li>
+                   <li class="filter__item">
+                       <label class="filter__item-name">
+                           <input class="filter__item-checkbox" type="checkbox"/>
+                           Medium
+                       </label>
+                       <span class="filter__item-counter">155</span>
+                   </li>
+                   <li class="filter__item">
+                       <label class="filter__item-name">
+                           <input class="filter__item-checkbox" type="checkbox"/>
+                           High
+                       </label>
+                       <span class="filter__item-counter">3425</span>
+                   </li>
+               </ul>
+           </div>
+
+           <div class="filter__btn-wrap">
+               <button class="filter__btn filter__btn_clear">clear</button><button class="filter__btn filter__btn_update">update</button>
+           </div>
+       </aside>
+       <!-- /sidebar -->
+
+      <section class="main" >
+      	<!-- /.ticket -->
+	<div ng-repeat="ticket in ticketPool" class="ticket ticket_{{ticket.status}}">
+              <div class="ticket__main-info">
+                  <div class="ticket__number">
+                  		<a href="#/ticket/{{ticket.number}}">{{ticket.number}} </a>
+                  </div>
+                  <div class="ticket__status">{{ticket.status}}</div>
+                  <div class="ticket__descr">
+                      {{ticket.descr}}
+                  </div>
+              </div>
+              <div class="ticket__customer-info">
+                  <a href="mailto:" class="ticket__customer-email"> {{ticket.customer_email}}</a>
+                  <div class="ticket__customer-order-number">{{ticket.customer_order_number}}</div>
+              </div>
+              <div class="ticket__time-info">
+                  <div class="ticket__date-created">
+                      <b>Date Created:</b>   Feb 25, 3:34:23 PM
+                  </div>
+                  <div class="ticket__spent-time">
+                      Spent Time: 1 Day, 2 hour.
+                  </div>
+                  <div class="ticket__agent">
+                      Agent: <b>Stephanie Bishop</b>
+                  </div>
+              </div>
+              <div class="ticket__additional-info">
+                  <div class="ticket__category">
+                      Category: Incident
+                  </div>
+                  <div class="ticket__level">
+                      Level 3: Automated
+                  </div>
+              </div>
+          </div>
+          
+
+      </section>
+      <!-- /content -->
+
+  </div>
