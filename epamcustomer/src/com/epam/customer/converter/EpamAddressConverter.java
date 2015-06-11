@@ -16,8 +16,12 @@ import org.springframework.stereotype.Component;
 @Qualifier("converter")
 public class EpamAddressConverter extends AbstractPopulatingConverter<AddressModel, EpamAddressData> {
 
-    @Autowired
     private EpamAddressPopulator customerAddressPopulator;
+
+    @Autowired
+    public EpamAddressConverter(EpamAddressPopulator customerAddressPopulator) {
+        this.customerAddressPopulator = customerAddressPopulator;
+    }
 
     @Override
     protected EpamAddressData createTarget() {

@@ -16,12 +16,16 @@ import org.springframework.stereotype.Component;
 @Qualifier("reverseConverter")
 public class EpamAddressReverseConverter extends AbstractPopulatingConverter<EpamAddressData, AddressModel> {
 
-    @Autowired
     private EpamAddressReversePopulator customerAddressReversePopulator;
+
+    @Autowired
+    public EpamAddressReverseConverter(EpamAddressReversePopulator customerAddressReversePopulator) {
+        this.customerAddressReversePopulator = customerAddressReversePopulator;
+    }
 
     @Override
     protected AddressModel createTarget() {
-        return new AddressModel() ;
+        return new AddressModel();
     }
 
     @Override
