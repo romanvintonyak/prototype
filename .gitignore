@@ -64,6 +64,7 @@ out
 *-testclasses.xml
 *-webtestclasses.xml
 components-lang-addon.xml
+*.iml
 
 !utils/mysql/*.zip
 !utils/mysql/*.jar
