@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 
@@ -31,7 +31,7 @@ public class EpamAddressReverseConverterTest extends BaseTest {
 
         AddressModel actualAddressModel = addressReverseConverter.convert(addressData);
 
-        verify(mockAddressReversePopulator).populate(eq(addressData), anyObject());
+        verify(mockAddressReversePopulator).populate(eq(addressData), any(AddressModel.class));
         assertNotNull("AddressModel object should not be null.", actualAddressModel);
     }
 }
