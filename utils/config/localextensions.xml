@@ -8,9 +8,6 @@
         -->
 
         <path dir="${HYBRIS_BIN_DIR}"/>
-        <path dir="${HYBRIS_BIN_DIR}/custom/epamcore/"/>
-        <path dir="${HYBRIS_BIN_DIR}/custom/epamcscockpit/"/>
-        <path dir="${HYBRIS_BIN_DIR}/custom/epamcustomer/"/>
 
 
         <!-- ext-platform -->
@@ -32,7 +29,8 @@
         <extension name="epamcore"/>
         <extension name="epamcscockpit"/>
         <extension name="epamcustomer"/>
-		<extension name="epamticket"/>
+	<extension name="epamticket"/>
+	<extension name="epamorder"/>
 
 
     </extensions>
