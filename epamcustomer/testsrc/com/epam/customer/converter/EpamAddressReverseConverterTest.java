@@ -26,7 +26,7 @@ public class EpamAddressReverseConverterTest extends BaseTest {
     }
 
     @Test
-    public void shouldReturnCustomerAddressData() {
+    public void shouldReturnCustomerAddressModel() {
         EpamAddressData addressData = new EpamAddressData();
 
         AddressModel actualAddressModel = addressReverseConverter.convert(addressData);
