@@ -3,6 +3,7 @@ package com.epam.customer.converter;
 import com.epam.customer.BaseTest;
 import com.epam.customer.converter.populator.EpamAddressPopulator;
 import com.epam.customer.data.EpamAddressData;
+import de.hybris.bootstrap.annotations.UnitTest;
 import de.hybris.platform.core.model.user.AddressModel;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,6 +14,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 
+@UnitTest
 public class EpamAddressConverterTest extends BaseTest {
 
     @Mock
