@@ -17,13 +17,14 @@ public class EpamCustomerReverseConverter extends AbstractPopulatingConverter<Ep
     @Override
     protected CustomerModel createTarget() {
         // TODO Singleton returns prototype implementation
-        return null;
+        return new CustomerModel();
     }
 
     @Override
     public CustomerModel convert(EpamCustomerData customerData) {
-        // TODO Add implementation like in EpamAddressConverter.java
-        return null;
+        CustomerModel customerModel = createTarget();
+        customerReversePopulator.populate(customerData, customerModel);
+        return customerModel;
     }
 
 }

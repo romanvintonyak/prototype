@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * @author Roman_Kovalenko
  */
-@Service
+@Service // TODO Switch to XML-based configuration
 public class DefaultEpamCustomerFacade implements EpamCustomerFacade {
 
     private static final Logger LOG = LoggerFactory.getLogger(DefaultEpamCustomerFacade.class);

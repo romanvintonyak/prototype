@@ -17,10 +17,10 @@ import java.text.SimpleDateFormat;
 @Component
 public class EpamCustomerPopulator implements Populator<CustomerModel, EpamCustomerData> {
 
-    private DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+    private DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss"); // TODO Inject as bean
     private CustomerNameStrategy customerNameStrategy;
 
-    @Autowired
+    @Autowired // TODO Switch to XML-based configuration
     public EpamCustomerPopulator(CustomerNameStrategy customerNameStrategy) {
         this.customerNameStrategy = customerNameStrategy;
     }
@@ -30,16 +30,19 @@ public class EpamCustomerPopulator implements Populator<CustomerModel, EpamCusto
         Assert.notNull(source, "Parameter source cannot be null.");
         Assert.notNull(target, "Parameter target cannot be null.");
 
+        target.setUid(source.getUid());
+        target.setName(source.getName());
+        setFirstNameAndLastName(source, target);
+        target.setEmail(source.getUid()); // TODO Clarify if uid really contains email
+        target.setActive(!source.isLoginDisabled());
+        target.setCreatedDate(formatter.format(source.getCreationtime()));
+    }
+
+    private void setFirstNameAndLastName(final CustomerModel source, final EpamCustomerData target) {
         final String[] names = customerNameStrategy.splitName(source.getName());
         if (names != null) {
             target.setFirstName(names[0]);
             target.setLastName(names[1]);
         }
-
-        target.setCreatedDt(formatter.format(source.getCreationtime()));
-        target.setName(source.getName());
-        target.setUid(source.getUid());
-        target.setEmail(source.getUid());
-        target.setActive(!source.isLoginDisabled());
     }
 }

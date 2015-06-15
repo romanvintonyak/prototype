@@ -12,10 +12,10 @@ public class EpamCustomerData implements Serializable {
 	private String uid;
 	private String name;
 	private String firstName;
-	private String LastName;
+	private String lastName;
 	private String email;
 	private boolean active = true;
-	private String createdDt;
+	private String createdDate;
 
 	public String getUid() {
 		return uid;
@@ -34,11 +34,11 @@ public class EpamCustomerData implements Serializable {
 	}
 
 	public String getLastName() {
-		return LastName;
+		return lastName;
 	}
 
 	public void setLastName(String lastName) {
-		LastName = lastName;
+		this.lastName = lastName;
 	}
 
 	public String getEmail() {
@@ -57,12 +57,12 @@ public class EpamCustomerData implements Serializable {
 		this.active = active;
 	}
 
-	public String getCreatedDt() {
-		return createdDt;
+	public String getCreatedDate() {
+		return createdDate;
 	}
 
-	public void setCreatedDt(String createdDt) {
-		this.createdDt = createdDt;
+	public void setCreatedDate(String createdDate) {
+		this.createdDate = createdDate;
 	}
 
 	public String getName() {

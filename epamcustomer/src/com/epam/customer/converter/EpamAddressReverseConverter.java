@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
- * @author Roman_Kovalenko
+ * @author Roman_Kovalenkol
  */
 @Component
 @Qualifier("reverseConverter")
@@ -18,7 +18,7 @@ public class EpamAddressReverseConverter extends AbstractPopulatingConverter<Epa
 
     private EpamAddressReversePopulator customerAddressReversePopulator;
 
-    @Autowired
+    @Autowired // TODO Switch to XML-based configuration
     public EpamAddressReverseConverter(EpamAddressReversePopulator customerAddressReversePopulator) {
         this.customerAddressReversePopulator = customerAddressReversePopulator;
     }

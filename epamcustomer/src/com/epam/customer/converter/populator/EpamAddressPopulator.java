@@ -11,7 +11,7 @@ import org.springframework.util.StringUtils;
 /**
  * @author Roman_Kovalenko
  */
-@Component
+@Component // TODO Switch to XML-based configuration
 @Qualifier("populator")
 public class EpamAddressPopulator implements Populator<AddressModel, EpamAddressData> {
 
@@ -23,9 +23,8 @@ public class EpamAddressPopulator implements Populator<AddressModel, EpamAddress
         target.setPk(source.getPk() != null ? source.getPk().getLong() : null);
         target.setFirstName(source.getFirstname());
         target.setLastName(source.getLastname());
-        target.setPhone(source.getPhone1());
         target.setAddress1(buildAddress1From(source));
-        target.setAddress2(null);
+        target.setPhone(source.getPhone1());
         target.setTown(source.getTown());
         target.setPostalCode(source.getPostalcode());
         target.setRegion(source.getRegion() != null ? source.getRegion().getName() : null);
@@ -34,11 +33,14 @@ public class EpamAddressPopulator implements Populator<AddressModel, EpamAddress
         target.setIsDeliveryAddress(source.getShippingAddress());
     }
 
-    private String buildAddress1From(AddressModel source) {
-        return StringUtils.hasText(source.getStreetname()) ? buildAddress(source) : "";
+    private String buildAddress1From(final AddressModel source) {
+        if (StringUtils.hasText(source.getStreetname())) {
+            return buildAddress(source);
+        }
+        return "";
     }
 
-    private String buildAddress(AddressModel source) {
+    private String buildAddress(final AddressModel source) {
         String streetName = source.getStreetname();
 
         if (StringUtils.hasText(source.getStreetnumber())) {

@@ -18,7 +18,7 @@ public class EpamAddressConverter extends AbstractPopulatingConverter<AddressMod
 
     private EpamAddressPopulator customerAddressPopulator;
 
-    @Autowired
+    @Autowired // TODO Switch to XML-based configuration
     public EpamAddressConverter(EpamAddressPopulator customerAddressPopulator) {
         this.customerAddressPopulator = customerAddressPopulator;
     }
