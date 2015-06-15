@@ -5,14 +5,15 @@ import com.epam.customer.data.EpamCustomerData;
 import de.hybris.bootstrap.annotations.UnitTest;
 import de.hybris.platform.commerceservices.strategies.CustomerNameStrategy;
 import de.hybris.platform.core.model.user.CustomerModel;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -23,10 +24,26 @@ public class EpamCustomerPopulatorTest extends BaseTest {
     private CustomerNameStrategy mockCustomerNameStrategy;
 
     private EpamCustomerPopulator customerPopulator;
+    private CustomerModel source;
+    private EpamCustomerData target;
 
     @Before
     public void setUp() {
         customerPopulator = new EpamCustomerPopulator(mockCustomerNameStrategy);
+        source = getCustomerModel();
+        target = new EpamCustomerData();
+    }
+
+    private CustomerModel getCustomerModel() {
+        CustomerModel source = new CustomerModel();
+        source.setCreationtime(new Date());
+        return source;
+    }
+
+    @After
+    public void tearDown() {
+        source = null;
+        target = null;
     }
 
     @Test
@@ -43,6 +60,42 @@ public class EpamCustomerPopulatorTest extends BaseTest {
         thrown.expectMessage("Parameter target cannot be null.");
 
         customerPopulator.populate(new CustomerModel(), null);
+    }
+
+    @Test
+    public void shouldSetUidWhenSourceUidIsNotNull() {
+        String expectedUid = "Uid";
+        source.setUid(expectedUid);
+
+        customerPopulator.populate(source, target);
+
+        String errorMsg = String.format("Uid should be equals <%s>.", expectedUid);
+        assertEquals(errorMsg, expectedUid, target.getUid());
+    }
+
+    @Test
+    public void shouldNotSetUidWhenSourceUidIsNull() {
+        customerPopulator.populate(source, target);
+
+        assertNull("Uid should be null.", target.getUid());
+    }
+
+    @Test
+    public void shouldSetNameWhenSourceNameIsNotNull() {
+        String expectedName = "John";
+        source.setName(expectedName);
+
+        customerPopulator.populate(source, target);
+
+        String errorMsg = String.format("Name should be equals <%s>.", expectedName);
+        assertEquals(errorMsg, expectedName, target.getName());
+    }
+
+    @Test
+    public void shouldNotSetNameWhenSourceNameIsNull() {
+        customerPopulator.populate(source, target);
+
+        assertNull("Name should be null.", target.getName());
     }
 
     @Test
@@ -70,8 +123,65 @@ public class EpamCustomerPopulatorTest extends BaseTest {
 
         customerPopulator.populate(source, target);
 
-        assertEquals("FirstName should be [" + expectedFirstName + "].", expectedFirstName, target.getFirstName());
-        assertEquals("FirstName should be [" + expectedLastName + "].", expectedLastName, target.getLastName());
+        String errorMsg = String.format("FirstName should be <%s>.", expectedFirstName);
+        assertEquals(errorMsg, expectedFirstName, target.getFirstName());
+        errorMsg = String.format("LastName should be <%s>.", expectedLastName);
+        assertEquals(errorMsg, expectedLastName, target.getLastName());
+    }
+
+    @Test
+    public void shouldSetEmailWhenSourceUidIsNotNull() {
+        String expectedEmail = "john_dou@gmail.com";
+        source.setUid(expectedEmail);
+
+        customerPopulator.populate(source, target);
+
+        String errorMsg = String.format("Email should be equals <%s>.", expectedEmail);
+        assertEquals(errorMsg, expectedEmail, target.getEmail());
+    }
+
+    @Test
+    public void shouldNotSetEmailWhenSourceUidIsNull() {
+        customerPopulator.populate(source, target);
+
+        assertNull("Email should be null.", target.getEmail());
+    }
+
+    @Test
+    public void shouldSetActiveFalseWhenSourcesIsLoginDisabledIsTrue() {
+        boolean isLoginDisabled = true;
+        source.setLoginDisabled(isLoginDisabled);
+        boolean expectedActive = !isLoginDisabled;
+
+        customerPopulator.populate(source, target);
+
+        String errorMsg = String.format("Active should be equals <%b>.", expectedActive);
+        assertFalse(errorMsg, target.isActive());
+    }
+
+    @Test
+    public void shouldSetActiveTrueWhenSourcesIsLoginDisabledIsFalse() {
+        boolean isLoginDisabled = false;
+        source.setLoginDisabled(isLoginDisabled);
+        boolean expectedActive = !isLoginDisabled;
+
+        customerPopulator.populate(source, target);
+
+        String errorMsg = String.format("Active should be equals <%b>.", expectedActive);
+        assertTrue(errorMsg, target.isActive());
+    }
+
+    @Test
+    public void shouldSetCreatedDate() {
+        source = new CustomerModel();
+        Date currentDate = new Date();
+        String expectedCreatedDate = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(currentDate);
+        source.setCreationtime(currentDate);
+
+        customerPopulator.populate(source, target);
+
+        String errorMsg = String.format("Active should be equals <%s>.", expectedCreatedDate);
+        assertEquals(errorMsg, expectedCreatedDate, target.getCreatedDate());
     }
 
 }
