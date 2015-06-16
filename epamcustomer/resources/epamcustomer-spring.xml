@@ -10,6 +10,18 @@
            http://www.springframework.org/schema/aop
            http://www.springframework.org/schema/aop/spring-aop.xsd">
 
+    <context:annotation-config/>
+    <context:component-scan base-package="com.epam.customer" />
+    <import resource="classpath*:converters-spring.xml"/>
+
+    <bean id="epamCustomerFacade" class="com.epam.customer.facades.impl.DefaultEpamCustomerFacade">
+        <property name="userService" ref="userService"/>
+        <property name="modelService" ref="modelService"/>
+        <property name="customerPopulator" ref="epamCustomerPopulator"/>
+        <property name="customerReversePopulator" ref="epamCustomerReversePopulator"/>
+
+    </bean>
+
     <!--
     The hybris platform provides one single Spring application context for beans located at the jalo layer.
     Each extension can add beans to this context by specifying them at this configuration file.
@@ -70,17 +82,5 @@
                           !execution(* getPK(..))" />
            <aop:pointcut id="profiledMethods" expression="execution(* *(..))" />
       -->
-
-    <context:annotation-config/>
-    <context:component-scan base-package="com.epam.customer" />
-    <import resource="classpath*:converters-spring.xml"/>
-
-    <bean id="epamCustomerFacade" class="com.epam.customer.facades.impl.DefaultEpamCustomerFacade">
-        <property name="userService" ref="userService"/>
-        <property name="modelService" ref="modelService"/>
-        <property name="customerPopulator" ref="epamCustomerPopulator"/>
-        <property name="customerReversePopulator" ref="epamCustomerReversePopulator"/>
-
-    </bean>
 
 </beans>

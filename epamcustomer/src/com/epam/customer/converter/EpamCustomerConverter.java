@@ -9,7 +9,6 @@ public class EpamCustomerConverter extends AbstractPopulatingConverter<CustomerM
 
     private EpamCustomerPopulator customerPopulator;
 
-    // TODO Injection should be performed by means of converters-spring.xml
     public EpamCustomerConverter(EpamCustomerPopulator customerPopulator) {
         this.customerPopulator = customerPopulator;
     }

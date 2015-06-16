@@ -4,24 +4,28 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="epamAddressPopulator" class="com.epam.customer.converter.populator.EpamAddressPopulator"/>
-
-    <bean id="epamAddressReversePopulator" class="com.epam.customer.converter.populator.EpamAddressReversePopulator"/>
-
-    <bean id="epamCustomerPopulator" class="com.epam.customer.converter.populator.EpamCustomerPopulator"/>
-
-    <bean id="epamCustomerReversePopulator" class="com.epam.customer.converter.populator.EpamCustomerReversePopulator"/>
-
-    <bean id="epamAddressConverter" class="com.epam.customer.converter.EpamAddressConverter"/>
-
-    <bean id="epamAddressReverseConverter" class="com.epam.customer.converter.EpamAddressReverseConverter"/>
-
-    <bean id="epamCustomerConverter" class="com.epam.customer.converter.EpamCustomerConverter">
-        <property name="customerPopulator" ref="epamCustomerPopulator"/>
+    <bean id="addressConverter" class="com.epam.customer.converter.EpamAddressConverter">
+        <constructor-arg ref="addressPopulator"/>
     </bean>
 
-    <bean id="epamCustomerReverseConverter" class="com.epam.customer.converter.EpamCustomerReverseConverter">
-        <property name="customerReversePopulator" ref="epamCustomerReversePopulator"/>
+    <bean id="addressReverseConverter" class="com.epam.customer.converter.EpamAddressReverseConverter">
+        <constructor-arg ref="addressReversePopulator"/>
     </bean>
+
+    <bean id="customerConverter" class="com.epam.customer.converter.EpamCustomerConverter">
+        <constructor-arg ref="customerPopulator"/>
+    </bean>
+
+    <bean id="customerReverseConverter" class="com.epam.customer.converter.EpamCustomerReverseConverter">
+        <constructor-arg ref="customerReversePopulator"/>
+    </bean>
+
+    <bean id="addressPopulator" class="com.epam.customer.converter.populator.EpamAddressPopulator"/>
+
+    <bean id="addressReversePopulator" class="com.epam.customer.converter.populator.EpamAddressReversePopulator"/>
+
+    <bean id="customerPopulator" class="com.epam.customer.converter.populator.EpamCustomerPopulator"/>
+
+    <bean id="customerReversePopulator" class="com.epam.customer.converter.populator.EpamCustomerReversePopulator"/>
 
 </beans>

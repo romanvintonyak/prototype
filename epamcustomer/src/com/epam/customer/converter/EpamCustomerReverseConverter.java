@@ -9,7 +9,6 @@ public class EpamCustomerReverseConverter extends AbstractPopulatingConverter<Ep
 
     private EpamCustomerReversePopulator customerReversePopulator;
 
-    // TODO Injection should be performed by means of converters-spring.xml
     public EpamCustomerReverseConverter(EpamCustomerReversePopulator customerReversePopulator) {
         this.customerReversePopulator = customerReversePopulator;
     }
