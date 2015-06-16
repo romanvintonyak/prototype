@@ -17,8 +17,8 @@
         <intercept-url pattern="/fonts/**" access="permitAll"/>
         <intercept-url pattern="/js/**" access="permitAll"/>
         <intercept-url pattern="/favicon.ico" access="permitAll"/>
-        <intercept-url pattern="/template/**" access="hasRole('ROLE_ADMINGROUP')"/>
-        <intercept-url pattern="/**" access="hasRole('ROLE_ADMINGROUP')"/>
+        <intercept-url pattern="/template/**" access="hasRole('ROLE_ADMINGROUP') or hasRole('ROLE_CSAGENTGROUP')"/>
+        <intercept-url pattern="/**" access="hasRole('ROLE_ADMINGROUP') or hasRole('ROLE_CSAGENTGROUP')"/>
 
         <form-login
                 always-use-default-target="false"
@@ -43,6 +43,7 @@
         <beans:property name="allowedUserGroups">
             <beans:list merge="false">
                 <beans:value>Admingroup</beans:value>
+                <beans:value>csagentgroup</beans:value>
             </beans:list>
         </beans:property>
     </beans:bean>
