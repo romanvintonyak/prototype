@@ -11,7 +11,7 @@ import org.mockito.Mock;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 public class EpamCustomerReverseConverterTest extends BaseTest {
 
@@ -19,18 +19,23 @@ public class EpamCustomerReverseConverterTest extends BaseTest {
     private EpamCustomerReversePopulator mockCustomerReversePopulator;
 
     private EpamCustomerReverseConverter customerReverseConverter;
+    private EpamCustomerData customerData;
+    private CustomerModel customerModel;
 
     @Before
     public void setUp() throws Exception {
-        customerReverseConverter = new EpamCustomerReverseConverter(mockCustomerReversePopulator);
+        customerReverseConverter = spy(new EpamCustomerReverseConverter(mockCustomerReversePopulator));
+        customerData = new EpamCustomerData();
+        customerModel = new CustomerModel();
     }
 
     @Test
     public void shouldReturnCustomerModel() {
-        EpamCustomerData customerData = new EpamCustomerData();
+        when(customerReverseConverter.createTarget()).thenReturn(customerModel);
 
         CustomerModel actualCustomerModel = customerReverseConverter.convert(customerData);
 
+        verify(customerReverseConverter).createTarget();
         verify(mockCustomerReversePopulator).populate(eq(customerData), any(CustomerModel.class));
         assertNotNull("CustomerModel object should not be null.", actualCustomerModel);
     }

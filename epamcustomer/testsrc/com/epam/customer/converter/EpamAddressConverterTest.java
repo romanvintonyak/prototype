@@ -10,9 +10,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @UnitTest
 public class EpamAddressConverterTest extends BaseTest {
@@ -21,19 +19,24 @@ public class EpamAddressConverterTest extends BaseTest {
     private EpamAddressPopulator mockAddressPopulator;
 
     private EpamAddressConverter addressConverter;
+    private AddressModel addressModel;
+    private EpamAddressData addressData;
 
     @Before
     public void setUp() {
-        addressConverter = new EpamAddressConverter(mockAddressPopulator);
+        addressConverter = spy(new EpamAddressConverter(mockAddressPopulator));
+        addressModel = new AddressModel();
+        addressData = new EpamAddressData();
     }
 
     @Test
     public void shouldReturnCustomerAddressData() {
-        AddressModel addressModel = new AddressModel();
+        when(addressConverter.createTarget()).thenReturn(addressData);
 
         EpamAddressData actualAddressData = addressConverter.convert(addressModel);
 
-        verify(mockAddressPopulator).populate(eq(addressModel), any(EpamAddressData.class));
+        verify(addressConverter).createTarget();
+        verify(mockAddressPopulator).populate(addressModel, addressData);
         assertNotNull("EpamAddressData object should not be null.", actualAddressData);
     }
 

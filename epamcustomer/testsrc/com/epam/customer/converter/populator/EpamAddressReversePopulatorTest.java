@@ -4,7 +4,6 @@ import com.epam.customer.BaseTest;
 import com.epam.customer.data.EpamAddressData;
 import de.hybris.bootstrap.annotations.UnitTest;
 import de.hybris.platform.core.model.user.AddressModel;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,12 +21,6 @@ public class EpamAddressReversePopulatorTest extends BaseTest {
     public void setUp() {
         source = new EpamAddressData();
         target = new AddressModel();
-    }
-
-    @After
-    public void tearDown() {
-        source = null;
-        target = null;
     }
 
     @Test

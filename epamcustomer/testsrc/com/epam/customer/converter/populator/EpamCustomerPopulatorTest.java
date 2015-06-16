@@ -5,7 +5,6 @@ import com.epam.customer.data.EpamCustomerData;
 import de.hybris.bootstrap.annotations.UnitTest;
 import de.hybris.platform.commerceservices.strategies.CustomerNameStrategy;
 import de.hybris.platform.core.model.user.CustomerModel;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -38,12 +37,6 @@ public class EpamCustomerPopulatorTest extends BaseTest {
         CustomerModel source = new CustomerModel();
         source.setCreationtime(new Date());
         return source;
-    }
-
-    @After
-    public void tearDown() {
-        source = null;
-        target = null;
     }
 
     @Test

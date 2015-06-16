@@ -9,9 +9,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 public class EpamCustomerConverterTest extends BaseTest {
 
@@ -19,19 +17,24 @@ public class EpamCustomerConverterTest extends BaseTest {
     private EpamCustomerPopulator mockCustomerPopulator;
 
     private EpamCustomerConverter customerConverter;
+    private CustomerModel customerModel;
+    private EpamCustomerData customerData;
 
     @Before
     public void setUp() throws Exception {
-        customerConverter = new EpamCustomerConverter(mockCustomerPopulator);
+        customerConverter = spy(new EpamCustomerConverter(mockCustomerPopulator));
+        customerModel = new CustomerModel();
+        customerData = new EpamCustomerData();
     }
 
     @Test
     public void shouldReturnCustomerData() {
-        CustomerModel customerModel = new CustomerModel();
+        when(customerConverter.createTarget()).thenReturn(customerData);
 
         EpamCustomerData actualCustomerData = customerConverter.convert(customerModel);
 
-        verify(mockCustomerPopulator).populate(eq(customerModel), any(EpamCustomerData.class));
+        verify(customerConverter).createTarget();
+        verify(mockCustomerPopulator).populate(customerModel, customerData);
         assertNotNull("EpamCustomerData object should not be null.", actualCustomerData);
     }
 

@@ -5,7 +5,6 @@ import com.epam.customer.data.EpamCustomerData;
 import de.hybris.bootstrap.annotations.UnitTest;
 import de.hybris.platform.commerceservices.strategies.CustomerNameStrategy;
 import de.hybris.platform.core.model.user.CustomerModel;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -28,12 +27,6 @@ public class EpamCustomerReversePopulatorTest extends BaseTest {
         customerReversePopulator = new EpamCustomerReversePopulator(mockCustomerNameStrategy);
         source = new EpamCustomerData();
         target = new CustomerModel();
-    }
-
-    @After
-    public void tearDown() {
-        source = null;
-        target = null;
     }
 
     @Test

@@ -7,7 +7,6 @@ import de.hybris.platform.core.PK;
 import de.hybris.platform.core.model.c2l.CountryModel;
 import de.hybris.platform.core.model.c2l.RegionModel;
 import de.hybris.platform.core.model.user.AddressModel;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -37,12 +36,6 @@ public class EpamAddressPopulatorTest extends BaseTest {
             source.setShippingAddress(true);
         }
         return source;
-    }
-
-    @After
-    public void tearDown() {
-        source = null;
-        target = null;
     }
 
     @Test
