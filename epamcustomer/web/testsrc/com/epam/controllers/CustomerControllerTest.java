@@ -6,7 +6,6 @@ import com.epam.customer.facades.EpamCustomerFacade;
 import de.hybris.bootstrap.annotations.UnitTest;
 import de.hybris.platform.commerceservices.customer.DuplicateUidException;
 import de.hybris.platform.servicelayer.exceptions.UnknownIdentifierException;
-import org.apache.commons.codec.binary.Base64;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -16,6 +15,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.List;
 
@@ -58,7 +58,7 @@ public class CustomerControllerTest {
     }
 
     private String encodeBase64(String customerId) {
-        return new String(Base64.encodeBase64(customerId.getBytes(StandardCharsets.UTF_8)));
+        return new String(Base64.getEncoder().encode(customerId.getBytes(StandardCharsets.UTF_8)));
     }
 
     @Test

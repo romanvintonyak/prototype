@@ -4,13 +4,13 @@ import com.epam.customer.data.EpamAddressData;
 import com.epam.customer.data.EpamCustomerData;
 import com.epam.customer.facades.EpamCustomerFacade;
 import de.hybris.platform.commerceservices.customer.DuplicateUidException;
-import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Collection;
 
 /**
@@ -35,7 +35,7 @@ public class CustomerController {
     }
 
     private String decodeBase64(@PathVariable("customerId") String customerId) {
-        return new String(Base64.decodeBase64((customerId.getBytes(StandardCharsets.UTF_8))));
+        return new String(Base64.getDecoder().decode(customerId.getBytes(StandardCharsets.UTF_8)));
     }
 
     @RequestMapping(value = "/{customerId}/address", method = RequestMethod.POST)
