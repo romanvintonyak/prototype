@@ -20,6 +20,7 @@
        <requires-extension name="ticketsystem"/>
        <requires-extension name="basecommerce"/>
        <requires-extension name="hmc"/>
+       <requires-extension name="epamcore"/>
 
       <coremodule generated="true" manager="com.epam.ticket.jalo.EpamticketManager" packageroot="com.epam.ticket"/>
 

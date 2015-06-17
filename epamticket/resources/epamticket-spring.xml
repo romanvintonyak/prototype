@@ -17,11 +17,6 @@
         <property name="dateFormatter" ref="dateFormatter"/>
     </bean>
 
-    <bean id="dateFormatter" class="java.text.SimpleDateFormat">
-        <constructor-arg index="0" type="java.lang.String"
-                         value="yyyy-MM-dd HH:mm:ss"/>
-    </bean>
-
     <bean id="epamTicketDao" class="com.epam.ticket.dao.EpamTicketDAO"
           parent="abstractItemDao" scope="tenant">
 

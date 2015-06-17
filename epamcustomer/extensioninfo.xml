@@ -11,19 +11,22 @@
  license agreement you entered into with hybris.
 
   
---><extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+-->
+<extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
 
-   <extension abstractclassprefix="Generated" classprefix="Epamcustomer" managername="EpamcustomerManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="epamcustomer">
+    <extension abstractclassprefix="Generated" classprefix="Epamcustomer" managername="EpamcustomerManager"
+               managersuperclass="de.hybris.platform.jalo.extension.Extension" name="epamcustomer">
 
-       <requires-extension name="commercefacades" />
-       <requires-extension name="commerceservices" />
+        <requires-extension name="commercefacades"/>
+        <requires-extension name="commerceservices"/>
+        <requires-extension name="epamcore"/>
 
-      <coremodule generated="true" manager="com.epam.customer.jalo.EpamcustomerManager" packageroot="com.epam.customer"/>
+        <coremodule generated="true" manager="com.epam.customer.jalo.EpamcustomerManager"
+                    packageroot="com.epam.customer"/>
 
-      <webmodule jspcompile="false" webroot="/epamcustomer"/>
-					
-	
+        <webmodule jspcompile="false" webroot="/epamcustomer"/>
 
-   </extension>
-      
+
+    </extension>
+
 </extensioninfo>
