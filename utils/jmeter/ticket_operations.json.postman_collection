@@ -1,0 +1,42 @@
+{
+	"id": "7ec01174-5ab7-096f-80a7-f45abe104e19",
+	"name": "ticket_operations",
+	"description": "",
+	"order": [
+		"90fb2a95-31e9-33d5-9141-3e3000965590"
+	],
+	"folders": [],
+	"timestamp": 1434373855995,
+	"synced": false,
+	"owner": 0,
+	"sharedWithTeam": false,
+	"subscribed": false,
+	"remoteLink": "",
+	"public": false,
+	"write": true,
+	"requests": [
+		{
+			"id": "90fb2a95-31e9-33d5-9141-3e3000965590",
+			"headers": "Authorization: Basic YWRtaW46bmltZGE=\nAccept: application/json\nContent-Type: application/json\n",
+			"url": " http://localhost:9001/epamticket/tickets",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "PUT",
+			"collectionId": "7ec01174-5ab7-096f-80a7-f45abe104e19",
+			"data": [],
+			"dataMode": "raw",
+			"name": "get tickets by Priorities",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1434534837653,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"collectionOwner": 0,
+			"synced": false,
+			"rawModeData": "{\"priorities\":[\"Low\", \"Medium\"]}"
+		}
+	]
+}
