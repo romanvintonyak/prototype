@@ -5,30 +5,22 @@ import com.epam.customer.data.EpamAddressData;
 import de.hybris.platform.converters.impl.AbstractPopulatingConverter;
 import de.hybris.platform.core.model.user.AddressModel;
 import de.hybris.platform.servicelayer.dto.converter.ConversionException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 
 /**
  * @author Roman_Kovalenkol
  */
 public class EpamAddressReverseConverter extends AbstractPopulatingConverter<EpamAddressData, AddressModel> {
 
-    private EpamAddressReversePopulator customerAddressReversePopulator;
+    private EpamAddressReversePopulator epamAddressReversePopulator;
 
-    public EpamAddressReverseConverter(EpamAddressReversePopulator addressReversePopulator) {
-        this.customerAddressReversePopulator = addressReversePopulator;
-    }
-
-    @Override
-    protected AddressModel createTarget() {
-        return new AddressModel();
+    public EpamAddressReverseConverter(EpamAddressReversePopulator epamAddressReversePopulator) {
+        this.epamAddressReversePopulator = epamAddressReversePopulator;
     }
 
     @Override
     public AddressModel convert(EpamAddressData addressData) throws ConversionException {
-        AddressModel addressModel = createTarget();
-        customerAddressReversePopulator.populate(addressData, addressModel);
+        AddressModel addressModel = new AddressModel();
+        epamAddressReversePopulator.populate(addressData, addressModel);
         return addressModel;
     }
 }
