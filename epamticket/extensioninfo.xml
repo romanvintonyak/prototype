@@ -16,8 +16,10 @@
    <extension abstractclassprefix="Generated" classprefix="Epamticket" managername="EpamticketManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="epamticket">
                
       <!-- you should add all required extensions to this list, except platform extensions which are automatically required -->         
-      <!-- <requires-extension name="cms"/> -->         
-      
+      <!-- <requires-extension name="cms"/> -->
+       <requires-extension name="ticketsystem"/>
+       <requires-extension name="basecommerce"/>
+       <requires-extension name="hmc"/>
 
       <coremodule generated="true" manager="com.epam.ticket.jalo.EpamticketManager" packageroot="com.epam.ticket"/>
 
