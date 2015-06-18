@@ -30,7 +30,7 @@
         <extension name="epamcore"/>
         <extension name="epamcscockpit"/>
         <extension name="epamcustomer"/>
-		<extension name="epamorder"/>
+        <extension name="epamorder"/>
         <extension name="epamticket"/>
 
 
