@@ -20,18 +20,23 @@ public class EpamAddressReverseConverterTest extends BaseTest {
 
     private EpamAddressReverseConverter addressReverseConverter;
     private EpamAddressData addressData;
+    private AddressModel addressModel;
 
     @Before
     public void setUp() {
         addressReverseConverter = spy(new EpamAddressReverseConverter(mockAddressReversePopulator));
         addressData = new EpamAddressData();
+        addressModel = new AddressModel();
     }
 
     @Test
     public void shouldReturnCustomerAddressModel() {
+        when(addressReverseConverter.createTarget()).thenReturn(addressModel);
+
         AddressModel actualAddressModel = addressReverseConverter.convert(addressData);
 
-        verify(mockAddressReversePopulator).populate(eq(addressData), any(AddressModel.class));
+        verify(addressReverseConverter).createTarget();
+        verify(mockAddressReversePopulator).populate(addressData, addressModel);
         assertNotNull("AddressModel object should not be null.", actualAddressModel);
     }
 }

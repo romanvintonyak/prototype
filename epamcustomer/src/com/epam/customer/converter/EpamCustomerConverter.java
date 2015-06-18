@@ -14,9 +14,14 @@ public class EpamCustomerConverter extends AbstractPopulatingConverter<CustomerM
         this.epamCustomerPopulator = epamCustomerPopulator;
     }
 
+    @Override // hybris marks this method as deprecated but wants to see it here
+    protected EpamCustomerData createTarget() {
+        return new EpamCustomerData();
+    }
+
     @Override
     public EpamCustomerData convert(CustomerModel customerModel) throws ConversionException {
-        EpamCustomerData customerData = new EpamCustomerData();
+        EpamCustomerData customerData = createTarget();
         epamCustomerPopulator.populate(customerModel, customerData);
         return customerData;
     }

@@ -18,18 +18,23 @@ public class EpamCustomerConverterTest extends BaseTest {
 
     private EpamCustomerConverter customerConverter;
     private CustomerModel customerModel;
+    private EpamCustomerData customerData;
 
     @Before
     public void setUp() throws Exception {
-        customerConverter = new EpamCustomerConverter(mockCustomerPopulator);
+        customerConverter = spy(new EpamCustomerConverter(mockCustomerPopulator));
         customerModel = new CustomerModel();
+        customerData = new EpamCustomerData();
     }
 
     @Test
     public void shouldReturnCustomerData() {
+        when(customerConverter.createTarget()).thenReturn(customerData);
+
         EpamCustomerData actualCustomerData = customerConverter.convert(customerModel);
 
-        verify(mockCustomerPopulator).populate(eq(customerModel), any(EpamCustomerData.class));
+        verify(customerConverter).createTarget();
+        verify(mockCustomerPopulator).populate(customerModel, customerData);
         assertNotNull("EpamCustomerData object should not be null.", actualCustomerData);
     }
 

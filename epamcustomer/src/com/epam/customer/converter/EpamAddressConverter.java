@@ -17,9 +17,14 @@ public class EpamAddressConverter extends AbstractPopulatingConverter<AddressMod
         this.epamAddressPopulator = epamAddressPopulator;
     }
 
+    @Override // hybris marks this method as deprecated but wants to see it here
+    protected EpamAddressData createTarget() {
+        return new EpamAddressData();
+    }
+
     @Override
     public EpamAddressData convert(AddressModel addressModel) throws ConversionException {
-        EpamAddressData customerAddressData = new EpamAddressData();
+        EpamAddressData customerAddressData = createTarget();
         epamAddressPopulator.populate(addressModel, customerAddressData);
         return customerAddressData;
     }
