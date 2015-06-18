@@ -13,7 +13,7 @@ import static org.junit.Assert.assertNull;
 @UnitTest
 public class EpamAddressReversePopulatorTest extends BaseTest {
 
-    private EpamAddressReversePopulator addressReversePopulator = new EpamAddressReversePopulator();
+    private EpamAddressReversePopulator epamAddressReversePopulator = new EpamAddressReversePopulator();
     private EpamAddressData source;
     private AddressModel target;
 
@@ -28,7 +28,7 @@ public class EpamAddressReversePopulatorTest extends BaseTest {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Parameter source cannot be null.");
 
-        addressReversePopulator.populate(null, target);
+        epamAddressReversePopulator.populate(null, target);
     }
 
     @Test
@@ -36,7 +36,7 @@ public class EpamAddressReversePopulatorTest extends BaseTest {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Parameter target cannot be null.");
 
-        addressReversePopulator.populate(source, null);
+        epamAddressReversePopulator.populate(source, null);
     }
 
     @Test
@@ -44,7 +44,7 @@ public class EpamAddressReversePopulatorTest extends BaseTest {
         String expectedFirstName = "John";
         source.setFirstName(expectedFirstName);
 
-        addressReversePopulator.populate(source, target);
+        epamAddressReversePopulator.populate(source, target);
 
         String errorMsg = String.format("FirstName should be equals <%s>.", expectedFirstName);
         assertEquals(errorMsg, expectedFirstName, target.getFirstname());
@@ -52,7 +52,7 @@ public class EpamAddressReversePopulatorTest extends BaseTest {
 
     @Test
     public void shouldNotSetFirstNameWhenSourceFirstNameIsNull() {
-        addressReversePopulator.populate(source, target);
+        epamAddressReversePopulator.populate(source, target);
 
         assertNull("FirstName should be null.", target.getFirstname());
     }
@@ -62,7 +62,7 @@ public class EpamAddressReversePopulatorTest extends BaseTest {
         String expectedLastName = "Dou";
         source.setLastName(expectedLastName);
 
-        addressReversePopulator.populate(source, target);
+        epamAddressReversePopulator.populate(source, target);
 
         String errorMsg = String.format("LastName should be equals <%s>.", expectedLastName);
         assertEquals(errorMsg, expectedLastName, target.getLastname());
@@ -70,7 +70,7 @@ public class EpamAddressReversePopulatorTest extends BaseTest {
 
     @Test
     public void shouldNotSetLastNameWhenSourceLastNameIsNull() {
-        addressReversePopulator.populate(source, target);
+        epamAddressReversePopulator.populate(source, target);
 
         assertNull("LastName should be null.", target.getLastname());
     }
@@ -79,7 +79,7 @@ public class EpamAddressReversePopulatorTest extends BaseTest {
     public void shouldNotSetStreetNameAndStreetNumberWhenAddress1IsNull() {
         source.setAddress1(null);
 
-        addressReversePopulator.populate(source, target);
+        epamAddressReversePopulator.populate(source, target);
 
         assertNull("StreetName should be null.", target.getStreetname());
         assertNull("StreetNumber should be null.", target.getStreetnumber());
@@ -89,7 +89,7 @@ public class EpamAddressReversePopulatorTest extends BaseTest {
     public void shouldNotSetStreetNameAndStreetNumberWhenAddress1IsEmpty() {
         source.setAddress1("");
 
-        addressReversePopulator.populate(source, target);
+        epamAddressReversePopulator.populate(source, target);
 
         assertNull("StreetName should be null.", target.getStreetname());
         assertNull("StreetNumber should be null.", target.getStreetnumber());
@@ -101,7 +101,7 @@ public class EpamAddressReversePopulatorTest extends BaseTest {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Address1 cannot be split into StreetName and StreetNumber because it contains less than 2 tokens.");
 
-        addressReversePopulator.populate(source, target);
+        epamAddressReversePopulator.populate(source, target);
     }
 
     @Test
@@ -110,7 +110,7 @@ public class EpamAddressReversePopulatorTest extends BaseTest {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Address1 cannot be split into StreetName and StreetNumber because it contains more than 2 tokens.");
 
-        addressReversePopulator.populate(source, target);
+        epamAddressReversePopulator.populate(source, target);
     }
 
     @Test
@@ -118,7 +118,7 @@ public class EpamAddressReversePopulatorTest extends BaseTest {
         String expectedPhone = "+123 456-78-90";
         source.setPhone(expectedPhone);
 
-        addressReversePopulator.populate(source, target);
+        epamAddressReversePopulator.populate(source, target);
 
         String errorMsg = String.format("Phone should be equals <%s>.", expectedPhone);
         assertEquals(errorMsg, expectedPhone, target.getPhone1());
@@ -126,7 +126,7 @@ public class EpamAddressReversePopulatorTest extends BaseTest {
 
     @Test
     public void shouldNotSetPhoneWhenSourcePhone1IsNull() {
-        addressReversePopulator.populate(source, target);
+        epamAddressReversePopulator.populate(source, target);
 
         assertNull("Phone should be null.", target.getPhone1());
     }
@@ -136,7 +136,7 @@ public class EpamAddressReversePopulatorTest extends BaseTest {
         String expectedTown = "Ottawa";
         source.setTown(expectedTown);
 
-        addressReversePopulator.populate(source, target);
+        epamAddressReversePopulator.populate(source, target);
 
         String errorMsg = String.format("Town should be equals <%s>.", expectedTown);
         assertEquals(errorMsg, expectedTown, target.getTown());
@@ -144,7 +144,7 @@ public class EpamAddressReversePopulatorTest extends BaseTest {
 
     @Test
     public void shouldNotSetTownWhenSourceTownIsNull() {
-        addressReversePopulator.populate(source, target);
+        epamAddressReversePopulator.populate(source, target);
 
         assertNull("Town should be null.", target.getTown());
     }
@@ -154,7 +154,7 @@ public class EpamAddressReversePopulatorTest extends BaseTest {
         String expectedPostalCode = "K1A 0B1";
         source.setPostalCode(expectedPostalCode);
 
-        addressReversePopulator.populate(source, target);
+        epamAddressReversePopulator.populate(source, target);
 
         String errorMsg = String.format("PostalCode should be equals <%s>.", expectedPostalCode);
         assertEquals(errorMsg, expectedPostalCode, target.getPostalcode());
@@ -162,7 +162,7 @@ public class EpamAddressReversePopulatorTest extends BaseTest {
 
     @Test
     public void shouldNotSetPostalCodeWhenSourcePostalCodeIsNull() {
-        addressReversePopulator.populate(source, target);
+        epamAddressReversePopulator.populate(source, target);
 
         assertNull("PostalCode should be null.", target.getPostalcode());
     }

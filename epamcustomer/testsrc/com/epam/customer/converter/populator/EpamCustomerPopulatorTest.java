@@ -22,13 +22,14 @@ public class EpamCustomerPopulatorTest extends BaseTest {
     @Mock
     private CustomerNameStrategy mockCustomerNameStrategy;
 
-    private EpamCustomerPopulator customerPopulator;
+    private SimpleDateFormat dateFormatter = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss z"); // See epamcore-spring.xml
+    private EpamCustomerPopulator epamCustomerPopulator;
     private CustomerModel source;
     private EpamCustomerData target;
 
     @Before
     public void setUp() {
-        customerPopulator = new EpamCustomerPopulator(mockCustomerNameStrategy);
+        epamCustomerPopulator = new EpamCustomerPopulator(mockCustomerNameStrategy, dateFormatter);
         source = getCustomerModel();
         target = new EpamCustomerData();
     }
@@ -44,7 +45,7 @@ public class EpamCustomerPopulatorTest extends BaseTest {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Parameter source cannot be null.");
 
-        customerPopulator.populate(null, new EpamCustomerData());
+        epamCustomerPopulator.populate(null, new EpamCustomerData());
     }
 
     @Test
@@ -52,7 +53,7 @@ public class EpamCustomerPopulatorTest extends BaseTest {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Parameter target cannot be null.");
 
-        customerPopulator.populate(new CustomerModel(), null);
+        epamCustomerPopulator.populate(new CustomerModel(), null);
     }
 
     @Test
@@ -60,7 +61,7 @@ public class EpamCustomerPopulatorTest extends BaseTest {
         String expectedUid = "Uid";
         source.setUid(expectedUid);
 
-        customerPopulator.populate(source, target);
+        epamCustomerPopulator.populate(source, target);
 
         String errorMsg = String.format("Uid should be equals <%s>.", expectedUid);
         assertEquals(errorMsg, expectedUid, target.getUid());
@@ -68,7 +69,7 @@ public class EpamCustomerPopulatorTest extends BaseTest {
 
     @Test
     public void shouldNotSetUidWhenSourceUidIsNull() {
-        customerPopulator.populate(source, target);
+        epamCustomerPopulator.populate(source, target);
 
         assertNull("Uid should be null.", target.getUid());
     }
@@ -78,7 +79,7 @@ public class EpamCustomerPopulatorTest extends BaseTest {
         String expectedName = "John";
         source.setName(expectedName);
 
-        customerPopulator.populate(source, target);
+        epamCustomerPopulator.populate(source, target);
 
         String errorMsg = String.format("Name should be equals <%s>.", expectedName);
         assertEquals(errorMsg, expectedName, target.getName());
@@ -86,7 +87,7 @@ public class EpamCustomerPopulatorTest extends BaseTest {
 
     @Test
     public void shouldNotSetNameWhenSourceNameIsNull() {
-        customerPopulator.populate(source, target);
+        epamCustomerPopulator.populate(source, target);
 
         assertNull("Name should be null.", target.getName());
     }
@@ -98,7 +99,7 @@ public class EpamCustomerPopulatorTest extends BaseTest {
         EpamCustomerData target = new EpamCustomerData();
         when(mockCustomerNameStrategy.splitName(anyString())).thenReturn(null);
 
-        customerPopulator.populate(source, target);
+        epamCustomerPopulator.populate(source, target);
 
         assertNull("FirstName should be null", target.getFirstName());
         assertNull("LastName should be null", target.getLastName());
@@ -114,7 +115,7 @@ public class EpamCustomerPopulatorTest extends BaseTest {
         String[] names = {expectedFirstName, expectedLastName};
         when(mockCustomerNameStrategy.splitName(anyString())).thenReturn(names);
 
-        customerPopulator.populate(source, target);
+        epamCustomerPopulator.populate(source, target);
 
         String errorMsg = String.format("FirstName should be <%s>.", expectedFirstName);
         assertEquals(errorMsg, expectedFirstName, target.getFirstName());
@@ -127,7 +128,7 @@ public class EpamCustomerPopulatorTest extends BaseTest {
         String expectedEmail = "john_dou@gmail.com";
         source.setUid(expectedEmail);
 
-        customerPopulator.populate(source, target);
+        epamCustomerPopulator.populate(source, target);
 
         String errorMsg = String.format("Email should be equals <%s>.", expectedEmail);
         assertEquals(errorMsg, expectedEmail, target.getEmail());
@@ -135,7 +136,7 @@ public class EpamCustomerPopulatorTest extends BaseTest {
 
     @Test
     public void shouldNotSetEmailWhenSourceUidIsNull() {
-        customerPopulator.populate(source, target);
+        epamCustomerPopulator.populate(source, target);
 
         assertNull("Email should be null.", target.getEmail());
     }
@@ -146,7 +147,7 @@ public class EpamCustomerPopulatorTest extends BaseTest {
         source.setLoginDisabled(isLoginDisabled);
         boolean expectedActive = !isLoginDisabled;
 
-        customerPopulator.populate(source, target);
+        epamCustomerPopulator.populate(source, target);
 
         String errorMsg = String.format("Active should be equals <%b>.", expectedActive);
         assertFalse(errorMsg, target.isActive());
@@ -158,7 +159,7 @@ public class EpamCustomerPopulatorTest extends BaseTest {
         source.setLoginDisabled(isLoginDisabled);
         boolean expectedActive = !isLoginDisabled;
 
-        customerPopulator.populate(source, target);
+        epamCustomerPopulator.populate(source, target);
 
         String errorMsg = String.format("Active should be equals <%b>.", expectedActive);
         assertTrue(errorMsg, target.isActive());
@@ -168,10 +169,10 @@ public class EpamCustomerPopulatorTest extends BaseTest {
     public void shouldSetCreatedDate() {
         source = new CustomerModel();
         Date currentDate = new Date();
-        String expectedCreatedDate = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(currentDate);
+        String expectedCreatedDate = dateFormatter.format(currentDate);
         source.setCreationtime(currentDate);
 
-        customerPopulator.populate(source, target);
+        epamCustomerPopulator.populate(source, target);
 
         String errorMsg = String.format("Active should be equals <%s>.", expectedCreatedDate);
         assertEquals(errorMsg, expectedCreatedDate, target.getCreatedDate());

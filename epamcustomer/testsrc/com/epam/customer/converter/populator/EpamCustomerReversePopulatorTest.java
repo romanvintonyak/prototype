@@ -9,6 +9,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import java.text.SimpleDateFormat;
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
@@ -18,13 +20,14 @@ public class EpamCustomerReversePopulatorTest extends BaseTest {
     @Mock
     private CustomerNameStrategy mockCustomerNameStrategy;
 
-    private EpamCustomerReversePopulator customerReversePopulator;
+    private SimpleDateFormat dateFormatter = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss z"); // See epamcore-spring.xml
+    private EpamCustomerReversePopulator epamCustomerReversePopulator;
     private EpamCustomerData source;
     private CustomerModel target;
 
     @Before
     public void setUp() {
-        customerReversePopulator = new EpamCustomerReversePopulator(mockCustomerNameStrategy);
+        epamCustomerReversePopulator = new EpamCustomerReversePopulator(mockCustomerNameStrategy, dateFormatter);
         source = new EpamCustomerData();
         target = new CustomerModel();
     }
@@ -34,7 +37,7 @@ public class EpamCustomerReversePopulatorTest extends BaseTest {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Parameter source cannot be null.");
 
-        customerReversePopulator.populate(null, new CustomerModel());
+        epamCustomerReversePopulator.populate(null, new CustomerModel());
     }
 
     @Test
@@ -42,7 +45,7 @@ public class EpamCustomerReversePopulatorTest extends BaseTest {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Parameter target cannot be null.");
 
-        customerReversePopulator.populate(new EpamCustomerData(), null);
+        epamCustomerReversePopulator.populate(new EpamCustomerData(), null);
     }
 
     @Test
@@ -50,7 +53,7 @@ public class EpamCustomerReversePopulatorTest extends BaseTest {
         String expectedUid = "Uid";
         source.setUid(expectedUid);
 
-        customerReversePopulator.populate(source, target);
+        epamCustomerReversePopulator.populate(source, target);
 
         String errorMsg = String.format("Uid should be equals <%s>.", expectedUid);
         assertEquals(errorMsg, expectedUid, target.getUid());
@@ -58,7 +61,7 @@ public class EpamCustomerReversePopulatorTest extends BaseTest {
 
     @Test
     public void shouldNotSetUidWhenSourceUidIsNull() {
-        customerReversePopulator.populate(source, target);
+        epamCustomerReversePopulator.populate(source, target);
 
         assertNull("Uid should be null.", target.getUid());
     }
@@ -68,7 +71,7 @@ public class EpamCustomerReversePopulatorTest extends BaseTest {
         String expectedUid = "Uid";
         source.setUid(expectedUid);
 
-        customerReversePopulator.populate(source, target);
+        epamCustomerReversePopulator.populate(source, target);
 
         String errorMsg = String.format("CustomerId should be equals <%s>.", expectedUid);
         assertEquals(errorMsg, expectedUid, target.getCustomerID());
@@ -76,7 +79,7 @@ public class EpamCustomerReversePopulatorTest extends BaseTest {
 
     @Test
     public void shouldNotSetCustomerIdWhenSourceUidIsNull() {
-        customerReversePopulator.populate(source, target);
+        epamCustomerReversePopulator.populate(source, target);
 
         assertNull("CustomerId should be null.", target.getCustomerID());
     }
@@ -86,7 +89,7 @@ public class EpamCustomerReversePopulatorTest extends BaseTest {
         String expectedUid = "Uid";
         source.setUid(expectedUid);
 
-        customerReversePopulator.populate(source, target);
+        epamCustomerReversePopulator.populate(source, target);
 
         String errorMsg = String.format("OriginalUid should be equals <%s>.", expectedUid);
         assertEquals(errorMsg, expectedUid, target.getOriginalUid());
@@ -94,7 +97,7 @@ public class EpamCustomerReversePopulatorTest extends BaseTest {
 
     @Test
     public void shouldNotSetOriginalUidWhenSourceUidIsNull() {
-        customerReversePopulator.populate(source, target);
+        epamCustomerReversePopulator.populate(source, target);
 
         assertNull("OriginalUid should be null.", target.getOriginalUid());
     }
@@ -110,7 +113,7 @@ public class EpamCustomerReversePopulatorTest extends BaseTest {
         when(mockCustomerNameStrategy.getName(firstName, lastName)).thenReturn(expectedName);
         CustomerModel target = new CustomerModel();
 
-        customerReversePopulator.populate(source, target);
+        epamCustomerReversePopulator.populate(source, target);
 
         String errorMsg = String.format("Name should be <%s>.", expectedName);
         assertEquals(errorMsg, expectedName, target.getName());
@@ -122,7 +125,7 @@ public class EpamCustomerReversePopulatorTest extends BaseTest {
         source.setActive(isActive);
         boolean expectedIsLoginDisabled = !isActive;
 
-        customerReversePopulator.populate(source, target);
+        epamCustomerReversePopulator.populate(source, target);
 
         String errorMsg = String.format("IsLoginDisabled should be equals <%s>.", expectedIsLoginDisabled);
         assertTrue(errorMsg, target.isLoginDisabled());
@@ -134,7 +137,7 @@ public class EpamCustomerReversePopulatorTest extends BaseTest {
         source.setActive(isActive);
         boolean expectedIsLoginDisabled = !isActive;
 
-        customerReversePopulator.populate(source, target);
+        epamCustomerReversePopulator.populate(source, target);
 
         String errorMsg = String.format("IsLoginDisabled should be equals <%s>.", expectedIsLoginDisabled);
         assertFalse(errorMsg, target.isLoginDisabled());

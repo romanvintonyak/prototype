@@ -18,7 +18,7 @@ import static org.mockito.Mockito.when;
 @UnitTest
 public class EpamAddressPopulatorTest extends BaseTest {
 
-    private EpamAddressPopulator addressPopulator = new EpamAddressPopulator();
+    private EpamAddressPopulator epamAddressPopulator = new EpamAddressPopulator();
     private AddressModel source;
     private EpamAddressData target;
 
@@ -43,7 +43,7 @@ public class EpamAddressPopulatorTest extends BaseTest {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Parameter source cannot be null.");
 
-        addressPopulator.populate(null, target);
+        epamAddressPopulator.populate(null, target);
     }
 
     @Test
@@ -51,7 +51,7 @@ public class EpamAddressPopulatorTest extends BaseTest {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Parameter target cannot be null.");
 
-        addressPopulator.populate(source, null);
+        epamAddressPopulator.populate(source, null);
     }
 
     @Test
@@ -62,7 +62,7 @@ public class EpamAddressPopulatorTest extends BaseTest {
         Long expectedLongPkValue = 42L;
         when(source.getPk()).thenReturn(PK.fromLong(expectedLongPkValue));
 
-        addressPopulator.populate(source, target);
+        epamAddressPopulator.populate(source, target);
 
         String errorMsg = String.format("Pk should be equals <%d>.", expectedLongPkValue);
         assertEquals(errorMsg, expectedLongPkValue, target.getPk());
@@ -75,7 +75,7 @@ public class EpamAddressPopulatorTest extends BaseTest {
         when(source.getShippingAddress()).thenReturn(true);
         when(source.getPk()).thenReturn(null);
 
-        addressPopulator.populate(source, target);
+        epamAddressPopulator.populate(source, target);
 
         assertNull("Pk should be null.", target.getPk());
     }
@@ -85,7 +85,7 @@ public class EpamAddressPopulatorTest extends BaseTest {
         String expectedFirstName = "John";
         source.setFirstname(expectedFirstName);
 
-        addressPopulator.populate(source, target);
+        epamAddressPopulator.populate(source, target);
 
         String errorMsg = String.format("FirstName should be equals <%s>.", expectedFirstName);
         assertEquals(errorMsg, expectedFirstName, target.getFirstName());
@@ -93,7 +93,7 @@ public class EpamAddressPopulatorTest extends BaseTest {
 
     @Test
     public void shouldNotSetFirstNameWhenSourceFirstNameIsNull() {
-        addressPopulator.populate(source, target);
+        epamAddressPopulator.populate(source, target);
 
         assertNull("FirstName should be null.", target.getFirstName());
     }
@@ -103,7 +103,7 @@ public class EpamAddressPopulatorTest extends BaseTest {
         String expectedLastName = "Dou";
         source.setLastname(expectedLastName);
 
-        addressPopulator.populate(source, target);
+        epamAddressPopulator.populate(source, target);
 
         String errorMsg = String.format("LastName should be equals <%s>.", expectedLastName);
         assertEquals(errorMsg, expectedLastName, target.getLastName());
@@ -111,14 +111,14 @@ public class EpamAddressPopulatorTest extends BaseTest {
 
     @Test
     public void shouldNotSetLastNameWhenSourceLastNameIsNull() {
-        addressPopulator.populate(source, target);
+        epamAddressPopulator.populate(source, target);
 
         assertNull("LastName should be null.", target.getLastName());
     }
 
     @Test
     public void shouldSetEmptyAddress1WhenStreetNameIsAbsentInSourceParameter() {
-        addressPopulator.populate(source, target);
+        epamAddressPopulator.populate(source, target);
 
         assertTrue("Address1 should be an empty string.", target.getAddress1().isEmpty());
     }
@@ -128,7 +128,7 @@ public class EpamAddressPopulatorTest extends BaseTest {
         String expectedAddress = "The Street";
         source.setStreetname(expectedAddress);
 
-        addressPopulator.populate(source, target);
+        epamAddressPopulator.populate(source, target);
 
         String errorMsg = String.format("Address1 should be equals the <%s>.", expectedAddress);
         assertEquals(errorMsg, expectedAddress, target.getAddress1());
@@ -142,7 +142,7 @@ public class EpamAddressPopulatorTest extends BaseTest {
         source.setStreetnumber(streetNumber);
         String expectedAddress = streetName + ", " + streetNumber;
 
-        addressPopulator.populate(source, target);
+        epamAddressPopulator.populate(source, target);
 
         String errorMsg = String.format("Address1 should be equals the <%s>.", expectedAddress);
         assertEquals(errorMsg, expectedAddress, target.getAddress1());
@@ -153,7 +153,7 @@ public class EpamAddressPopulatorTest extends BaseTest {
         String expectedPhone = "+123 456-78-90";
         source.setPhone1(expectedPhone);
 
-        addressPopulator.populate(source, target);
+        epamAddressPopulator.populate(source, target);
 
         String errorMsg = String.format("Phone should be equals <%s>.", expectedPhone);
         assertEquals(errorMsg, expectedPhone, target.getPhone());
@@ -161,7 +161,7 @@ public class EpamAddressPopulatorTest extends BaseTest {
 
     @Test
     public void shouldNotSetPhoneWhenSourcePhone1IsNull() {
-        addressPopulator.populate(source, target);
+        epamAddressPopulator.populate(source, target);
 
         assertNull("Phone should be null.", target.getPhone());
     }
@@ -171,7 +171,7 @@ public class EpamAddressPopulatorTest extends BaseTest {
         String expectedTown = "Ottawa";
         source.setTown(expectedTown);
 
-        addressPopulator.populate(source, target);
+        epamAddressPopulator.populate(source, target);
 
         String errorMsg = String.format("Town should be equals <%s>.", expectedTown);
         assertEquals(errorMsg, expectedTown, target.getTown());
@@ -179,7 +179,7 @@ public class EpamAddressPopulatorTest extends BaseTest {
 
     @Test
     public void shouldNotSetTownWhenSourceTownIsNull() {
-        addressPopulator.populate(source, target);
+        epamAddressPopulator.populate(source, target);
 
         assertNull("Town should be null.", target.getTown());
     }
@@ -189,7 +189,7 @@ public class EpamAddressPopulatorTest extends BaseTest {
         String expectedPostalCode = "K1A 0B1";
         source.setPostalcode(expectedPostalCode);
 
-        addressPopulator.populate(source, target);
+        epamAddressPopulator.populate(source, target);
 
         String errorMsg = String.format("PostalCode should be equals <%s>.", expectedPostalCode);
         assertEquals(errorMsg, expectedPostalCode, target.getPostalCode());
@@ -197,7 +197,7 @@ public class EpamAddressPopulatorTest extends BaseTest {
 
     @Test
     public void shouldNotSetPostalCodeWhenSourcePostalCodeIsNull() {
-        addressPopulator.populate(source, target);
+        epamAddressPopulator.populate(source, target);
 
         assertNull("PostalCode should be null.", target.getPostalCode());
     }
@@ -209,7 +209,7 @@ public class EpamAddressPopulatorTest extends BaseTest {
         when(mockRegionModel.getName()).thenReturn(expectedRegion);
         source.setRegion(mockRegionModel);
 
-        addressPopulator.populate(source, target);
+        epamAddressPopulator.populate(source, target);
 
         String errorMsg = String.format("Region should be equals <%s>.", expectedRegion);
         assertEquals(errorMsg, expectedRegion, target.getRegion());
@@ -217,7 +217,7 @@ public class EpamAddressPopulatorTest extends BaseTest {
 
     @Test
     public void shouldNotSetRegionWhenSourceRegionIsNull() {
-        addressPopulator.populate(source, target);
+        epamAddressPopulator.populate(source, target);
 
         assertNull("Region should be null.", target.getRegion());
     }
@@ -229,7 +229,7 @@ public class EpamAddressPopulatorTest extends BaseTest {
         when(mockCountryModel.getName()).thenReturn(expectedCountry);
         source.setCountry(mockCountryModel);
 
-        addressPopulator.populate(source, target);
+        epamAddressPopulator.populate(source, target);
 
         String errorMsg = String.format("Country should be equals <%s>.", expectedCountry);
         assertEquals(errorMsg, expectedCountry, target.getCountry());
@@ -237,7 +237,7 @@ public class EpamAddressPopulatorTest extends BaseTest {
 
     @Test
     public void shouldNotSetCountryWhenSourceCountryIsNull() {
-        addressPopulator.populate(source, target);
+        epamAddressPopulator.populate(source, target);
 
         assertNull("Country should be null.", target.getCountry());
     }
@@ -247,7 +247,7 @@ public class EpamAddressPopulatorTest extends BaseTest {
         Boolean expectedBillingAddress = true;
         source.setBillingAddress(expectedBillingAddress);
 
-        addressPopulator.populate(source, target);
+        epamAddressPopulator.populate(source, target);
 
         String errorMsg = String.format("PostalCode should be equals <%b>.", expectedBillingAddress);
         assertEquals(errorMsg, expectedBillingAddress, target.isBillingAddress());
@@ -258,7 +258,7 @@ public class EpamAddressPopulatorTest extends BaseTest {
         Boolean expectedBillingAddress = false;
         source.setBillingAddress(expectedBillingAddress);
 
-        addressPopulator.populate(source, target);
+        epamAddressPopulator.populate(source, target);
 
         String errorMsg = String.format("PostalCode should be equals <%b>.", expectedBillingAddress);
         assertEquals(errorMsg, expectedBillingAddress, target.isBillingAddress());
@@ -269,7 +269,7 @@ public class EpamAddressPopulatorTest extends BaseTest {
         Boolean expectedDeliveryAddress = true;
         source.setShippingAddress(expectedDeliveryAddress);
 
-        addressPopulator.populate(source, target);
+        epamAddressPopulator.populate(source, target);
 
         String errorMsg = String.format("DeliveryAddress should be equals <%b>.", expectedDeliveryAddress);
         assertEquals(errorMsg, expectedDeliveryAddress, target.isDeliveryAddress());
@@ -280,7 +280,7 @@ public class EpamAddressPopulatorTest extends BaseTest {
         Boolean expectedDeliveryAddress = false;
         source.setShippingAddress(expectedDeliveryAddress);
 
-        addressPopulator.populate(source, target);
+        epamAddressPopulator.populate(source, target);
 
         String errorMsg = String.format("DeliveryAddress should be equals <%b>.", expectedDeliveryAddress);
         assertEquals(errorMsg, expectedDeliveryAddress, target.isDeliveryAddress());

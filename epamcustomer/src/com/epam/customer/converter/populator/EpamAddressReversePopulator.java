@@ -4,15 +4,11 @@ import com.epam.customer.data.EpamAddressData;
 import com.google.common.base.Strings;
 import de.hybris.platform.converters.Populator;
 import de.hybris.platform.core.model.user.AddressModel;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 /**
  * @author Roman_Kovalenko
  */
-@Component // TODO Switch to XML-based configuration
-@Qualifier("reversePopulator")
 public class EpamAddressReversePopulator implements Populator<EpamAddressData, AddressModel> {
 
     @Override
@@ -26,8 +22,8 @@ public class EpamAddressReversePopulator implements Populator<EpamAddressData, A
         target.setPhone1(source.getPhone());
         target.setTown(source.getTown());
         target.setPostalcode(source.getPostalCode());
-        // TODO How to implement this? target.setRegion(source.getRegion());
-        // TODO How to implement this? target.setCountry(source.getCountry());
+        // TODO How to implement this correctly? target.setRegion(source.getRegion());
+        // TODO How to implement this correctly? target.setCountry(source.getCountry());
         // TODO What is the default value? target.setBillingAddress(source.isBillingAddress());
         // TODO What is the default value? target.setShippingAddress(source.isDeliveryAddress());
     }

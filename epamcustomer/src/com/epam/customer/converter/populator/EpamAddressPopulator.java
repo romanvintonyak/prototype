@@ -3,16 +3,12 @@ package com.epam.customer.converter.populator;
 import com.epam.customer.data.EpamAddressData;
 import de.hybris.platform.converters.Populator;
 import de.hybris.platform.core.model.user.AddressModel;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 /**
  * @author Roman_Kovalenko
  */
-@Component // TODO Switch to XML-based configuration
-@Qualifier("populator")
 public class EpamAddressPopulator implements Populator<AddressModel, EpamAddressData> {
 
     @Override

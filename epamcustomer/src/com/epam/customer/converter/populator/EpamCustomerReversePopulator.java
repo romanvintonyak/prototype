@@ -4,26 +4,22 @@ import com.epam.customer.data.EpamCustomerData;
 import de.hybris.platform.commerceservices.strategies.CustomerNameStrategy;
 import de.hybris.platform.converters.Populator;
 import de.hybris.platform.core.model.user.CustomerModel;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 /**
  * @author Irina_Vasilyeva
  */
-@Component
 public class EpamCustomerReversePopulator implements Populator<EpamCustomerData, CustomerModel> {
 
     private CustomerNameStrategy customerNameStrategy;
-    private DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss"); // TODO Inject as bean
+    private SimpleDateFormat dateFormatter;
 
-    @Autowired // TODO Switch to XML-based configuration
-    public EpamCustomerReversePopulator(CustomerNameStrategy customerNameStrategy) {
+    public EpamCustomerReversePopulator(CustomerNameStrategy customerNameStrategy, SimpleDateFormat dateFormatter) {
         this.customerNameStrategy = customerNameStrategy;
+        this.dateFormatter = dateFormatter;
     }
 
     @Override
@@ -47,7 +43,7 @@ public class EpamCustomerReversePopulator implements Populator<EpamCustomerData,
         }
 
         try {
-            target.setCreationtime(formatter.parse(source.getCreatedDate()));
+            target.setCreationtime(dateFormatter.parse(source.getCreatedDate()));
         } catch (ParseException e) {
             throw new IllegalArgumentException("Cannot parse the CreatedDate into java.util.Date.", e);
         }
