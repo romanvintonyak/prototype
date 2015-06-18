@@ -8,18 +8,18 @@
     <bean id="defaultEpamTicketFacade"
           class="com.epam.ticket.facades.impl.DefaultEpamTicketFacade">
 
-        <property name="ticketDao" ref="epamTicketDao"/>
-        <property name="ticketConverter" ref="epamTicketConverter"/>
+        <constructor-arg  name="ticketDao" ref="epamTicketDao"/>
+        <constructor-arg name="ticketConverter" ref="epamTicketConverter"/>
     </bean>
 
-    <bean id="epamTicketConverter"
-          class="com.epam.ticket.converter.EpamTicketConverter">
-        <property name="dateFormatter" ref="dateFormatter"/>
+    <bean id="epamTicketConverter" class="com.epam.ticket.converter.EpamTicketConverter">
+        <constructor-arg name="epamTicketPopulator" ref="epamTicketPopulator"/>
     </bean>
 
-    <bean id="epamTicketDao" class="com.epam.ticket.dao.EpamTicketDAO"
-          parent="abstractItemDao" scope="tenant">
-
+    <bean id="epamTicketPopulator" class="com.epam.ticket.converter.EpamTicketPopulator">
+        <constructor-arg ref="dateFormatter"/>
     </bean>
+
+    <bean id="epamTicketDao" class="com.epam.ticket.dao.EpamTicketDAO" parent="abstractItemDao" scope="tenant"/>
 
 </beans>
