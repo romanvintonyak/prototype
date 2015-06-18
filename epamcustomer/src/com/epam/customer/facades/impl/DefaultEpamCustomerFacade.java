@@ -21,6 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -68,15 +69,27 @@ public class DefaultEpamCustomerFacade implements EpamCustomerFacade {
     public List<EpamAddressData> findCustomerAddresses(final String customerId) {
         ServicesUtil.validateParameterNotNull(customerId, CUSTOMER_MODEL_CANNOT_BE_NULL);
 
-        final CustomerModel user = (CustomerModel) userService.getUserForUID(customerId);
-        if (null == user) {
-            throw new UnknownIdentifierException(String.format(USER_NOT_FOUND, customerId));
+        final CustomerModel customer = retrieveCustomerModelByUID(customerId);
+
+        final List<EpamAddressData> customerAddressDtos = new ArrayList<>();
+        Collection<AddressModel> customerAddressesFromModel = customer.getAddresses();
+        customerAddressesFromModel.stream().forEach(addressModel -> customerAddressDtos.add(epamAddressConverter.convert(addressModel)));
+        return customerAddressDtos;
+    }
+
+    private CustomerModel retrieveCustomerModelByUID(final String uid) {
+        LOG.info(String.format("Invoke the #getUserForUID() with parameter uid=%s.", uid));
+        UserModel userModel = userService.getUserForUID(uid);
+
+        if (null == userModel) {
+            LOG.error(String.format("User with uid '%s' not found!", uid));
+            throw new UnknownIdentifierException(String.format(USER_NOT_FOUND, uid));
+        } else if (!(userModel instanceof CustomerModel)) {
+            LOG.error(String.format("User with uid '%s' is not a customer", uid));
+            throw new UnknownIdentifierException(String.format(USER_IS_NOT_CUSTOMER, uid));
         }
 
-        final List<EpamAddressData> addressDataList = new ArrayList<>();
-        user.getAddresses().stream()
-                .forEach(addressModel -> addressDataList.add(epamAddressConverter.convert(addressModel)));
-        return addressDataList;
+        return (CustomerModel) userModel;
     }
 
     @Override
@@ -84,12 +97,9 @@ public class DefaultEpamCustomerFacade implements EpamCustomerFacade {
         ServicesUtil.validateParameterNotNull(addressData, ADDRESS_MODEL_CANNOT_BE_NULL);
         ServicesUtil.validateParameterNotNull(customerId, CUSTOMER_ID_CANNOT_BE_NULL);
 
-        final CustomerModel customer = (CustomerModel) userService.getUserForUID(customerId);
-        if (null == customer) {
-            throw new UnknownIdentifierException(String.format(USER_NOT_FOUND, customerId));
-        }
-
+        final CustomerModel customer = retrieveCustomerModelByUID(customerId);
         AddressModel customerAddress = epamAddressReverseConverter.convert(addressData);
+        LOG.info(String.format("Invoke the #saveAddressEntry() with parameters: customer=%s, customerAddress=%s.", customer, customerAddress));
         customerAccountService.saveAddressEntry(customer, customerAddress);
         return epamAddressConverter.convert(customerAddress);
     }
@@ -100,13 +110,12 @@ public class DefaultEpamCustomerFacade implements EpamCustomerFacade {
         ServicesUtil.validateParameterNotNull(customerId, CUSTOMER_ID_CANNOT_BE_NULL);
         ServicesUtil.validateParameterNotNull(addressData.getPk(), ADDRESS_ID_CANNOT_BE_NULL);
 
-        final CustomerModel customer = (CustomerModel) userService.getUserForUID(customerId);
-        if (null == customer) {
-            throw new UnknownIdentifierException(String.format(USER_NOT_FOUND, customerId));
-        }
+        final CustomerModel customer = retrieveCustomerModelByUID(customerId);
 
+        LOG.info(String.format("Invoke the #getAddressForCode() with parameters: customer=%s, addressDataPk=%s", customer, addressData.getPk()));
         AddressModel customerAddress = customerAccountService.getAddressForCode(customer, addressData.getPk().toString());
         epamAddressReversePopulator.populate(addressData, customerAddress);
+        LOG.info(String.format("Invoke the #saveAddressEntry() with parameters: customer=%s, customerAddress=%s", customer, customerAddress));
         customerAccountService.saveAddressEntry(customer, customerAddress);
         return epamAddressConverter.convert(customerAddress);
     }
@@ -130,7 +139,9 @@ public class DefaultEpamCustomerFacade implements EpamCustomerFacade {
         ServicesUtil.validateParameterNotNullStandardMessage("lastName", customerData.getLastName());
 
         customerData.setEmail(customerData.getEmail().toLowerCase());
+        LOG.info(String.format("Invoke the #isUserExisting() with parameter customerData.getEmail()=%s.", customerData.getEmail()));
         if (userService.isUserExisting(customerData.getEmail())) {
+            LOG.error(String.format("User with uid '%s' already exists", customerData.getEmail()));
             throw new DuplicateUidException(String.format(SUCH_USER_ALREADY_EXIST, customerData.getEmail()));
         }
 
@@ -139,6 +150,7 @@ public class DefaultEpamCustomerFacade implements EpamCustomerFacade {
         customerModel.setUid(customerData.getEmail());
         customerModel.setCustomerID(customerData.getEmail());
 
+        LOG.info(String.format("Invoke the #save() with parameter customerModel=%s.", customerModel));
         modelService.save(customerModel);
     }
 
@@ -151,24 +163,15 @@ public class DefaultEpamCustomerFacade implements EpamCustomerFacade {
 
         String uid = customerData.getUid().toLowerCase();
         if (!userService.isUserExisting(uid)) {
+            LOG.error(String.format("User with uid '%s' not found!", uid));
             throw new UnknownIdentifierException(String.format(USER_NOT_FOUND, uid));
         }
 
         CustomerModel customerModel = retrieveCustomerModelByUID(uid);
         epamCustomerReversePopulator.populate(customerData, customerModel);
 
+        LOG.info(String.format("Invoke the #save() with parameter customerModel=%s.", customerModel));
         modelService.save(customerModel);
-    }
-
-    private CustomerModel retrieveCustomerModelByUID(final String uid) {
-        UserModel userModel = userService.getUserForUID(uid);
-        if (null == userModel) {
-            throw new UnknownIdentifierException(String.format(USER_NOT_FOUND, uid));
-        } else if (!(userModel instanceof CustomerModel)) {
-            throw new UnknownIdentifierException(String.format(USER_IS_NOT_CUSTOMER, uid));
-        }
-
-        return (CustomerModel) userModel;
     }
 
 }

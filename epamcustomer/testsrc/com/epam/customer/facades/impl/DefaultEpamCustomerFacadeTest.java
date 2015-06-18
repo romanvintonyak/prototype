@@ -55,12 +55,6 @@ public class DefaultEpamCustomerFacadeTest extends BaseTest {
     @InjectMocks
     private DefaultEpamCustomerFacade defaultEpamCustomerFacade;
 
-    @Before
-    public void setUp() {
-        // TODO Add implementation
-    }
-
-
     @Test
     public void shouldThrowUnknownIdentifierExceptionWhenCustomerNotFoundById() {
         String uid = "uid";
