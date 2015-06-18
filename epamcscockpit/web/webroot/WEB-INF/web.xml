@@ -14,7 +14,7 @@
 
 
 	<welcome-file-list>
-		<welcome-file>main.html</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 
 

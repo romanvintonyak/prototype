@@ -11,14 +11,17 @@
  license agreement you entered into with hybris.
 
   
---><extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+-->
+
+<extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
 
    <extension abstractclassprefix="Generated" classprefix="Epamcscockpit" managername="EpamcscockpitManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="epamcscockpit">
                
       <!-- you should add all required extensions to this list, except platform extensions which are automatically required -->         
       <!-- <requires-extension name="cms"/> -->         
       
-
+	  <requires-extension name="epamcore"/>
+	  
       <coremodule generated="true" manager="com.epam.jalo.EpamcscockpitManager" packageroot="com.epam"/>
 
       <webmodule jspcompile="false" webroot="/epamcscockpit"/>
