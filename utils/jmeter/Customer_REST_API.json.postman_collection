@@ -5,7 +5,10 @@
 	"order": [
 		"2fa9d8f5-4462-69cc-5078-80ab219d82dc",
 		"823aef34-242b-8e49-2351-79f3e22151ba",
-		"80bcba10-764a-42fc-d0d3-7f171f55d77d"
+		"80bcba10-764a-42fc-d0d3-7f171f55d77d",
+		"0ba7b23c-00fc-8551-6f13-10d724f1ca30",
+		"d2e3eb10-9ae4-26a3-56a7-f06374608362",
+		"c69bd448-1d93-2191-1a71-4bcad4122095"
 	],
 	"folders": [],
 	"timestamp": 1433240677100,
@@ -16,6 +19,32 @@
 	"updatedAt": 1433240677100,
 	"synced": false,
 	"requests": [
+		{
+			"id": "0ba7b23c-00fc-8551-6f13-10d724f1ca30",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Basic YWRtaW46bmltZGE=\n",
+			"url": "http://localhost:9001/epamcustomer/v1/customers/c29tZV9lbWFpbEBlcGFtLmNvbQ==/address",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "basicAuth",
+			"helperAttributes": {
+				"username": "admin",
+				"password": "nimda",
+				"id": "basic",
+				"timestamp": 1432306433124
+			},
+			"time": 1434653565046,
+			"name": "Create Address - POST",
+			"description": "",
+			"collectionId": "1d40408d-52a2-df5e-c51f-6ac5f4e1dc0d",
+			"responses": [],
+			"synced": false,
+			"rawModeData": "    {  \r\n        \"firstName\":\"Roman\",\r\n        \"address1\":\"Kudrashova 14B, office 201\",\r\n        \"address2\":\"TODO\",\r\n        \"phone\":\"09978965425\",\r\n        \"town\":\"Kyiv\",\r\n        \"postalCode\":\"01001\",\r\n        \"region\":null,\r\n        \"country\":\"Ukraine\",\r\n        \"billingAddress\":false,\r\n        \"deliveryAddress\":true,\r\n        \"lastName\":\"Kovalenko\",\r\n        \"primaryDeliveryAddress\":false,\r\n        \"primaryBillingAddress\":false\r\n    }"
+		},
 		{
 			"id": "2fa9d8f5-4462-69cc-5078-80ab219d82dc",
 			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Basic YWRtaW46bmltZGE=\n",
@@ -42,7 +71,8 @@
 			},
 			"collectionOwner": 0,
 			"synced": false,
-			"rawModeData": "{  \r\n    \"firstName\":\"Irina\",\r\n    \"lastName\":\"Vasilyeva\",\r\n    \"email\":\"some_email@epam.com\"\r\n}"
+			"rawModeData": "{  \r\n    \"firstName\":\"Irina\",\r\n    \"lastName\":\"Vasilyeva\",\r\n    \"email\":\"some_email@epam.com\"\r\n}",
+			"owner": 0
 		},
 		{
 			"id": "80bcba10-764a-42fc-d0d3-7f171f55d77d",
@@ -70,7 +100,8 @@
 			},
 			"collectionOwner": 0,
 			"synced": false,
-			"rawModeData": "{  \r\n    \"uid\":\"some_email@epam.com\",\r\n    \"firstName\":\"Irina\",\r\n    \"lastName\":\"Vasilyeva\",\r\n    \"email\":\"some_email@epam.com\",\r\n    \"active\": false\r\n}"
+			"rawModeData": "{  \r\n    \"uid\":\"some_email@epam.com\",\r\n    \"firstName\":\"Irina\",\r\n    \"lastName\":\"Vasilyeva\",\r\n    \"email\":\"some_email@epam.com\",\r\n    \"active\": false\r\n}",
+			"owner": 0
 		},
 		{
 			"id": "823aef34-242b-8e49-2351-79f3e22151ba",
@@ -97,6 +128,58 @@
 				"timestamp": 1432306433124
 			},
 			"collectionOwner": 0,
+			"synced": false,
+			"owner": 0
+		},
+		{
+			"id": "c69bd448-1d93-2191-1a71-4bcad4122095",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Basic YWRtaW46bmltZGE=\n",
+			"url": "http://localhost:9001/epamcustomer/v1/customers/c29tZV9lbWFpbEBlcGFtLmNvbQ==/address",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "PUT",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "basicAuth",
+			"helperAttributes": {
+				"username": "admin",
+				"password": "nimda",
+				"id": "basic",
+				"timestamp": 1432306433124
+			},
+			"time": 1434664224468,
+			"name": "Update Address- PUT",
+			"description": "",
+			"collectionId": "1d40408d-52a2-df5e-c51f-6ac5f4e1dc0d",
+			"responses": [],
+			"synced": false,
+			"rawModeData": "{  \r\n        \"pk\": 8796093054999,\r\n        \"firstName\":\"Roman\",\r\n        \"address1\":\"Kudrashova 14B, office 203\",\r\n        \"address2\":\"TODO\",\r\n        \"phone\":\"09978965425\",\r\n        \"town\":\"Kyiv\",\r\n        \"postalCode\":\"01001\",\r\n        \"region\":null,\r\n        \"country\":\"Ukraine\",\r\n        \"billingAddress\":false,\r\n        \"deliveryAddress\":true,\r\n        \"lastName\":\"Kovalenko\",\r\n        \"primaryDeliveryAddress\":false,\r\n        \"primaryBillingAddress\":false\r\n    }"
+		},
+		{
+			"id": "d2e3eb10-9ae4-26a3-56a7-f06374608362",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Basic YWRtaW46bmltZGE=\n",
+			"url": "localhost:9001/epamcustomer/v1/customers/c29tZV9lbWFpbEBlcGFtLmNvbQ==/address",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "basicAuth",
+			"helperAttributes": {
+				"username": "admin",
+				"password": "nimda",
+				"id": "basic",
+				"timestamp": 1432306433124
+			},
+			"time": 1434653454835,
+			"name": "Find Address - GET",
+			"description": "",
+			"collectionId": "1d40408d-52a2-df5e-c51f-6ac5f4e1dc0d",
+			"responses": [],
 			"synced": false
 		}
 	]

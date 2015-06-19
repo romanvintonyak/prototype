@@ -1,0 +1,70 @@
+{
+	"id": "66b47aca-1b0d-4f5e-d5d5-355b09ee66f2",
+	"name": "Order_REST_API",
+	"description": "",
+	"order": [
+		"fd5c3cba-39a0-9375-6a20-825142007fda",
+		"91cb4daa-0328-608e-51e2-15ac6e6fd3a8"
+	],
+	"folders": [],
+	"timestamp": 1434616125377,
+	"owner": 0,
+	"remoteLink": "",
+	"public": false,
+	"createdAt": 1434616125377,
+	"updatedAt": 1434616125377,
+	"synced": false,
+	"requests": [
+		{
+			"id": "91cb4daa-0328-608e-51e2-15ac6e6fd3a8",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Basic YWRtaW46bmltZGE=\n",
+			"url": "http://localhost:9001/epamorder/orders",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "PUT",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "basicAuth",
+			"helperAttributes": {
+				"username": "admin",
+				"password": "nimda",
+				"id": "basic",
+				"timestamp": 1432306433124
+			},
+			"time": 1434720225738,
+			"name": "Update Order By Criteria - PUT",
+			"description": "",
+			"collectionId": "66b47aca-1b0d-4f5e-d5d5-355b09ee66f2",
+			"responses": [],
+			"synced": false,
+			"rawModeData": "{  \r\n        \"orderCode\": \"00000001\",\r\n        \"firstName\":\"Roman\",\r\n        \"lastName\":null,\r\n        \"email\":null,\r\n        \"phone\":null,\r\n        \"town\":null,\r\n        \"region\":null,\r\n        \"postalCode\":\"01001\"\r\n    }"
+		},
+		{
+			"id": "fd5c3cba-39a0-9375-6a20-825142007fda",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Basic YWRtaW46bmltZGE=\n",
+			"url": "http://localhost:9001/epamorder/orders/00000001",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "basicAuth",
+			"helperAttributes": {
+				"username": "admin",
+				"password": "nimda",
+				"id": "basic",
+				"timestamp": 1432306433124
+			},
+			"time": 1434664706256,
+			"name": "Find Order By Code - GET",
+			"description": "",
+			"collectionId": "66b47aca-1b0d-4f5e-d5d5-355b09ee66f2",
+			"responses": [],
+			"synced": false
+		}
+	]
+}
