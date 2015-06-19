@@ -53,7 +53,7 @@
 
         <div class="header-user">
             <div class="header-user__name">
-            	<sec:authentication property="principal.displayName"/>
+            	<sec:authentication property="displayName"/>
             </div>
             <div class="header-user__role">
             	<!--CS Ticket Pool Group-->

@@ -7,8 +7,11 @@ import de.hybris.platform.jalo.user.User;
 import de.hybris.platform.jalo.user.UserManager;
 import de.hybris.platform.spring.security.CoreAuthenticationProvider;
 
+import java.util.Collection;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
@@ -20,24 +23,18 @@ public class EpamCoreAuthenticationProvider extends CoreAuthenticationProvider {
 	@Override
 	protected Authentication createSuccessAuthentication(final Authentication authentication, final UserDetails userDetails) {
 		final User user = UserManager.getInstance().getUserByLogin(userDetails.getUsername());
-		final UsernamePasswordAuthenticationToken result = new UsernamePasswordAuthenticationToken(new SimpleUserDetails(user), authentication.getCredentials(),
+		final EpamAuthenticationToken result = new EpamAuthenticationToken(userDetails.getUsername(), authentication.getCredentials(),
 				userDetails.getAuthorities());
 		result.setDetails(authentication.getDetails());
+		result.setDisplayName(user.getDisplayName());
 		return result;
 	}
 
-	private class SimpleUserDetails {
-		private final String login;
-		private final String displayName;
+	private class EpamAuthenticationToken extends UsernamePasswordAuthenticationToken {
+		private String displayName;
 
-		public SimpleUserDetails(final User user) {
-			this.login = user.getLogin();
-			this.displayName = user.getDisplayName();
-		}
-
-		@SuppressWarnings("unused")
-		public String getLogin() {
-			return login;
+		public EpamAuthenticationToken(final Object principal, final Object credentials,final Collection<? extends GrantedAuthority> authorities) {
+			super(principal,credentials,authorities);
 		}
 
 		@SuppressWarnings("unused")
@@ -45,10 +42,11 @@ public class EpamCoreAuthenticationProvider extends CoreAuthenticationProvider {
 			return displayName;
 		}
 
-		@Override
-		public String toString() {
-			return this.login;
+		public void setDisplayName(String displayName) {
+			this.displayName = displayName;
 		}
+
+		
 	}
 
 }
