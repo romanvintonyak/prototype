@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="epamCurrencyConverter" class="com.epam.order.converter.EpamCurrencyConverter">
+        <constructor-arg ref="epamCurrencyPopulator"/>
+    </bean>
+
+    <bean id="epamCurrencyReverseConverter" class="com.epam.order.converter.EpamCurrencyReverseConverter">
+        <constructor-arg ref="epamCurrencyReversePopulator"/>
+    </bean>
+
+    <bean id="epamOrderConverter" class="com.epam.order.converter.EpamOrderConverter">
+        <constructor-arg ref="epamOrderPopulator"/>
+    </bean>
+
+    <bean id="epamOrderReverseConverter" class="com.epam.order.converter.EpamOrderReverseConverter">
+        <constructor-arg ref="epamOrderReversePopulator"/>
+    </bean>
+
+    <bean id="epamPaymentInfoConverter" class="com.epam.order.converter.EpamPaymentInfoConverter">
+        <constructor-arg ref="epamPaymentInfoPopulator"/>
+    </bean>
+
+    <bean id="epamPaymentInfoReverseConverter" class="com.epam.order.converter.EpamPaymentInfoReverseConverter">
+        <constructor-arg ref="epamPaymentInfoReversePopulator"/>
+    </bean>
+
+    <bean id="epamCurrencyPopulator" class="com.epam.order.converter.populator.EpamCurrencyPopulator"/>
+
+    <bean id="epamCurrencyReversePopulator" class="com.epam.order.converter.populator.EpamCurrencyReversePopulator"/>
+
+    <bean id="epamOrderPopulator" class="com.epam.order.converter.populator.EpamOrderPopulator">
+        <property name="epamCurrencyPopulator" ref="epamCurrencyPopulator"/>
+        <property name="epamPaymentInfoPopulator" ref="epamPaymentInfoPopulator"/>
+    </bean>
+
+    <bean id="epamOrderReversePopulator" class="com.epam.order.converter.populator.EpamOrderReversePopulator"/>
+
+    <bean id="epamPaymentInfoPopulator" class="com.epam.order.converter.populator.EpamPaymentInfoPopulator"/>
+
+    <bean id="epamPaymentInfoReversePopulator" class="com.epam.order.converter.populator.EpamPaymentInfoReversePopulator"/>
+
+</beans>
