@@ -1,12 +1,14 @@
 package com.epam.customer.converter.populator;
 
 import com.epam.customer.data.EpamCustomerData;
+
 import de.hybris.platform.commerceservices.strategies.CustomerNameStrategy;
 import de.hybris.platform.converters.Populator;
 import de.hybris.platform.core.model.user.CustomerModel;
+
 import org.springframework.util.Assert;
 
-import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 
 /**
  * @author Irina_Vasilyeva
@@ -14,9 +16,9 @@ import java.text.SimpleDateFormat;
 public class EpamCustomerPopulator implements Populator<CustomerModel, EpamCustomerData> {
 
     private CustomerNameStrategy customerNameStrategy;
-    private SimpleDateFormat dateFormatter;
+    private DateFormat dateFormatter;
 
-    public EpamCustomerPopulator(CustomerNameStrategy customerNameStrategy, SimpleDateFormat dateFormatter) {
+    public EpamCustomerPopulator(CustomerNameStrategy customerNameStrategy, DateFormat dateFormatter) {
         this.customerNameStrategy = customerNameStrategy;
         this.dateFormatter = dateFormatter;
     }

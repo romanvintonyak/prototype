@@ -2,13 +2,16 @@ package com.epam.customer.converter.populator;
 
 import com.epam.customer.BaseTest;
 import com.epam.customer.data.EpamCustomerData;
+
 import de.hybris.bootstrap.annotations.UnitTest;
 import de.hybris.platform.commerceservices.strategies.CustomerNameStrategy;
 import de.hybris.platform.core.model.user.CustomerModel;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -22,7 +25,7 @@ public class EpamCustomerPopulatorTest extends BaseTest {
     @Mock
     private CustomerNameStrategy mockCustomerNameStrategy;
 
-    private SimpleDateFormat dateFormatter = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss z"); // See epamcore-spring.xml
+    private DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ"); // See epamcore-spring.xml
     private EpamCustomerPopulator epamCustomerPopulator;
     private CustomerModel source;
     private EpamCustomerData target;
