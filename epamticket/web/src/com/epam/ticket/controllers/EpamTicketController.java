@@ -21,9 +21,9 @@ public class EpamTicketController {
     @Autowired
     private DefaultEpamTicketFacade defaultEpamTicketFacade;
 
-    @RequestMapping(value = "/tickets", method = RequestMethod.PUT)
+    @RequestMapping(value = "/tickets", method = RequestMethod.GET)
     @ResponseBody
-    public Collection<EpamTicket> getTicketsByCriteria(@RequestBody EpamTicketSearchCriteria searchCriteria){
+    public Collection<EpamTicket> getTicketsByCriteria( EpamTicketSearchCriteria searchCriteria){
         return defaultEpamTicketFacade.getTicketsByCriteria(searchCriteria);
     }
 
