@@ -1,7 +1,6 @@
 angular.module("epamCustomersResource", [ "ngResource" ])
 	.factory("CustomersResource", ["$resource", function($resource) {
 		var resourseUrl = "/epamcustomer/v1/customers/";
-		console.log("initCustomersResource");
 		return $resource(resourseUrl+':id',
 			{
 				id: '@id'
@@ -13,6 +12,13 @@ angular.module("epamCustomersResource", [ "ngResource" ])
 					url:resourseUrl+':id/address'
 				},
 				
+			});
+	}])
+	.factory("TicketsResource", ["$resource", function($resource) {
+		var resourseUrl = "/epamticket/tickets";
+		return $resource(resourseUrl+':id',
+			{
+				id: '@id'
 			});
 	}]);
     

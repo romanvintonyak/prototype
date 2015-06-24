@@ -32,17 +32,24 @@ epamcscockpit.config(["$routeProvider","$httpProvider",function($routeProvider,$
 	    });
 }]);
 
-epamcscockpit.controller("TicketPoolCtrl", function($scope, $http) {
-	$scope.ticketPool = [];
-	
-	$http.get("data/ticketStore.json").
-		success(function(data,status,headers,config){
-			$scope.ticketPool=data
-		}).
-		error(function(){
-			// Handle error here
-		});
-	
+epamcscockpit.controller("TicketPoolCtrl", function($scope, $http,$interval,TicketsResource) {
+	$scope.ticketStore = [];
+	$scope.ticketFilter={
+			priorities:[]
+	}
+	TicketsResource.query(
+			$scope.ticketFilter,		
+			function(data, status, headers, config){
+				var curDate = new Date()
+				angular.forEach(data, function(ticket) {
+					ticket.creationTime = new Date(ticket.creationTime)
+				})
+				$scope.ticketStore = data
+			},
+			function(){
+				// Handle error here
+			}
+	)
 });
 
 epamcscockpit.controller("TicketDetailsCtrl", function($scope, $http, $routeParams) {

@@ -59,7 +59,7 @@
                <ul>
                    <li class="filter__item">
                        <label class="filter__item-name">
-                           <input class="filter__item-checkbox" type="checkbox"/>
+                           <input class="filter__item-checkbox"  type="checkbox" />
                            New
                        </label>
                        <span class="filter__item-counter">552</span>
@@ -157,41 +157,43 @@
            </div>
 
            <div class="filter__btn-wrap">
-               <button class="filter__btn filter__btn_clear">clear</button><button class="filter__btn filter__btn_update">update</button>
+               <button class="filter__btn filter__btn_clear">clear</button>
+               <button class="filter__btn filter__btn_update">update</button>
            </div>
        </aside>
        <!-- /sidebar -->
 
       <section class="main" >
       	<!-- /.ticket -->
-	<div ng-repeat="ticket in ticketPool" class="ticket ticket_{{ticket.status}}">
+	<div ng-repeat="ticket in ticketStore" class="ticket ticket_{{ticket.state | lowercase}}">
               <div class="ticket__main-info">
                   <div class="ticket__number">
-                  		<a href="#/ticket/{{ticket.number}}">{{ticket.number}} </a>
+                  		<a href="#/ticket/{{ticket.ticketId}}">{{ticket.ticketId}} </a>
                   </div>
-                  <div class="ticket__status">{{ticket.status}}</div>
+                  <div class="ticket__status">{{ticket.state}}</div>
                   <div class="ticket__descr">
-                      {{ticket.descr}}
+                      {{ticket.headline}}
                   </div>
               </div>
               <div class="ticket__customer-info">
-                  <a href="mailto:" class="ticket__customer-email"> {{ticket.customer_email}}</a>
-                  <div class="ticket__customer-order-number">{{ticket.customer_order_number}}</div>
+                  <a href="#/customer/" class="ticket__customer-email">{{ticket.customer}} </a>
+                  <div class="ticket__customer-order-number">{{ticket.order}}</div>
+                  
               </div>
               <div class="ticket__time-info">
                   <div class="ticket__date-created">
-                      <b>Date Created:</b>   Feb 25, 3:34:23 PM
+                      <b>Date Created:</b>  {{ticket.creationTime | date : 'MMM dd,  hh:mm:ss a' }}
                   </div>
                   <div class="ticket__spent-time">
                       Spent Time: 1 Day, 2 hour.
                   </div>
                   <div class="ticket__agent">
-                      Agent: <b>Stephanie Bishop</b>
+                      Agent: <b>{{ticket.assightedEmployee}}</b>
                   </div>
               </div>
               <div class="ticket__additional-info">
                   <div class="ticket__category">
-                      Category: Incident
+                      Category: {{ticket.category}}
                   </div>
                   <div class="ticket__level">
                       Level 3: Automated
