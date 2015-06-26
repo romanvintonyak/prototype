@@ -15,10 +15,17 @@ angular.module("epamCustomersResource", [ "ngResource" ])
 			});
 	}])
 	.factory("TicketsResource", ["$resource", function($resource) {
-		var resourseUrl = "/epamticket/tickets";
-		return $resource(resourseUrl+':id',
+		var resourseUrl = "/epamticket/v1/tickets";
+		return $resource(resourseUrl+'/:ticketId',
 			{
-				id: '@id'
+				id: '@ticketId'
+			});
+	}])
+	.factory("OrdersResource", ["$resource", function($resource) {
+		var resourseUrl = "/epamorder/orders";
+		return $resource(resourseUrl+'/:orderCode',
+			{
+				id: '@orderCode'
 			});
 	}]);
     

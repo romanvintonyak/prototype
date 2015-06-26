@@ -10,6 +10,9 @@
     <script src="js/lib/angular.js"></script> 
     <script src="js/lib/angular-route.js"></script> 
     <script src="js/lib/angular-resource.js"></script> 
+    <script src="js/lib/checklist-model.js"></script>
+    
+    
     
     <script src="js/filters.js"></script> 
     <script src="js/services.js"></script>  

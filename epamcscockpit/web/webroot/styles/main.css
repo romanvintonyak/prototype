@@ -799,6 +799,17 @@ ul {
   width: 4px;
   height: 100%;
 }
+
+.ticket_low:before {
+  background: #95D258;
+}
+.ticket_medium:before {
+  background: #F5A623;
+}
+.ticket_high:before {
+  background: #E7394E;
+}
+
 .ticket_new:before {
   background: #95D258;
 }
@@ -826,6 +837,17 @@ ul {
   font-style: italic;
   vertical-align: bottom;
 }
+
+.ticket_new .ticket__status {
+  color: #95D258;
+}
+.ticket_open .ticket__status {
+  color: #F5A623;
+}
+.ticket_closed .ticket__status {
+  color: #E7394E;
+}
+
 .ticket_new .ticket__status {
   color: #95D258;
 }

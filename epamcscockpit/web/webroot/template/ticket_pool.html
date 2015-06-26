@@ -132,40 +132,26 @@
            <div class="filter__section">
                <h3 class="filter__title">priority</h3>
                <ul>
-                   <li class="filter__item">
+                   <li ng-repeat="priority in ticketPriorities" class="filter__item">
                        <label class="filter__item-name">
-                           <input class="filter__item-checkbox" type="checkbox"/>
-                           Low
+                           <input class="filter__item-checkbox" type="checkbox" checklist-model="ticketSearchCriteria.priorities" checklist-value="priority"/>
+                           {{priority}}
                        </label>
-                       <span class="filter__item-counter">1512</span>
-                   </li>
-                   <li class="filter__item">
-                       <label class="filter__item-name">
-                           <input class="filter__item-checkbox" type="checkbox"/>
-                           Medium
-                       </label>
-                       <span class="filter__item-counter">155</span>
-                   </li>
-                   <li class="filter__item">
-                       <label class="filter__item-name">
-                           <input class="filter__item-checkbox" type="checkbox"/>
-                           High
-                       </label>
-                       <span class="filter__item-counter">3425</span>
+                       <span class="filter__item-counter"></span>
                    </li>
                </ul>
            </div>
 
            <div class="filter__btn-wrap">
-               <button class="filter__btn filter__btn_clear">clear</button>
-               <button class="filter__btn filter__btn_update">update</button>
+               <button class="filter__btn filter__btn_clear" ng-click="clearTicketSearchCriteria()">clear</button>
+               <button class="filter__btn filter__btn_update" ng-click="updateTicketStore()">update</button>
            </div>
        </aside>
        <!-- /sidebar -->
 
       <section class="main" >
       	<!-- /.ticket -->
-	<div ng-repeat="ticket in ticketStore" class="ticket ticket_{{ticket.state | lowercase}}">
+	<div ng-repeat="ticket in ticketStore" class="ticket ticket_{{ticket.priority | lowercase}}">
               <div class="ticket__main-info">
                   <div class="ticket__number">
                   		<a href="#/ticket/{{ticket.ticketId}}">{{ticket.ticketId}} </a>
@@ -176,8 +162,8 @@
                   </div>
               </div>
               <div class="ticket__customer-info">
-                  <a href="#/customer/" class="ticket__customer-email">{{ticket.customer}} </a>
-                  <div class="ticket__customer-order-number">{{ticket.order}}</div>
+                  <a href="#/customer/{{ticket.customerUid | encodeBase64}}" class="ticket__customer-email">{{ticket.customerDisplayName}} </a>
+                  <div class="ticket__customer-order-number"> <a href="#/order/{{ticket.order}}"> {{ticket.order}}</a></div>
                   
               </div>
               <div class="ticket__time-info">
