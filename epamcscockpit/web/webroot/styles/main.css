@@ -540,7 +540,7 @@ ul {
   width: 71px;
   height: 36px;
   margin: 0 auto 42px;
-  background: url("/img/logo.png") no-repeat;
+  background: url("../img/logo.png") no-repeat;
   background-size: cover;
 }
 .login-form__fields {
@@ -564,10 +564,10 @@ ul {
   background-size: cover;
 }
 .login-form__inp-wrap_login:before {
-  background-image: url("/img/icon-login-login.png");
+  background-image: url("../img/icon-login-login.png");
 }
 .login-form__inp-wrap_pass:before {
-  background-image: url("/img/icon-login-pass.png");
+  background-image: url("../img/icon-login-pass.png");
 }
 .login-form__inp-wrap_pass .login-form__inp {
   box-shadow: inset 0 1px 0 0 #E8EAEC;
@@ -600,7 +600,7 @@ ul {
   overflow: hidden;
   text-indent: -99em;
   border: none;
-  background: url("/img/btn-login.png") no-repeat;
+  background: url("../img/btn-login.png") no-repeat;
   background-size: cover;
 }
 .login-form__remember {
