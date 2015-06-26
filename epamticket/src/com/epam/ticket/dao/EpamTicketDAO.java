@@ -2,10 +2,13 @@ package com.epam.ticket.dao;
 
 import com.epam.ticket.facades.EpamTicketSearchCriteria;
 import com.google.common.base.Strings;
+
+import de.hybris.platform.servicelayer.exceptions.AmbiguousIdentifierException;
 import de.hybris.platform.servicelayer.search.SearchResult;
 import de.hybris.platform.ticket.dao.impl.DefaultTicketDao;
 import de.hybris.platform.ticket.enums.CsTicketPriority;
 import de.hybris.platform.ticket.model.CsTicketModel;
+
 import org.apache.log4j.Logger;
 
 import java.util.List;
@@ -20,6 +23,15 @@ public class EpamTicketDAO extends DefaultTicketDao {
     public static final String QUERY_STRING = "SELECT {t:pk} FROM {CsTicket AS t} ";
     private StringBuffer query;
 
+    public CsTicketModel getTicketById(String ticketId){
+    	List<CsTicketModel> csTicketModels=this.findTicketsById(ticketId);
+    	if (csTicketModels.size() > 1){
+    	 throw new AmbiguousIdentifierException("CsTicket with ticketId'" + ticketId + "' is not unique, " + csTicketModels.size() + " results!");
+    	}
+    	return csTicketModels.size()==1 ? csTicketModels.get(0) : null;
+    	
+    }
+    
     public List<CsTicketModel> findTicketsByCriteria(EpamTicketSearchCriteria criteria) {
         query = new StringBuffer(QUERY_STRING);
         Map<String, Object> paramMap = new TreeMap<>();

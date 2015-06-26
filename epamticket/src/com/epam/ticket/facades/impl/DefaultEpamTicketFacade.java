@@ -5,7 +5,9 @@ import com.epam.ticket.dao.EpamTicketDAO;
 import com.epam.ticket.data.EpamTicket;
 import com.epam.ticket.facades.EpamTicketFacade;
 import com.epam.ticket.facades.EpamTicketSearchCriteria;
+
 import de.hybris.platform.ticket.model.CsTicketModel;
+
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -33,7 +35,13 @@ public class DefaultEpamTicketFacade implements EpamTicketFacade {
         List<CsTicketModel> csTicketModels = ticketDao.findTicketsByCriteria(searchCriteria);
         return getEpamTickets(csTicketModels);
     }
-
+    @Override
+    public EpamTicket getTicketById(String ticketId){
+    	LOG.info("Get ticket by id: " + ticketId);
+    	CsTicketModel csTicketModel = ticketDao.getTicketById(ticketId);
+    	return ticketConverter.convert(csTicketModel);
+    }
+    
     private List<EpamTicket> getEpamTickets(List<CsTicketModel> csTicketModels) {
         List<EpamTicket> tickets = new ArrayList<>();
         (csTicketModels).forEach(csTicketModel -> tickets.add(ticketConverter.convert(csTicketModel)));

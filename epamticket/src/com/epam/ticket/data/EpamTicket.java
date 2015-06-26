@@ -4,7 +4,8 @@ import java.io.Serializable;
 
 public class EpamTicket  implements Serializable{
     private String ticketId;
-    private String customer;
+    private String customerDisplayName;
+    private String customerUid;
     private String order;
     private String category;
     private String priority;
@@ -41,12 +42,12 @@ public class EpamTicket  implements Serializable{
         this.ticketId = ticketId;
     }
 
-    public String getCustomer() {
-        return customer;
+    public String getCustomerDisplayName() {
+        return customerDisplayName;
     }
 
-    public void setCustomer(String customer) {
-        this.customer = customer;
+    public void setCustomerDisplayName(String customerDisplayName) {
+        this.customerDisplayName = customerDisplayName;
     }
 
     public String getOrder() {
@@ -105,6 +106,12 @@ public class EpamTicket  implements Serializable{
         this.headline = headline;
     }
 
+	public String getCustomerUid() {
+		return customerUid;
+	}
 
+	public void setCustomerUid(String customerUid) {
+		this.customerUid = customerUid;
+	}
 
 }
