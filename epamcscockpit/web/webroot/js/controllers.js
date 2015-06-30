@@ -1,5 +1,5 @@
-var epamcscockpit = angular.module("epamcscockpit", ["ngRoute","checklist-model","epamCustomersResource","epamcscockpitFilters"]);
-
+var epamcscockpit = angular.module("epamcscockpit", ["ngRoute","checklist-model","epamcscockpitResource","epamcscockpitFilters"]);
+var defaultErrrMsg = "An error occurred while loading the data";
 epamcscockpit.config(["$routeProvider","$httpProvider",function($routeProvider,$httpProvider){
 	$routeProvider
 		.when("/",{
@@ -37,11 +37,24 @@ epamcscockpit.config(["$routeProvider","$httpProvider",function($routeProvider,$
 }]);
 
 epamcscockpit.controller("TicketPoolCtrl", function($scope, $http,$interval,TicketsResource) {
+	$scope.ticketPriorities = ['Low','Medium','High']; 
+	$scope.ticketStates = ['New','Open','Closed'];
+	$scope.ticketCategories = [null,'Problem','Incident','Complaint','Fraud','Note'];
+	$scope.ticketLevels = ['All','Sales','Service','Automated','Interactive','Physical store CS transfer'];
+	$scope.ticketGroup = ['My Group','All Groups','Unassigned'];
+	$scope.ticketAgent = ['Assigned to me','All Group Users','Unassigned'];
+	
+	$scope.errorMsg="";
+	
 	$scope.ticketStore = [];
 	$scope.ticketSearchCriteria={
-			priorities:[]
+			agent:[],
+			group:[],
+			levels:[],
+			priorities:[],
+			states:[],
+			categories:[]
 	}
-	$scope.ticketPriorities = ['Low','Medium','High']; 
 	
 	$scope.updateTicketStore = function(){
 		TicketsResource.query(
@@ -54,7 +67,7 @@ epamcscockpit.controller("TicketPoolCtrl", function($scope, $http,$interval,Tick
 					$scope.ticketStore = data
 				},
 				function(){
-					// Handle error here
+					$scope.errorMsg=defaultErrrMsg
 				}
 		)
 	};
@@ -66,33 +79,29 @@ epamcscockpit.controller("TicketPoolCtrl", function($scope, $http,$interval,Tick
 });
 
 epamcscockpit.controller("TicketDetailsCtrl", function($scope, $http, $routeParams,TicketsResource) {
-	TicketsResource.get(
-			{
-				ticketId: $routeParams.ticketId
-			},
-			function(data, status, headers, config){
-				$scope.ticket = data;
-			},
-			function(){
-				// Handle error here
-			}
-	);
+	TicketsResource.get({
+			ticketId: $routeParams.ticketId
+		},
+		function(data, status, headers, config){
+			$scope.ticket = data;
+		},
+		function(){
+			$scope.errorMsg=defaultErrrMsg
+		});
 	
 });
 
 
 epamcscockpit.controller("OrderDetailsCtrl", function($scope, $http, $routeParams,OrdersResource) {
-	OrdersResource.get(
-			{
-				orderCode: $routeParams.orderCode
-			},
-			function(data, status, headers, config){
-				$scope.order = data;
-			},
-			function(){
-				// Handle error here
-			}
-	);
+	OrdersResource.get({
+			orderCode: $routeParams.orderCode
+		},
+		function(data, status, headers, config){
+			$scope.order = data;
+		},
+		function(){
+			$scope.errorMsg=defaultErrrMsg
+		});
 	
 });
 
@@ -100,15 +109,13 @@ epamcscockpit.controller("OrderDetailsCtrl", function($scope, $http, $routeParam
 
 epamcscockpit.controller("CustomerDetailsCtrl", function(CustomersResource,$http, $scope, $routeParams) {
 	$scope.customer = undefined;
-	$scope.customerAddress = undefined;
 	
 	CustomersResource.get({
 		 id: $routeParams.customerId,
-	 }, function(data) { //successful response here
+	 }, function(data) { 
 		 $scope.customer=data
-		 console.log($scope.customer)
 	 }, function(err) {
-		 // Handle error here
+		 $scope.errorMsg=defaultErrrMsg
 	 });
 });
 

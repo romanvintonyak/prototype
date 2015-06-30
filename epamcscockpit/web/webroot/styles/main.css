@@ -908,3 +908,7 @@ ul {
   background: url("../img/login-page.jpg") no-repeat;
   background-size: cover;
 }
+
+.bg-error {
+  background-color: #f2dede;
+}

@@ -1,4 +1,4 @@
-angular.module("epamCustomersResource", [ "ngResource" ])
+angular.module("epamcscockpitResource", [ "ngResource" ])
 	.factory("CustomersResource", ["$resource", function($resource) {
 		var resourseUrl = "/epamcustomer/v1/customers/";
 		return $resource(resourseUrl+':id',
@@ -22,7 +22,7 @@ angular.module("epamCustomersResource", [ "ngResource" ])
 			});
 	}])
 	.factory("OrdersResource", ["$resource", function($resource) {
-		var resourseUrl = "/epamorder/orders";
+		var resourseUrl = "/epamorder/v1/orders";
 		return $resource(resourseUrl+'/:orderCode',
 			{
 				id: '@orderCode'
