@@ -15,7 +15,7 @@ import java.util.List;
  * @author Iaroslav_Bezhenar
  */
 @Controller
-@RequestMapping("/orders")
+@RequestMapping("/v1/orders")
 public class OrderController {
     @Autowired
     private DefaultEpamOrderFacade defaultEpamOrderFacade;
