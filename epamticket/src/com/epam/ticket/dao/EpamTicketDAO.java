@@ -6,7 +6,9 @@ import com.google.common.base.Strings;
 import de.hybris.platform.servicelayer.exceptions.AmbiguousIdentifierException;
 import de.hybris.platform.servicelayer.search.SearchResult;
 import de.hybris.platform.ticket.dao.impl.DefaultTicketDao;
+import de.hybris.platform.ticket.enums.CsTicketCategory;
 import de.hybris.platform.ticket.enums.CsTicketPriority;
+import de.hybris.platform.ticket.enums.CsTicketState;
 import de.hybris.platform.ticket.model.CsTicketModel;
 
 import org.apache.log4j.Logger;
@@ -35,11 +37,26 @@ public class EpamTicketDAO extends DefaultTicketDao {
     public List<CsTicketModel> findTicketsByCriteria(EpamTicketSearchCriteria criteria) {
         query = new StringBuffer(QUERY_STRING);
         Map<String, Object> paramMap = new TreeMap<>();
+        
         List<CsTicketPriority> priorities = criteria.getPriorities();
         if (priorities != null && priorities.size() != 0) {
             query.append(getJoiningString());
             query.append("{priority} IN (?priority)");
             paramMap.put("priority", priorities);
+        }
+        
+        List<CsTicketState> states = criteria.getStates();
+        if (states != null && states.size() != 0) {
+            query.append(getJoiningString());
+            query.append("{state} IN (?state)");
+            paramMap.put("state", states);
+        }
+        
+        List<CsTicketCategory> categories = criteria.getCategories();
+        if (categories != null && categories.size() != 0) {
+            query.append(getJoiningString());
+            query.append("{category} IN (?category)");
+            paramMap.put("category", categories);
         }
 
         String agentId = criteria.getAgentId();
