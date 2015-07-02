@@ -1,8 +1,8 @@
 # prototype
 
 To start working with prototype follow steps below:
-* Create new Eclipse workspace and pull the project (including submodules) from GitHub exactly to the folder ${hybrishome}/bin/custom, without creating new folder 'prototye';
-* Import the following hybris' modules to the workspace: admincochpit, backoffice, basecommerce, cms2, cockpit, commercefacades, commerceservices, config, customerreview, hmc, mcc, payment, platform, platformhmc, promotions, solrfacetsearch, solrfacetsearchhmc, ticketsystem, voucher;
+* Create new Eclipse workspace and clone the project (including submodules) from GitHub exactly to the folder ${hybrishome}/bin/custom, without creating new folder 'prototye', import it to workspace;
+* Import the following hybris' modules to the workspace: admincochpit, backoffice, basecommerce, cms2, cockpit, commercefacades, commerceservices, config, customerreview, hmc, ldap, mcc, payment, platform, platformhmc, promotions, solrfacetsearch, solrfacetsearchhmc, ticketsystem, voucher;
 * Add to your ${hybrishome}/config/localextentions.xml the extentions listed in the [` localextensions.xml`](https://github.com/sanabramov/prototype/blob/master/utils/config/localextensions.xml);
 * Configure build path for 5 prototype's extentions: add extentions, listed in project's ${hybrishome}/bin/custom/${projectName}/extensioninfo.xml to required projects in its build path;
 * Check build path of all of the hybris' imported modules: ensure that all required projects are imported and that 'platform' project is present in required projects;
