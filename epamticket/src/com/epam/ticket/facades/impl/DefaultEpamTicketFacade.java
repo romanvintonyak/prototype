@@ -1,13 +1,11 @@
 package com.epam.ticket.facades.impl;
 
 import com.epam.ticket.converter.EpamTicketConverter;
-import com.epam.ticket.dao.EpamTicketDAO;
 import com.epam.ticket.data.EpamTicket;
 import com.epam.ticket.facades.EpamTicketFacade;
 import com.epam.ticket.facades.EpamTicketSearchCriteria;
-
+import com.epam.ticket.services.EpamTicketService;
 import de.hybris.platform.ticket.model.CsTicketModel;
-
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -19,26 +17,27 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Created by Viktor_Peretiatko on 6/12/2015.
  */
 public class DefaultEpamTicketFacade implements EpamTicketFacade {
-    public static final Logger LOG = Logger.getLogger(DefaultEpamTicketFacade.class);
-    private EpamTicketConverter ticketConverter;
-    private EpamTicketDAO ticketDao;
-    //    private DefaultAgentDao agentDao;
 
-    public DefaultEpamTicketFacade(EpamTicketConverter ticketConverter, EpamTicketDAO ticketDao) {
+    public static final Logger LOG = Logger.getLogger(DefaultEpamTicketFacade.class);
+
+    private EpamTicketConverter ticketConverter;
+    private EpamTicketService ticketService;
+
+    public DefaultEpamTicketFacade(EpamTicketConverter ticketConverter, EpamTicketService ticketService) {
         this.ticketConverter = checkNotNull(ticketConverter);
-        this.ticketDao = checkNotNull(ticketDao);
+        this.ticketService = checkNotNull(ticketService);
     }
 
     @Override
     public List<EpamTicket> getTicketsByCriteria(EpamTicketSearchCriteria searchCriteria) {
         LOG.info("Search by criteria: " + searchCriteria);
-        List<CsTicketModel> csTicketModels = ticketDao.findTicketsByCriteria(searchCriteria);
+        List<CsTicketModel> csTicketModels = ticketService.getTicketsByCriteria(searchCriteria);
         return getEpamTickets(csTicketModels);
     }
     @Override
     public EpamTicket getTicketById(String ticketId){
     	LOG.info("Get ticket by id: " + ticketId);
-    	CsTicketModel csTicketModel = ticketDao.getTicketById(ticketId);
+    	CsTicketModel csTicketModel = ticketService.getTicketById(ticketId);
     	return ticketConverter.convert(csTicketModel);
     }
     
