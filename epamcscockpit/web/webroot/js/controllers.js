@@ -4,10 +4,10 @@ epamcscockpit.config(["$routeProvider","$httpProvider",function($routeProvider,$
 	$routeProvider
 		.when("/",{
 			 templateUrl: 'template/ticket_pool.html',
-		     controller: 'TicketPoolCtrl',
+		     controller: 'TicketPoolCtrl'
 		})
 		.when("/advanced_search",{
-			templateUrl: "template/advanced_search.html",
+			templateUrl: "template/advanced_search.html"
 		})
 		.when("/ticket/:ticketId",{
 			templateUrl: "template/ticket_details.html",
@@ -22,14 +22,14 @@ epamcscockpit.config(["$routeProvider","$httpProvider",function($routeProvider,$
 			controller: 'OrderDetailsCtrl'
 		})
 		.when("/ticket_create",{
-			templateUrl: "template/ticket_create.html",
+			templateUrl: "template/ticket_create.html"
 		    
 		})
 		.when("/order_create",{
-			templateUrl: "template/order_create.html",
+			templateUrl: "template/order_create.html"
 		})
 		.when("/customer_create",{
-			templateUrl: "template/customer_create.html",
+			templateUrl: "template/customer_create.html"
 		})
 		.otherwise({
 	        redirectTo: "/"
@@ -54,26 +54,32 @@ epamcscockpit.controller("TicketPoolCtrl", function($scope, $http,$interval,Tick
 			priorities:[],
 			states:[],
 			categories:[]
-	}
+	};
 	
 	$scope.updateTicketStore = function(){
 		TicketsResource.query(
 				$scope.ticketSearchCriteria,		
 				function(data, status, headers, config){
-					var curDate = new Date()
+					var curDate = new Date();
 					angular.forEach(data, function(ticket) {
-						ticket.creationTime = new Date(ticket.creationTime)
-					})
-					$scope.ticketStore = data
+						ticket.creationTime = new Date(ticket.creationTime);
+					});
+					$scope.ticketStore = data;
 				},
 				function(){
-					$scope.errorMsg=defaultErrrMsg
+					$scope.errorMsg=defaultErrrMsg;
 				}
 		)
 	};
-	$scope.updateTicketStore()
+
+	$scope.updateTicketStore();
 	
 	$scope.clearTicketSearchCriteria = function() {
+		$scope.ticketSearchCriteria.categories = [];
+		$scope.ticketSearchCriteria.agent = [];
+		$scope.ticketSearchCriteria.group = [];
+		$scope.ticketSearchCriteria.states = [];
+		$scope.ticketSearchCriteria.levels = [];
 	    $scope.ticketSearchCriteria.priorities = [];
 	  };
 });
@@ -91,7 +97,6 @@ epamcscockpit.controller("TicketDetailsCtrl", function($scope, $http, $routePara
 	
 });
 
-
 epamcscockpit.controller("OrderDetailsCtrl", function($scope, $http, $routeParams,OrdersResource) {
 	OrdersResource.get({
 			orderCode: $routeParams.orderCode
@@ -104,8 +109,6 @@ epamcscockpit.controller("OrderDetailsCtrl", function($scope, $http, $routeParam
 		});
 	
 });
-
-
 
 epamcscockpit.controller("CustomerDetailsCtrl", function(CustomersResource,$http, $scope, $routeParams) {
 	$scope.customer = undefined;
