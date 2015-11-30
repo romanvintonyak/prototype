@@ -114,7 +114,7 @@ epamcscockpit.controller("CustomerDetailsCtrl", function(CustomersResource,$http
 	$scope.customer = undefined;
 	
 	CustomersResource.get({
-		 id: $routeParams.customerId,
+		 id: $routeParams.customerId
 	 }, function(data) { 
 		 $scope.customer=data
 	 }, function(err) {
