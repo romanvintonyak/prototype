@@ -510,6 +510,20 @@ ul {
 .sub-header {
   background: #4C5F79;
   height: 40px;
+  padding: 10px;
+  font-family: "open_sans_semibold";
+  color: #879FBA;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+}
+.sub-header_sortOrder {
+  color: white;
+}
+.sub-header_sortOrder__active {
+  color: white;
 }
 
 .sidebar {
@@ -799,7 +813,6 @@ ul {
   width: 4px;
   height: 100%;
 }
-
 .ticket_low:before {
   background: #95D258;
 }
@@ -809,7 +822,6 @@ ul {
 .ticket_high:before {
   background: #E7394E;
 }
-
 .ticket_new:before {
   background: #95D258;
 }
@@ -837,17 +849,6 @@ ul {
   font-style: italic;
   vertical-align: bottom;
 }
-
-.ticket_new .ticket__status {
-  color: #95D258;
-}
-.ticket_open .ticket__status {
-  color: #F5A623;
-}
-.ticket_closed .ticket__status {
-  color: #E7394E;
-}
-
 .ticket_new .ticket__status {
   color: #95D258;
 }
