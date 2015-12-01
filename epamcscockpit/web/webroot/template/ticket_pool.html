@@ -1,4 +1,23 @@
-<div class="container">
+<div>
+    <section class="sub-header">
+        SORT BY:&nbsp;
+        <select ng-model="sortField"
+                ng-options="key as value for (key , value) in ticketSorts"
+        >
+
+            <!--<option ng-repeat="(a,name) in ticketSorts" value="{{a}}">{{name}}</option>-->
+        </select>
+
+
+        <a  ng-click="sortReverse = !sortReverse">
+            <span ng-class="{'sub-header_sortOrder__active': sortReverse}">&#9660;</span
+            ><span ng-class="{'sub-header_sortOrder__active': !sortReverse}">&#9650;</span>
+        </a>
+        {{sortField}}
+    </section>
+
+    <div class="container">
+
        <aside class="sidebar filter">
        	   <div class="filter__section">
                <h3 class="filter__title">category</h3>
@@ -80,7 +99,8 @@
       <section class="main" >
       	<!-- /.ticket -->
       
-	    <div ng-repeat="ticket in ticketStore" class="ticket ticket_{{ticket.priority | lowercase}}">
+	    <div ng-repeat="ticket in ticketStore | orderBy:sortField:sortReverse"
+             class="ticket ticket_{{ticket.priority | lowercase}}">
               <div class="ticket__main-info">
                   <div class="ticket__number">
                   		<a href="#/ticket/{{ticket.ticketId}}">{{ticket.ticketId}} </a>
@@ -121,3 +141,4 @@
       <!-- /content -->
 
   </div>
+</div>

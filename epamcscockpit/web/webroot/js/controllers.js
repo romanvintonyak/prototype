@@ -22,8 +22,8 @@ epamcscockpit.config(["$routeProvider","$httpProvider",function($routeProvider,$
 			controller: 'OrderDetailsCtrl'
 		})
 		.when("/ticket_create",{
-			templateUrl: "template/ticket_create.html"
-		    
+			templateUrl: "template/ticket_create.html",
+
 		})
 		.when("/order_create",{
 			templateUrl: "template/order_create.html"
@@ -37,15 +37,20 @@ epamcscockpit.config(["$routeProvider","$httpProvider",function($routeProvider,$
 }]);
 
 epamcscockpit.controller("TicketPoolCtrl", function($scope, $http,$interval,TicketsResource) {
-	$scope.ticketPriorities = ['Low','Medium','High']; 
+	$scope.ticketPriorities = ['Low','Medium','High'];
 	$scope.ticketStates = ['New','Open','Closed'];
 	$scope.ticketCategories = [null,'Problem','Incident','Complaint','Fraud','Note'];
 	$scope.ticketLevels = ['All','Sales','Service','Automated','Interactive','Physical store CS transfer'];
 	$scope.ticketGroup = ['My Group','All Groups','Unassigned'];
 	$scope.ticketAgent = ['Assigned to me','All Group Users','Unassigned'];
-	
+	$scope.ticketSorts = {
+        'ticketId' : 'Ticket ID',
+        'creationTime' : 'Date Created',
+        'customerDisplayName' : 'Customer Name',
+        'modifyTime' : "Time Modified",
+	};
 	$scope.errorMsg="";
-	
+
 	$scope.ticketStore = [];
 	$scope.ticketSearchCriteria={
 			agent:[],
@@ -55,10 +60,14 @@ epamcscockpit.controller("TicketPoolCtrl", function($scope, $http,$interval,Tick
 			states:[],
 			categories:[]
 	};
-	
-	$scope.updateTicketStore = function(){
+
+    $scope.sortField = 'ticketId'; // todo maybe whe should include these fields to search criteria
+    $scope.sortReverse = true; // to execute them at the server-side
+
+
+    $scope.updateTicketStore = function(){
 		TicketsResource.query(
-				$scope.ticketSearchCriteria,		
+				$scope.ticketSearchCriteria,
 				function(data, status, headers, config){
 					var curDate = new Date();
 					angular.forEach(data, function(ticket) {
@@ -72,8 +81,12 @@ epamcscockpit.controller("TicketPoolCtrl", function($scope, $http,$interval,Tick
 		)
 	};
 
-	$scope.updateTicketStore();
-	
+	$scope.order = function(predicate) {
+		$scope.predicate = predicate;
+	};
+
+	$scope.updateTicketStore()
+
 	$scope.clearTicketSearchCriteria = function() {
 		$scope.ticketSearchCriteria.categories = [];
 		$scope.ticketSearchCriteria.agent = [];
@@ -94,7 +107,7 @@ epamcscockpit.controller("TicketDetailsCtrl", function($scope, $http, $routePara
 		function(){
 			$scope.errorMsg=defaultErrrMsg
 		});
-	
+
 });
 
 epamcscockpit.controller("OrderDetailsCtrl", function($scope, $http, $routeParams,OrdersResource) {
@@ -107,12 +120,12 @@ epamcscockpit.controller("OrderDetailsCtrl", function($scope, $http, $routeParam
 		function(){
 			$scope.errorMsg=defaultErrrMsg
 		});
-	
+
 });
 
 epamcscockpit.controller("CustomerDetailsCtrl", function(CustomersResource,$http, $scope, $routeParams) {
 	$scope.customer = undefined;
-	
+
 	CustomersResource.get({
 		 id: $routeParams.customerId
 	 }, function(data) { 

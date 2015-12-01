@@ -68,9 +68,7 @@
 </header>
 <!-- /header -->
 
-<section class="sub-header">
-    
-</section>
+
 <!-- /sub-header -->
 <main class="main-wrap" ng-view></main>
 
