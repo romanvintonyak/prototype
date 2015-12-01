@@ -1,6 +1,7 @@
 package com.epam.ticket.data;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class EpamTicket  implements Serializable{
     private String ticketId;
@@ -10,10 +11,12 @@ public class EpamTicket  implements Serializable{
     private String category;
     private String priority;
     private String state;
-    private String assightedEmployee;
-    private String assightedgroup;
+    private String assignedAgent;
+    private String assignedGroup;
     private String headline;
     private String creationTime;
+    private String modifyTime;
+    private List<EpamTicketEvent> events;
 
     public String getModifyTime() {
         return modifyTime;
@@ -30,9 +33,6 @@ public class EpamTicket  implements Serializable{
     public void setCreationTime(String creationTime) {
         this.creationTime = creationTime;
     }
-
-    private String modifyTime;
-
 
     public String getTicketId() {
         return ticketId;
@@ -82,20 +82,20 @@ public class EpamTicket  implements Serializable{
         this.state = state;
     }
 
-    public String getAssightedEmployee() {
-        return assightedEmployee;
+    public String getAssignedAgent() {
+        return assignedAgent;
     }
 
-    public void setAssightedEmployee(String assightedEmployee) {
-        this.assightedEmployee = assightedEmployee;
+    public void setAssignedAgent(String assignedAgent) {
+        this.assignedAgent = assignedAgent;
     }
 
-    public String getAssightedgroup() {
-        return assightedgroup;
+    public String getAssignedGroup() {
+        return assignedGroup;
     }
 
-    public void setAssightedgroup(String assightedgroup) {
-        this.assightedgroup = assightedgroup;
+    public void setAssignedGroup(String assignedGroup) {
+        this.assignedGroup = assignedGroup;
     }
 
     public String getHeadline() {
@@ -113,5 +113,13 @@ public class EpamTicket  implements Serializable{
 	public void setCustomerUid(String customerUid) {
 		this.customerUid = customerUid;
 	}
+
+    public List<EpamTicketEvent> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<EpamTicketEvent> events) {
+        this.events = events;
+    }
 
 }

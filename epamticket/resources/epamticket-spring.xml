@@ -18,7 +18,24 @@
 
     <bean id="epamTicketPopulator" class="com.epam.ticket.converter.EpamTicketPopulator">
         <constructor-arg ref="dateFormatter"/>
+        <property name="ticketEventConverter" ref="epamTicketEventConverter" />
     </bean>
+
+    <bean id="epamTicketEventConverter" class="com.epam.ticket.converter.EpamTicketEventConverter">
+        <property name="populator" ref="epamTicketEventPopulator" />
+    </bean>
+
+    <bean id="epamTicketEventPopulator" class="com.epam.ticket.converter.EpamTicketEventPopulator" >
+        <property name="ticketChangeEventEntryConverter" ref="epamTicketChangeEventEntryConverter" />
+    </bean>
+
+    <bean id="epamTicketEmailConverter" class="com.epam.ticket.converter.EpamTicketEmailConverter" />
+
+    <bean id="epamTicketEmailPopulator" class="com.epam.ticket.converter.EpamTicketEmailPopulator" />
+
+    <bean id="epamTicketChangeEventEntryConverter" class="com.epam.ticket.converter.EpamTicketChangeEventEntryConverter" />
+
+    <bean id="epamTicketChangeEventEntryPopulator" class="com.epam.ticket.converter.EpamTicketChangeEventEntryPopulator" />
 
     <bean id="epamTicketService" class="com.epam.ticket.services.impl.DefaultEpamTicketService" scope="tenant">
        <property name="ticketDao" ref="epamTicketDao" />
