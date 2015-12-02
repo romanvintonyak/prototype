@@ -2,143 +2,154 @@
     <section class="sub-header">
         SORT BY:&nbsp;
         <select ng-model="sortField"
-                ng-options="key as value for (key , value) in ticketSorts"
-        >
+                ng-options="key as value for (key , value) in ticketSorts">
 
             <!--<option ng-repeat="(a,name) in ticketSorts" value="{{a}}">{{name}}</option>-->
         </select>
 
 
-        <a  ng-click="sortReverse = !sortReverse">
+        <a ng-click="sortReverse = !sortReverse">
             <span ng-class="{'sub-header_sortOrder__active': sortReverse}">&#9660;</span
-            ><span ng-class="{'sub-header_sortOrder__active': !sortReverse}">&#9650;</span>
+                    ><span ng-class="{'sub-header_sortOrder__active': !sortReverse}">&#9650;</span>
         </a>
         {{sortField}}
+
+        <div class="sub-header_ticketCount">
+           Total Tickets: <span class="sub-header_ticketCount_title"> {{ticketCount.total}}</span>
+        </div>
     </section>
 
     <div class="container">
 
-       <aside class="sidebar filter">
-       	   <div class="filter__section">
-               <h3 class="filter__title">category</h3>
-               <select ng-model="ticketSearchCriteria.categories" ng-options="category for category in ticketCategories" >
-               </select>
-           </div>
-           <div class="filter__section">
-               <h3 class="filter__title">agent</h3>
-               <ul>
-                   <li ng-repeat="agent in ticketAgent" class="filter__item">
-                       <label class="filter__item-name">
-                           <input class="filter__item-checkbox" type="checkbox" checklist-model="ticketSearchCriteria.agent" checklist-value="agent"/>
-                           {{agent}}
-                       </label>
-                       <span class="filter__item-counter"></span>
-                   </li>
-               </ul>
-           </div>
+        <aside class="sidebar filter">
+            <div class="filter__section">
+                <h3 class="filter__title">category</h3>
+                <select ng-model="ticketSearchCriteria.categories"
+                        ng-options="category for category in ticketCategories">
+                </select>
+            </div>
+            <div class="filter__section">
+                <h3 class="filter__title">agent</h3>
+                <ul>
+                    <li ng-repeat="agent in ticketAgent" class="filter__item">
+                        <label class="filter__item-name">
+                            <input class="filter__item-checkbox" type="checkbox"
+                                   checklist-model="ticketSearchCriteria.agent" checklist-value="agent"/>
+                            {{agent}}
+                        </label>
+                        <span class="filter__item-counter"></span>
+                    </li>
+                </ul>
+            </div>
 
-           <div class="filter__section">
-               <h3 class="filter__title">group</h3>
-               <ul>
-                   <li ng-repeat="group in ticketGroup" class="filter__item">
-                       <label class="filter__item-name">
-                           <input class="filter__item-checkbox" type="checkbox" checklist-model="ticketSearchCriteria.group" checklist-value="group"/>
-                           {{group}}
-                       </label>
-                       <span class="filter__item-counter"></span>
-                   </li>
-               </ul>
-           </div>
+            <div class="filter__section">
+                <h3 class="filter__title">group</h3>
+                <ul>
+                    <li ng-repeat="group in ticketGroup" class="filter__item">
+                        <label class="filter__item-name">
+                            <input class="filter__item-checkbox" type="checkbox"
+                                   checklist-model="ticketSearchCriteria.group" checklist-value="group"/>
+                            {{group}}
+                        </label>
+                        <span class="filter__item-counter"></span>
+                    </li>
+                </ul>
+            </div>
 
-           <div class="filter__section">
-			   <h3 class="filter__title">state</h3>
-               <ul>
-                   <li ng-repeat="state in ticketStates" class="filter__item">
-                       <label class="filter__item-name">
-                           <input class="filter__item-checkbox" type="checkbox" checklist-model="ticketSearchCriteria.states" checklist-value="state"/>
-                           {{state}}
-                       </label>
-                       <span class="filter__item-counter"></span>
-                   </li>
-               </ul>
-           </div>
+            <div class="filter__section">
+                <h3 class="filter__title">state</h3>
+                <ul>
+                    <li ng-repeat="state in ticketStates" class="filter__item">
+                        <label class="filter__item-name">
+                            <input class="filter__item-checkbox" type="checkbox"
+                                   checklist-model="ticketSearchCriteria.states" checklist-value="state"/>
+                            {{state}}
+                        </label>
+                        <span class="filter__item-counter"></span>
+                    </li>
+                </ul>
+            </div>
 
-           <div class="filter__section">
-               <h3 class="filter__title">level</h3>
-               <ul>
-                   <li ng-repeat="level in ticketLevels" class="filter__item">
-                       <label class="filter__item-name">
-                           <input class="filter__item-checkbox" type="checkbox" checklist-model="ticketSearchCriteria.levels" checklist-value="level"/>
-                           {{level}}
-                       </label>
-                       <span class="filter__item-counter"></span>
-                   </li>
-               </ul>
-           </div>
+            <div class="filter__section">
+                <h3 class="filter__title">level</h3>
+                <ul>
+                    <li ng-repeat="level in ticketLevels" class="filter__item">
+                        <label class="filter__item-name">
+                            <input class="filter__item-checkbox" type="checkbox"
+                                   checklist-model="ticketSearchCriteria.levels" checklist-value="level"/>
+                            {{level}}
+                        </label>
+                        <span class="filter__item-counter"></span>
+                    </li>
+                </ul>
+            </div>
 
-           <div class="filter__section">
-               <h3 class="filter__title">priority</h3>
-               <ul>
-                   <li ng-repeat="priority in ticketPriorities" class="filter__item">
-                       <label class="filter__item-name">
-                           <input class="filter__item-checkbox" type="checkbox" checklist-model="ticketSearchCriteria.priorities" checklist-value="priority"/>
-                           {{priority}}
-                       </label>
-                       <span class="filter__item-counter"></span>
-                   </li>
-               </ul>
-           </div>
+            <div class="filter__section">
+                <h3 class="filter__title">priority</h3>
+                <ul>
+                    <li ng-repeat="priority in ticketPriorities" class="filter__item">
+                        <label class="filter__item-name">
+                            <input class="filter__item-checkbox" type="checkbox"
+                                   checklist-model="ticketSearchCriteria.priorities" checklist-value="priority"/>
+                            {{priority}}
+                        </label>
+                        <span class="filter__item-counter"></span>
+                    </li>
+                </ul>
+            </div>
 
-           <div class="filter__btn-wrap">
-               <button class="filter__btn filter__btn_clear" ng-click="clearTicketSearchCriteria()">clear</button>
-               <button class="filter__btn filter__btn_update" ng-click="updateTicketStore()">update</button>
-           </div>
-       </aside>
-       <!-- /sidebar -->
+            <div class="filter__btn-wrap">
+                <button class="filter__btn filter__btn_clear" ng-click="clearTicketSearchCriteria()">clear</button>
+                <button class="filter__btn filter__btn_update" ng-click="updateTicketStore()">update</button>
+            </div>
+        </aside>
+        <!-- /sidebar -->
 
-      <section class="main" >
-      	<!-- /.ticket -->
-      
-	    <div ng-repeat="ticket in ticketStore | orderBy:sortField:sortReverse"
-             class="ticket ticket_{{ticket.priority | lowercase}}">
-              <div class="ticket__main-info">
-                  <div class="ticket__number">
-                  		<a href="#/ticket/{{ticket.ticketId}}">{{ticket.ticketId}} </a>
-                  </div>
-                  <div class="ticket__status">{{ticket.state}}</div>
-                  <div class="ticket__descr">
-                      {{ticket.headline}}
-                  </div>
-              </div>
-              <div class="ticket__customer-info">
-                  <a href="#/customer/{{ticket.customerUid | encodeBase64}}" class="ticket__customer-email">{{ticket.customerDisplayName}} </a>
-                  <div class="ticket__customer-order-number"> <a href="#/order/{{ticket.order}}"> {{ticket.order}}</a></div>
-                  
-              </div>
-              <div class="ticket__time-info">
-                  <div class="ticket__date-created">
-                      <b>Date Created:</b>  {{ticket.creationTime | date : 'MMM dd,  hh:mm:ss a' }}
-                  </div>
-                  <div class="ticket__spent-time">
-                      Spent Time: 1 Day, 2 hour.
-                  </div>
-                  <div class="ticket__agent">
-                      Agent: <b>{{ticket.assightedEmployee || "Unassigned" }}</b>
-                  </div>
-              </div>
-              <div class="ticket__additional-info">
-                  <div class="ticket__category">
-                      Category: {{ticket.category}}
-                  </div>
-                  <div class="ticket__level">
-                      Level 3: Automated
-                  </div>
-              </div>
-          </div>
-          <div class="bg-error">{{errorMsg}}</div>
+        <section class="main">
+            <!-- /.ticket -->
 
-      </section>
-      <!-- /content -->
+            <div ng-repeat="ticket in ticketStore | orderBy:sortField:sortReverse"
+                 class="ticket ticket_{{ticket.priority | lowercase}}">
+                <div class="ticket__main-info">
+                    <div class="ticket__number">
+                        <a href="#/ticket/{{ticket.ticketId}}">{{ticket.ticketId}} </a>
+                    </div>
+                    <div class="ticket__status">{{ticket.state}}</div>
+                    <div class="ticket__descr">
+                        {{ticket.headline}}
+                    </div>
+                </div>
+                <div class="ticket__customer-info">
+                    <a href="#/customer/{{ticket.customerUid | encodeBase64}}" class="ticket__customer-email">{{ticket.customerDisplayName}} </a>
 
-  </div>
+                    <div class="ticket__customer-order-number"><a href="#/order/{{ticket.order}}"> {{ticket.order}}</a>
+                    </div>
+
+                </div>
+                <div class="ticket__time-info">
+                    <div class="ticket__date-created">
+                        <b>Date Created:</b> {{ticket.creationTime | date : 'MMM dd, hh:mm:ss a' }}
+                    </div>
+                    <div class="ticket__spent-time">
+                        Spent Time: 1 Day, 2 hour.
+                    </div>
+                    <div class="ticket__agent">
+                        Agent: <b>{{ticket.assightedEmployee || "Unassigned" }}</b>
+                    </div>
+                </div>
+                <div class="ticket__additional-info">
+                    <div class="ticket__category">
+                        Category: {{ticket.category}}
+                    </div>
+                    <div class="ticket__level">
+                        Level 3: Automated
+                    </div>
+                </div>
+            </div>
+            <div class="bg-error">{{errorMsg}}</div>
+
+        </section>
+        <!-- /content -->
+
+    </div>
 </div>

@@ -525,6 +525,16 @@ ul {
 .sub-header_sortOrder__active {
   color: white;
 }
+.sub-header_ticketCount {
+  float: right;
+  align-content: right;
+  font-size: 10px;
+  padding-right: 16px;
+  padding-top: 8px;
+}
+.sub-header_ticketCount_title {
+  color: white;
+}
 
 .sidebar {
   width: 18.46523%;

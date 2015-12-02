@@ -10,4 +10,6 @@ import java.util.List;
 public interface EpamTicketFacade {
     List<EpamTicket> getTicketsByCriteria(EpamTicketSearchCriteria searchCriteria);
     EpamTicket getTicketById(String ticketId);
+
+    Integer getTotalTicketCount();
 }

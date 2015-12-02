@@ -14,4 +14,6 @@ public interface EpamTicketService {
     List<CsTicketModel> getTicketsByCriteria(EpamTicketSearchCriteria searchCriteria);
 
     CsTicketModel getTicketById(String ticketId);
+
+    Integer getTotalTicketCount();
 }

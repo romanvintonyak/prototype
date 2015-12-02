@@ -13,9 +13,6 @@ import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-/**
- * Created by Viktor_Peretiatko on 6/12/2015.
- */
 public class DefaultEpamTicketFacade implements EpamTicketFacade {
 
     public static final Logger LOG = Logger.getLogger(DefaultEpamTicketFacade.class);
@@ -34,13 +31,20 @@ public class DefaultEpamTicketFacade implements EpamTicketFacade {
         List<CsTicketModel> csTicketModels = ticketService.getTicketsByCriteria(searchCriteria);
         return getEpamTickets(csTicketModels);
     }
+
     @Override
-    public EpamTicket getTicketById(String ticketId){
-    	LOG.info("Get ticket by id: " + ticketId);
-    	CsTicketModel csTicketModel = ticketService.getTicketById(ticketId);
-    	return ticketConverter.convert(csTicketModel);
+    public EpamTicket getTicketById(String ticketId) {
+        LOG.info("Get ticket by id: " + ticketId);
+        CsTicketModel csTicketModel = ticketService.getTicketById(ticketId);
+        return ticketConverter.convert(csTicketModel);
     }
-    
+
+    @Override
+    public Integer getTotalTicketCount() {
+        LOG.info("Get ticket count");
+        return ticketService.getTotalTicketCount();
+    }
+
     private List<EpamTicket> getEpamTickets(List<CsTicketModel> csTicketModels) {
         List<EpamTicket> tickets = new ArrayList<>();
         (csTicketModels).forEach(csTicketModel -> tickets.add(ticketConverter.convert(csTicketModel)));

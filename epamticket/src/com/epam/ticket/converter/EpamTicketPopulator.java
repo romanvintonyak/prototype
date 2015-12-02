@@ -32,10 +32,10 @@ public class EpamTicketPopulator implements Populator<CsTicketModel, EpamTicket>
     @Override
     public void populate(CsTicketModel csTicketModel, EpamTicket epamTicket) throws ConversionException {
         epamTicket.setTicketId(csTicketModel.getTicketID());
-        
+
         epamTicket.setCustomerDisplayName(getCustomerDisplayName(csTicketModel));
         epamTicket.setCustomerUid(getCustomerUid(csTicketModel));
-        
+
         epamTicket.setOrder(getOrderCode(csTicketModel));
         epamTicket.setCategory(getEnumCode(csTicketModel.getCategory()));
         epamTicket.setPriority(getEnumCode(csTicketModel.getPriority()));
@@ -55,18 +55,18 @@ public class EpamTicketPopulator implements Populator<CsTicketModel, EpamTicket>
                 .collect(Collectors.toList());
     }
 
-    private String getCustomerDisplayName(CsTicketModel csTicketModel){
-    	UserModel customer = csTicketModel.getCustomer();
-    	if(customer == null) return EMPTY_STRING;
-    	return nullToEmpty(csTicketModel.getCustomer().getDisplayName());
+    private String getCustomerDisplayName(CsTicketModel csTicketModel) {
+        UserModel customer = csTicketModel.getCustomer();
+        if (customer == null) return EMPTY_STRING;
+        return nullToEmpty(csTicketModel.getCustomer().getDisplayName());
     }
-    
-    private String getCustomerUid(CsTicketModel csTicketModel){
-    	UserModel customer = csTicketModel.getCustomer();
-    	if(customer == null) return EMPTY_STRING;
-    	return nullToEmpty(csTicketModel.getCustomer().getUid());
+
+    private String getCustomerUid(CsTicketModel csTicketModel) {
+        UserModel customer = csTicketModel.getCustomer();
+        if (customer == null) return EMPTY_STRING;
+        return nullToEmpty(csTicketModel.getCustomer().getUid());
     }
-    
+
     private String getOrderCode(CsTicketModel csTicketModel) {
         AbstractOrderModel orderModel = csTicketModel.getOrder();
         if (orderModel == null) return EMPTY_STRING;

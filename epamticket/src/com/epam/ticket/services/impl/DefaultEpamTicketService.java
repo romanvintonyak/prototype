@@ -25,6 +25,11 @@ public class DefaultEpamTicketService implements EpamTicketService {
         return ticketDao.getTicketById(ticketId);
     }
 
+    @Override
+    public Integer getTotalTicketCount() {
+        return ticketDao.getTotalTicketCount();
+    }
+
     public void setTicketDao(EpamTicketDAO ticketDao) {
         this.ticketDao = ticketDao;
     }
