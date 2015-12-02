@@ -52,18 +52,21 @@ epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval, T
     $scope.errorMsg = "";
 
     $scope.ticketStore = [];
-    $scope.ticketSearchCriteria = {
-        agent: [],
-        group: [],
-        levels: [],
-        priorities: [],
-        states: [],
-        categories: []
+    $scope.ticketSearchCriteria = {};
+
+    $scope.clearTicketSearchCriteria = function () {
+        var sc = $scope.ticketSearchCriteria;
+        sc.categories = [];
+        sc.agent = [];
+        sc.group = [];
+        sc.states = [];
+        sc.levels = [];
+        sc.priorities = [];
+        sc.sortField = [];
+        sc.sortReverse = false;
     };
 
-    $scope.sortField = 'ticketId'; // todo maybe whe should include these fields to search criteria
-    $scope.sortReverse = true; // to execute them at the server-side
-
+    $scope.clearTicketSearchCriteria();
 
     $scope.updateTicketStore = function () {
         TicketsResource.query(
@@ -81,21 +84,36 @@ epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval, T
         )
     };
 
-    $scope.order = function (predicate) {
-        $scope.predicate = predicate;
-    };
-
-    $scope.updateTicketStore()
+    $scope.updateTicketStore();
     $scope.ticketCount = TicketCountResource.get();
 
-    $scope.clearTicketSearchCriteria = function () {
-        $scope.ticketSearchCriteria.categories = [];
-        $scope.ticketSearchCriteria.agent = [];
-        $scope.ticketSearchCriteria.group = [];
-        $scope.ticketSearchCriteria.states = [];
-        $scope.ticketSearchCriteria.levels = [];
-        $scope.ticketSearchCriteria.priorities = [];
+    // --- sort-related functions
+    $scope.sortField = 'ticketId'; // user requested sort
+    $scope.sortFilterField = '' ; // real sorter for angular, sort field for server in SC
+    $scope.sortReverse = true;
+
+    $scope.isServerSort = function() { // todo total cannot be correct criteria to distinguish
+		return $scope.ticketCount.total > 1;
+	}
+
+    $scope.order = function () {
+        if($scope.isServerSort()) {
+            $scope.ticketSearchCriteria.sortField = $scope.sortField;
+            $scope.sortFilterField = [];
+            $scope.updateTicketStore();
+        } else {
+            $scope.ticketSearchCriteria.sortField = [];
+            $scope.sortFilterField = $scope.sortField;
+        }
     };
+
+	$scope.flipSort = function() {
+		$scope.sortReverse = !$scope.sortReverse;
+		$scope.ticketSearchCriteria.sortReverse = $scope.sortReverse;
+		if($scope.isServerSort())
+			$scope.updateTicketStore();
+
+	};
 });
 
 epamcscockpit.controller("TicketDetailsCtrl", function ($scope, $http, $routeParams, TicketsResource) {

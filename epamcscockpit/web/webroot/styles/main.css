@@ -520,7 +520,7 @@ ul {
   -webkit-user-select: none;
 }
 .sub-header_sortOrder {
-  color: white;
+  cursor: default;
 }
 .sub-header_sortOrder__active {
   color: white;
