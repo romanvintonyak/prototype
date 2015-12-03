@@ -23,7 +23,6 @@ public class EpamTicketEventPopulator implements Populator<CsTicketEventModel, E
 
     @Override
     public void populate(CsTicketEventModel source, EpamTicketEvent target) throws ConversionException {
-        target.setId(source.getPk().getLongValue());
         target.setStartDateTime(source.getStartDateTime());
         target.setEndDateTime(source.getEndDateTime());
         target.setEmails(source.getEmails().parallelStream()

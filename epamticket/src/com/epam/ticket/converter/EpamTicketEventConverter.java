@@ -8,7 +8,7 @@ public class EpamTicketEventConverter extends AbstractPopulatingConverter<CsTick
 
     private EpamTicketEventPopulator populator;
 
-    public void setPopulator(EpamTicketEventPopulator populator) {
+    public EpamTicketEventConverter(EpamTicketEventPopulator populator) {
         this.populator = populator;
     }
 

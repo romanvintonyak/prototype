@@ -6,20 +6,11 @@ public class EpamTicketChangeEventEntry implements Serializable {
 
     private static final long serialVersionUID = -990667506345628920L;
 
-    private long eventId;
     private String alteredAttribute; //temporary, should be replaced with some enum
     private String oldStringValue;
     private String newStringValue;
     private Object oldBinaryValue;
     private Object newBinaryValue;
-
-    public long getEventId() {
-        return eventId;
-    }
-
-    public void setEventId(long eventId) {
-        this.eventId = eventId;
-    }
 
     public String getAlteredAttribute() {
         return alteredAttribute;

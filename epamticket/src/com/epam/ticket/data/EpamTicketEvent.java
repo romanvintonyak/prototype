@@ -9,19 +9,10 @@ public class EpamTicketEvent implements Serializable {
 
     private static final long serialVersionUID = 2602461437712001432L;
 
-    private long id;
     private Date startDateTime;
     private Date endDateTime;
     private List<EpamTicketEmail> emails;
     private Set<EpamTicketChangeEventEntry> ticketChangeEventEntries;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public Date getStartDateTime() {
         return startDateTime;

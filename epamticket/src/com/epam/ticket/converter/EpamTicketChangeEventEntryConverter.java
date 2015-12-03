@@ -9,7 +9,7 @@ public class EpamTicketChangeEventEntryConverter
 
     private EpamTicketChangeEventEntryPopulator populator;
 
-    public void setPopulator(EpamTicketChangeEventEntryPopulator populator) {
+    public EpamTicketChangeEventEntryConverter(EpamTicketChangeEventEntryPopulator populator) {
         this.populator = populator;
     }
 

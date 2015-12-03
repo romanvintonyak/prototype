@@ -7,6 +7,7 @@ import de.hybris.platform.core.model.order.AbstractOrderModel;
 import de.hybris.platform.core.model.security.PrincipalModel;
 import de.hybris.platform.core.model.user.UserModel;
 import de.hybris.platform.servicelayer.dto.converter.ConversionException;
+import de.hybris.platform.ticket.model.CsAgentGroupModel;
 import de.hybris.platform.ticket.model.CsTicketModel;
 
 import java.text.DateFormat;
@@ -18,36 +19,28 @@ public class EpamTicketPopulator implements Populator<CsTicketModel, EpamTicket>
 
     public static final String EMPTY_STRING = "";
 
-    private DateFormat dateFormatter;
     private EpamTicketEventConverter ticketEventConverter;
+    private DateFormat dateFormatter;
 
-    public EpamTicketPopulator(DateFormat dateFormatter) {
-        this.dateFormatter = dateFormatter;
-    }
-
-    public void setTicketEventConverter(EpamTicketEventConverter ticketEventConverter) {
+    public EpamTicketPopulator(EpamTicketEventConverter ticketEventConverter, DateFormat dateFormatter) {
         this.ticketEventConverter = ticketEventConverter;
+        this.dateFormatter = dateFormatter;
     }
 
     @Override
     public void populate(CsTicketModel csTicketModel, EpamTicket epamTicket) throws ConversionException {
         epamTicket.setTicketId(csTicketModel.getTicketID());
-
-        epamTicket.setCustomerDisplayName(getCustomerDisplayName(csTicketModel));
         epamTicket.setCustomerUid(getCustomerUid(csTicketModel));
-
+        epamTicket.setCustomerDisplayName(getCustomerDisplayName(csTicketModel));
         epamTicket.setOrder(getOrderCode(csTicketModel));
         epamTicket.setCategory(getEnumCode(csTicketModel.getCategory()));
         epamTicket.setPriority(getEnumCode(csTicketModel.getPriority()));
         epamTicket.setState(getEnumCode(csTicketModel.getState()));
-
         epamTicket.setAssignedAgent(getUserName(csTicketModel.getAssignedAgent()));
-        epamTicket.setAssignedGroup(getUserName(csTicketModel.getAssignedGroup()));
-
+        epamTicket.setAssignedGroup(getGroupName(csTicketModel.getAssignedGroup()));
         epamTicket.setHeadline(csTicketModel.getHeadline());
         epamTicket.setCreationTime(dateFormatter.format(csTicketModel.getCreationtime()));
         epamTicket.setModifyTime(dateFormatter.format(csTicketModel.getModifiedtime()));
-
         // FIXME: getEvents() is @Deprecated, but suggested method FlexibleSearchService::searchRelation
         // throws exception with message "not implemented yet" :)
         csTicketModel.getEvents().parallelStream()
@@ -58,7 +51,8 @@ public class EpamTicketPopulator implements Populator<CsTicketModel, EpamTicket>
     private String getCustomerDisplayName(CsTicketModel csTicketModel) {
         UserModel customer = csTicketModel.getCustomer();
         if (customer == null) return EMPTY_STRING;
-        return nullToEmpty(csTicketModel.getCustomer().getDisplayName());
+        // FIXME: getDisplayName() was replaced with getName() thus no possibility to set "displayName" was found, should be investigated
+        return nullToEmpty(csTicketModel.getCustomer().getName());
     }
 
     private String getCustomerUid(CsTicketModel csTicketModel) {
@@ -80,7 +74,14 @@ public class EpamTicketPopulator implements Populator<CsTicketModel, EpamTicket>
 
     private String getUserName(PrincipalModel principalModel) {
         if (principalModel == null) return EMPTY_STRING;
-        return nullToEmpty(principalModel.getDisplayName());
+        // FIXME: getDisplayName() was replaced with getName() thus no possibility to set "displayName" was found, should be investigated
+        return nullToEmpty(principalModel.getName());
+    }
+
+    private String getGroupName(CsAgentGroupModel groupModel) {
+        if (groupModel == null) return EMPTY_STRING;
+        // FIXME: getDisplayName() was replaced with getName() thus no possibility to set "displayName" was found, should be investigated
+        return nullToEmpty(groupModel.getName());
     }
 
 }

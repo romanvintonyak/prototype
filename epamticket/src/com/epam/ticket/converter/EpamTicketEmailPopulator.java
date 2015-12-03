@@ -14,6 +14,5 @@ public class EpamTicketEmailPopulator implements Populator<CsTicketEmailModel, E
         target.setTo(source.getTo());
         target.setSubject(source.getSubject());
         target.setBody(source.getBody());
-        target.setTicketEventId(source.getTicket().getPk().getLong());
     }
 }

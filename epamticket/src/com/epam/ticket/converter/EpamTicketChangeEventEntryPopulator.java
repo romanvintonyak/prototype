@@ -11,7 +11,6 @@ public class EpamTicketChangeEventEntryPopulator implements
     @Override
     public void populate(CsTicketChangeEventEntryModel source, EpamTicketChangeEventEntry target)
             throws ConversionException {
-        target.setEventId(source.getEvent().getPk().getLong());
         target.setAlteredAttribute(source.getAlteredAttribute().getName());
         target.setOldStringValue(source.getOldStringValue());
         target.setNewStringValue(source.getNewStringValue());
