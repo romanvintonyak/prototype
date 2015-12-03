@@ -36,7 +36,7 @@ epamcscockpit.config(["$routeProvider", "$httpProvider", function ($routeProvide
         });
 }]);
 
-epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval, TicketsResource, TicketCountResource) {
+epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval, TicketsResource, TicketCountResource, TicketCountsResource) {
     $scope.ticketPriorities = ['Low', 'Medium', 'High'];
     $scope.ticketStates = ['New', 'Open', 'Closed'];
     $scope.ticketCategories = [null, 'Problem', 'Incident', 'Complaint', 'Fraud', 'Note'];
@@ -86,6 +86,7 @@ epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval, T
 
     $scope.updateTicketStore();
     $scope.ticketCount = TicketCountResource.get();
+    $scope.ticketCounts = TicketCountsResource.get();
 
     // --- sort-related functions
     $scope.sortField = 'ticketId'; // user requested sort

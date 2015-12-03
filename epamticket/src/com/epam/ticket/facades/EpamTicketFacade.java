@@ -1,5 +1,6 @@
 package com.epam.ticket.facades;
 
+import com.epam.ticket.dao.EpamTicketDAO.TicketCountsResult;
 import com.epam.ticket.data.EpamTicket;
 
 import java.util.List;
@@ -12,4 +13,6 @@ public interface EpamTicketFacade {
     EpamTicket getTicketById(String ticketId);
 
     Integer getTotalTicketCount();
+    
+    TicketCountsResult getTicketCounts();
 }

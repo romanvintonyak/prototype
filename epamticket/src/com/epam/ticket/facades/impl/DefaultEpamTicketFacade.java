@@ -1,6 +1,7 @@
 package com.epam.ticket.facades.impl;
 
 import com.epam.ticket.converter.EpamTicketConverter;
+import com.epam.ticket.dao.EpamTicketDAO.TicketCountsResult;
 import com.epam.ticket.data.EpamTicket;
 import com.epam.ticket.facades.EpamTicketFacade;
 import com.epam.ticket.facades.EpamTicketSearchCriteria;
@@ -49,6 +50,11 @@ public class DefaultEpamTicketFacade implements EpamTicketFacade {
         List<EpamTicket> tickets = new ArrayList<>();
         (csTicketModels).forEach(csTicketModel -> tickets.add(ticketConverter.convert(csTicketModel)));
         return tickets;
+    }
+
+    @Override
+    public TicketCountsResult getTicketCounts() {
+        return ticketService.getTicketCounts();
     }
 
 }

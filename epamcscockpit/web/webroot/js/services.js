@@ -28,7 +28,13 @@ angular.module("epamcscockpitResource", ["ngResource"])
                 responseType: 'text'
         }});
     }])
-
+    .factory("TicketCountsResource", ["$resource", function ($resource) {
+        var resourseUrl = "/epamticket/v1/tickets/ticketCounts";
+        return $resource(resourseUrl,{}, { get: {
+                 method: 'GET',
+                responseType: 'text'
+        }});
+    }])
     .factory("OrdersResource", ["$resource", function ($resource) {
         var resourseUrl = "/epamorder/v1/orders";
         return $resource(resourseUrl + '/:orderCode',

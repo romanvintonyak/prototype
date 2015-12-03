@@ -1,5 +1,6 @@
 package com.epam.ticket.controllers;
 
+import com.epam.ticket.dao.EpamTicketDAO.TicketCountsResult;
 import com.epam.ticket.data.EpamTicket;
 import com.epam.ticket.facades.EpamTicketSearchCriteria;
 import com.epam.ticket.facades.impl.DefaultEpamTicketFacade;
@@ -38,6 +39,12 @@ public class EpamTicketController {
         TicketCounterHolder ticketCounterHolder = new TicketCounterHolder();
         ticketCounterHolder.setTotal(defaultEpamTicketFacade.getTotalTicketCount());
         return ticketCounterHolder;
+    }
+
+    @RequestMapping(value = "/ticketCounts", method = RequestMethod.GET)
+    @ResponseBody
+    public TicketCountsResult getTicketCounts() {
+        return defaultEpamTicketFacade.getTicketCounts();
     }
 
     private class TicketCounterHolder  implements Serializable{
