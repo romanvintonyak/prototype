@@ -94,40 +94,22 @@ public class EpamTicketDAO extends DefaultTicketDao {
     }
     
     public TicketCountsResult getTicketCounts() {
-            
-            
         TicketCountsResult result = new TicketCountsResult();
-        
-        EnumerationService service = (EnumerationService) Registry.getApplicationContext().getBean("enumerationService");
-        List<CsTicketPriority> priorities = service.getEnumerationValues(CsTicketPriority.class);
         StringBuilder queryBuilder = new StringBuilder();
-        StringBuilder fieldsList = new StringBuilder();
-        int fieldsCount = 0;
-        for (CsTicketPriority priority : priorities) {
-            ++fieldsCount;
-            fieldsList.append(" P" + fieldsCount + "." + priority.getCode() + ",");
-            // @formatter:off
-            queryBuilder.append(
-                    " ( "
-                    + "  {{SELECT count(*) AS " + priority.getCode()
-                    + "    FROM {CsTicket AS c JOIN EnumerationValue AS ev ON {c.priority}={ev.pk}} "
-                    + "    WHERE {ev.code} = '" + priority.getCode() + "' "
-                    + "  }} "
-                    + ") AS P" + fieldsCount + ","
-            );
-            // @formatter:on
-        }
-        fieldsList.deleteCharAt(fieldsList.length() - 1);
-        queryBuilder.deleteCharAt(queryBuilder.length() -1);
         
-        FlexibleSearchQuery query = new FlexibleSearchQuery("SELECT" + fieldsList + " FROM" + queryBuilder);
-        query.setResultClassList( Collections.nCopies(fieldsCount, Integer.class) );
-        final SearchResult<List<Integer>> qResult = getFlexibleSearchService().search(query);
-        List<Integer> qr = qResult.getResult().get(0);
-        if (qr != null && !qr.isEmpty()) {
-            for (int i = 0; i < priorities.size(); i++) {
-                result.getPriority().put(priorities.get(i).getCode(), qr.get(i));
-            }
+        queryBuilder.append(
+                  "SELECT {e.code}, count({priority}) " 
+                + "FROM {CsTicket AS c JOIN enumerationvalue AS e ON {c.priority}={e.pk} } "
+                + "GROUP BY {priority}"
+        );
+        
+        FlexibleSearchQuery query = new FlexibleSearchQuery(queryBuilder);
+        query.setResultClassList( Arrays.asList(String.class, Integer.class) );
+        final SearchResult<List> qResult = getFlexibleSearchService().search(query);
+        
+        for (final Iterator<List> iter = qResult.getResult().iterator(); iter.hasNext(); ) {
+            List row = iter.next();
+            result.getPriority().put((String) row.get(0), (Integer) row.get(1));
         }
         LOG.info("Ticket counts:" + result);
         return result;
