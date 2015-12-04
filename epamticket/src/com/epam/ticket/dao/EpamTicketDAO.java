@@ -3,12 +3,10 @@ package com.epam.ticket.dao;
 import java.io.Serializable;
 import org.apache.log4j.Logger;
 
+import com.epam.ticket.dao.counters.CategoryCounterStrategy;
 import com.epam.ticket.facades.EpamTicketSearchCriteria;
 
-import de.hybris.platform.core.Registry;
-import de.hybris.platform.enumeration.EnumerationService;
 import de.hybris.platform.servicelayer.exceptions.AmbiguousIdentifierException;
-import de.hybris.platform.servicelayer.search.FlexibleSearchQuery;
 import de.hybris.platform.servicelayer.search.SearchResult;
 import de.hybris.platform.ticket.dao.impl.DefaultTicketDao;
 import de.hybris.platform.ticket.enums.CsTicketCategory;
@@ -25,6 +23,7 @@ public class EpamTicketDAO extends DefaultTicketDao {
     public static final Logger LOG = Logger.getLogger(EpamTicketDAO.class);
     public static final String QUERY_STRING = "SELECT {t:pk} FROM {CsTicket AS t} ";
     private StringBuffer query;
+    private CategoryCounterStrategy enumCategoryCounterStrategy;
 
     public CsTicketModel getTicketById(String ticketId) {
         List<CsTicketModel> csTicketModels = this.findTicketsById(ticketId);
@@ -95,22 +94,10 @@ public class EpamTicketDAO extends DefaultTicketDao {
     
     public TicketCountsResult getTicketCounts() {
         TicketCountsResult result = new TicketCountsResult();
-        StringBuilder queryBuilder = new StringBuilder();
+
+        result.addFilerCategoryCounters("priority", enumCategoryCounterStrategy.countCategory("priority"));
+        result.addFilerCategoryCounters("state", enumCategoryCounterStrategy.countCategory("state"));
         
-        queryBuilder.append(
-                  "SELECT {e.code}, count({priority}) " 
-                + "FROM {CsTicket AS c JOIN enumerationvalue AS e ON {c.priority}={e.pk} } "
-                + "GROUP BY {priority}"
-        );
-        
-        FlexibleSearchQuery query = new FlexibleSearchQuery(queryBuilder);
-        query.setResultClassList( Arrays.asList(String.class, Integer.class) );
-        final SearchResult<List> qResult = getFlexibleSearchService().search(query);
-        
-        for (final Iterator<List> iter = qResult.getResult().iterator(); iter.hasNext(); ) {
-            List row = iter.next();
-            result.getPriority().put((String) row.get(0), (Integer) row.get(1));
-        }
         LOG.info("Ticket counts:" + result);
         return result;
     }
@@ -122,25 +109,16 @@ public class EpamTicketDAO extends DefaultTicketDao {
     
     public class TicketCountsResult implements Serializable {
         private static final long serialVersionUID = 1L;
-        private Map<String, Integer> priority;
+        private final Map<String, Map<String, Integer>> filterCategories = new HashMap<>();
         
-        public TicketCountsResult() {
-            setPriority(new HashMap<>());
+        public void addFilerCategoryCounters(final String filterCategory, final Map<String, Integer> categoryStates) {
+            filterCategories.put(filterCategory, categoryStates);
         }
         
-        public Map<String, Integer> getPriority() {
-            return priority;
+        public Map<String, Map<String, Integer>> getFilterCategories() {
+            return filterCategories;
         }
 
-        private void setPriority(Map<String, Integer> priority) {
-            this.priority = priority;
-        }
-        
-        @Override
-        public String toString() {
-            return "Low=" + priority.get("Low") + ", High=" + priority.get("High") + ", Medium=" + priority.get("Medium");
-        }
-        
     }
 
     protected Map<String, EpamCsSort> sorts = new HashMap<>();
@@ -157,5 +135,7 @@ public class EpamTicketDAO extends DefaultTicketDao {
         this.sorts = res;
     }
 
-
+    public void setEnumCategoryCounterStrategy(CategoryCounterStrategy enumCategoryCounterStrategy) {
+        this.enumCategoryCounterStrategy = enumCategoryCounterStrategy;
+    }
 }

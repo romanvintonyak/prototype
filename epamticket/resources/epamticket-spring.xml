@@ -46,6 +46,7 @@
     </bean>
 
     <bean id="epamTicketDao" class="com.epam.ticket.dao.EpamTicketDAO" parent="abstractItemDao" scope="tenant">
+        <property name="enumCategoryCounterStrategy" ref="defaultEnumCategoryCounterStrategy"/>
         <property name="availableSorts">
             <list>
 
@@ -71,6 +72,10 @@
         <constructor-arg ref="ticketBusinessService" />
         <constructor-arg ref="ticketService" />
         <constructor-arg ref="epamTicketConverter" />
+    </bean>
+
+    <bean id="defaultEnumCategoryCounterStrategy" class="com.epam.ticket.dao.counters.impl.DefaultEnumCategoryCounterStrategy" >
+        <property name="flexibleSearchService" ref="flexibleSearchService"/>
     </bean>
 
 </beans>
