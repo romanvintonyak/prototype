@@ -19,6 +19,7 @@ import de.hybris.platform.ticket.dao.impl.DefaultTicketDao;
 import de.hybris.platform.ticket.enums.CsTicketCategory;
 import de.hybris.platform.ticket.enums.CsTicketPriority;
 import de.hybris.platform.ticket.enums.CsTicketState;
+import de.hybris.platform.ticket.jalo.CsTicket;
 import de.hybris.platform.ticket.model.CsTicketModel;
 
 public class EpamTicketDAO extends DefaultTicketDao {
@@ -86,8 +87,8 @@ public class EpamTicketDAO extends DefaultTicketDao {
     public TicketCountsResult getTicketCounts() {
         TicketCountsResult result = new TicketCountsResult();
 
-        result.addFilerCategoryCounters("priority", enumCategoryCounterStrategy.countCategory("priority"));
-        result.addFilerCategoryCounters("state", enumCategoryCounterStrategy.countCategory("state"));
+        result.addFilerCategoryCounters(CsTicket.PRIORITY, enumCategoryCounterStrategy.countCategory(CsTicket.PRIORITY));
+        result.addFilerCategoryCounters(CsTicket.STATE, enumCategoryCounterStrategy.countCategory(CsTicket.STATE));
         
         LOG.info("Ticket counts:" + result);
         return result;
