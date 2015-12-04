@@ -21,7 +21,7 @@ public class TicketsCountDaoIntegrationTest extends ServicelayerTransactionalTes
         EpamTicketDAO.TicketCountsResult result = epamTicketDao.getTicketCounts();
         assertNotNull("TicketCountsResult should not be NULL", result);
         assertTrue("Ticket count should not be null (check if there is a test data ina DB)", 
-                result.getpHigh() != 0);
+                result.getPriority().get("Low") != 0);
     }
 
 }
