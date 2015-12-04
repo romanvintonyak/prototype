@@ -1,11 +1,12 @@
 package com.epam.ticket.dao;
 
 import java.io.Serializable;
-
 import org.apache.log4j.Logger;
 
 import com.epam.ticket.facades.EpamTicketSearchCriteria;
 
+import de.hybris.platform.core.Registry;
+import de.hybris.platform.enumeration.EnumerationService;
 import de.hybris.platform.servicelayer.exceptions.AmbiguousIdentifierException;
 import de.hybris.platform.servicelayer.search.FlexibleSearchQuery;
 import de.hybris.platform.servicelayer.search.SearchResult;
@@ -96,35 +97,37 @@ public class EpamTicketDAO extends DefaultTicketDao {
             
             
         TicketCountsResult result = new TicketCountsResult();
-        FlexibleSearchQuery query = new FlexibleSearchQuery(
-                  "SELECT PL.PLOW, PH.PHIGH, PM.PMEDIUM "
-                + "FROM "
-                + "( "
-                + "  {{SELECT count(*) AS PLOW "
-                + "    FROM {CsTicket AS c JOIN EnumerationValue AS ev ON {c.priority}={ev.pk}} "
-                + "    WHERE {ev.code} = 'Low' "
-                + "  }} "
-                + ") AS PL, "
-                + "(  "
-                + "  {{SELECT count({c1.pk}) AS PHIGH "
-                + "    FROM {CsTicket AS c1 JOIN EnumerationValue AS ev1 ON {c1.priority}={ev1.pk}} "
-                + "    WHERE {ev1.code} = 'High' "
-                + "  }} "
-                + ") AS PH, "
-                + "( "
-                + "  {{SELECT count({c1.pk}) AS PMEDIUM "
-                + "    FROM {CsTicket AS c1 JOIN EnumerationValue AS ev1 ON {c1.priority}={ev1.pk}} "
-                + "    WHERE {ev1.code} = 'Medium' "
-                + "  }} "
-                + ") AS PM"
-        );
-        query.setResultClassList(Arrays.asList(Integer.class, Integer.class, Integer.class));
+        
+        EnumerationService service = (EnumerationService) Registry.getApplicationContext().getBean("enumerationService");
+        List<CsTicketPriority> priorities = service.getEnumerationValues(CsTicketPriority.class);
+        StringBuilder queryBuilder = new StringBuilder();
+        StringBuilder fieldsList = new StringBuilder();
+        int fieldsCount = 0;
+        for (CsTicketPriority priority : priorities) {
+            ++fieldsCount;
+            fieldsList.append(" P" + fieldsCount + "." + priority.getCode() + ",");
+            // @formatter:off
+            queryBuilder.append(
+                    " ( "
+                    + "  {{SELECT count(*) AS " + priority.getCode()
+                    + "    FROM {CsTicket AS c JOIN EnumerationValue AS ev ON {c.priority}={ev.pk}} "
+                    + "    WHERE {ev.code} = '" + priority.getCode() + "' "
+                    + "  }} "
+                    + ") AS P" + fieldsCount + ","
+            );
+            // @formatter:on
+        }
+        fieldsList.deleteCharAt(fieldsList.length() - 1);
+        queryBuilder.deleteCharAt(queryBuilder.length() -1);
+        
+        FlexibleSearchQuery query = new FlexibleSearchQuery("SELECT" + fieldsList + " FROM" + queryBuilder);
+        query.setResultClassList( Collections.nCopies(fieldsCount, Integer.class) );
         final SearchResult<List<Integer>> qResult = getFlexibleSearchService().search(query);
         List<Integer> qr = qResult.getResult().get(0);
         if (qr != null && !qr.isEmpty()) {
-            result.setpLow(qr.get(0)); result.getPriority().put("Low", qr.get(0));
-            result.setpHigh(qr.get(1)); result.getPriority().put("High", qr.get(1));
-            result.setpMedium(qr.get(2)); result.getPriority().put("Medium", qr.get(2));
+            for (int i = 0; i < priorities.size(); i++) {
+                result.getPriority().put(priorities.get(i).getCode(), qr.get(i));
+            }
         }
         LOG.info("Ticket counts:" + result);
         return result;
@@ -136,38 +139,13 @@ public class EpamTicketDAO extends DefaultTicketDao {
     }
     
     public class TicketCountsResult implements Serializable {
-        private int pLow;
-        private int pHigh;
-        private int pMedium;
+        private static final long serialVersionUID = 1L;
         private Map<String, Integer> priority;
         
         public TicketCountsResult() {
             setPriority(new HashMap<>());
         }
         
-        public int getpLow() {
-            return pLow;
-        }
-        public void setpLow(int plow) {
-            this.pLow = plow;
-        }
-        public int getpHigh() {
-            return pHigh;
-        }
-        public void setpHigh(int phigh) {
-            this.pHigh = phigh;
-        }
-        public int getpMedium() {
-            return pMedium;
-        }
-        public void setpMedium(int pmedium) {
-            this.pMedium = pmedium;
-        }
-        @Override
-        public String toString() {
-            return "pLow=" + pLow + ", pHigh=" + pHigh + ", pMedium=" + "pMedium";
-        }
-
         public Map<String, Integer> getPriority() {
             return priority;
         }
@@ -176,6 +154,10 @@ public class EpamTicketDAO extends DefaultTicketDao {
             this.priority = priority;
         }
         
+        @Override
+        public String toString() {
+            return "Low=" + priority.get("Low") + ", High=" + priority.get("High") + ", Medium=" + priority.get("Medium");
+        }
         
     }
 
