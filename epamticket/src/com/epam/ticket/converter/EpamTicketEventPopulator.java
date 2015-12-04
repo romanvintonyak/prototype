@@ -8,6 +8,8 @@ import de.hybris.platform.ticket.events.model.CsTicketEventModel;
 
 import java.util.stream.Collectors;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public class EpamTicketEventPopulator implements Populator<CsTicketEventModel, EpamTicketEvent> {
 
     private EpamTicketEmailConverter ticketEmailConverter;
@@ -23,7 +25,7 @@ public class EpamTicketEventPopulator implements Populator<CsTicketEventModel, E
 
     @Override
     public void populate(CsTicketEventModel source, EpamTicketEvent target) throws ConversionException {
-        target.setId(source.getPk().getLongValue());
+        checkNotNull(source, "Source model should not be null");
         target.setStartDateTime(source.getStartDateTime());
         target.setEndDateTime(source.getEndDateTime());
         target.setEmails(source.getEmails().parallelStream()

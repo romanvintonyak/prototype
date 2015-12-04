@@ -4,11 +4,13 @@ import com.epam.ticket.data.EpamTicketEmail;
 import de.hybris.platform.converters.impl.AbstractPopulatingConverter;
 import de.hybris.platform.ticket.events.model.CsTicketEmailModel;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public class EpamTicketEmailConverter extends AbstractPopulatingConverter<CsTicketEmailModel, EpamTicketEmail> {
 
     private EpamTicketEmailPopulator populator;
 
-    public void setPopulator(EpamTicketEmailPopulator populator) {
+    public EpamTicketEmailConverter(EpamTicketEmailPopulator populator) {
         this.populator = populator;
     }
 
@@ -18,9 +20,10 @@ public class EpamTicketEmailConverter extends AbstractPopulatingConverter<CsTick
     }
 
     @Override
-    public EpamTicketEmail convert(CsTicketEmailModel csTicketEmailModel) {
-        EpamTicketEmail epamTicketEmail = new EpamTicketEmail();
-        populator.populate(csTicketEmailModel, epamTicketEmail);
-        return epamTicketEmail;
+    public EpamTicketEmail convert(CsTicketEmailModel source) {
+        checkNotNull(source, "Source model should not be null");
+        EpamTicketEmail target = new EpamTicketEmail();
+        populator.populate(source, target);
+        return target;
     }
 }

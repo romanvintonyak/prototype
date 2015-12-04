@@ -7,7 +7,6 @@
 
     <bean id="defaultEpamTicketFacade"
           class="com.epam.ticket.facades.impl.DefaultEpamTicketFacade">
-
         <constructor-arg name="ticketService" ref="epamTicketService"/>
         <constructor-arg name="ticketConverter" ref="epamTicketConverter"/>
     </bean>
@@ -17,23 +16,28 @@
     </bean>
 
     <bean id="epamTicketPopulator" class="com.epam.ticket.converter.EpamTicketPopulator">
-        <constructor-arg ref="dateFormatter"/>
-        <property name="ticketEventConverter" ref="epamTicketEventConverter" />
+        <constructor-arg name="ticketEventConverter" ref="epamTicketEventConverter" />
+        <constructor-arg name="dateFormatter" ref="dateFormatter"/>
     </bean>
 
     <bean id="epamTicketEventConverter" class="com.epam.ticket.converter.EpamTicketEventConverter">
-        <property name="populator" ref="epamTicketEventPopulator" />
+        <constructor-arg name="populator" ref="epamTicketEventPopulator" />
     </bean>
 
     <bean id="epamTicketEventPopulator" class="com.epam.ticket.converter.EpamTicketEventPopulator" >
+        <property name="ticketEmailConverter" ref="epamTicketEmailConverter" />
         <property name="ticketChangeEventEntryConverter" ref="epamTicketChangeEventEntryConverter" />
     </bean>
 
-    <bean id="epamTicketEmailConverter" class="com.epam.ticket.converter.EpamTicketEmailConverter" />
+    <bean id="epamTicketEmailConverter" class="com.epam.ticket.converter.EpamTicketEmailConverter">
+        <constructor-arg name="populator" ref="epamTicketEmailPopulator" />
+    </bean>
 
     <bean id="epamTicketEmailPopulator" class="com.epam.ticket.converter.EpamTicketEmailPopulator" />
 
-    <bean id="epamTicketChangeEventEntryConverter" class="com.epam.ticket.converter.EpamTicketChangeEventEntryConverter" />
+    <bean id="epamTicketChangeEventEntryConverter" class="com.epam.ticket.converter.EpamTicketChangeEventEntryConverter">
+        <constructor-arg name="populator" ref="epamTicketChangeEventEntryPopulator" />
+    </bean>
 
     <bean id="epamTicketChangeEventEntryPopulator" class="com.epam.ticket.converter.EpamTicketChangeEventEntryPopulator" />
 
