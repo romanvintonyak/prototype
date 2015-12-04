@@ -78,6 +78,11 @@ public class EpamTicketConvertorTest {
         ctx = builder.build();
     }
 
+    @Test(expected = NullPointerException.class)
+    public void testNullSourceConvert() {
+        converter.convert(null);
+    }
+
     @Test(expected = NullPointerException.class) //empty list of emails and set of changes with initial change should be set at least
     public void testFailConvert() {
         CsTicketModel source = new CsTicketModel();

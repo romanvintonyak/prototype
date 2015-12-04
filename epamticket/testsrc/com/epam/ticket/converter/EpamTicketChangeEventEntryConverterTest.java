@@ -28,6 +28,11 @@ public class EpamTicketChangeEventEntryConverterTest {
     @Autowired
     private EpamTicketChangeEventEntryConverter converter;
 
+    @Test(expected = NullPointerException.class)
+    public void testNullSourceConvert() {
+        converter.convert(null);
+    }
+
     @Test(expected = NullPointerException.class) //changed attribute should be set at least
     public void testFailConvert() {
         CsTicketChangeEventEntryModel source = new CsTicketChangeEventEntryModel();

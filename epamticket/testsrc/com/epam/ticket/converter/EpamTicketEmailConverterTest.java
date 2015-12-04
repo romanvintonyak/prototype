@@ -27,6 +27,11 @@ public class EpamTicketEmailConverterTest {
     @Autowired
     private EpamTicketEmailConverter converter;
 
+    @Test(expected = NullPointerException.class)
+    public void testNullSourceConvert() {
+        converter.convert(null);
+    }
+
     @Test
     public void testConverter() {
 

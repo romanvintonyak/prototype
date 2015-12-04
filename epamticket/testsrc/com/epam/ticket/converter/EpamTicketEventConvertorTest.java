@@ -28,6 +28,11 @@ public class EpamTicketEventConvertorTest {
     @Autowired
     private EpamTicketEventConverter converter;
 
+    @Test(expected = NullPointerException.class)
+    public void testNullSourceConvert() {
+        converter.convert(null);
+    }
+
     @Test(expected = NullPointerException.class) //start date and empty list of events should be set at least
     public void testFailConvert() {
         CsTicketEventModel source = new CsTicketEventModel();

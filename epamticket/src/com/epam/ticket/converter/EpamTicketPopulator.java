@@ -13,6 +13,7 @@ import de.hybris.platform.ticket.model.CsTicketModel;
 import java.text.DateFormat;
 import java.util.stream.Collectors;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Strings.nullToEmpty;
 
 public class EpamTicketPopulator implements Populator<CsTicketModel, EpamTicket> {
@@ -28,22 +29,23 @@ public class EpamTicketPopulator implements Populator<CsTicketModel, EpamTicket>
     }
 
     @Override
-    public void populate(CsTicketModel csTicketModel, EpamTicket epamTicket) throws ConversionException {
-        epamTicket.setTicketId(csTicketModel.getTicketID());
-        epamTicket.setCustomerUid(getCustomerUid(csTicketModel));
-        epamTicket.setCustomerDisplayName(getCustomerDisplayName(csTicketModel));
-        epamTicket.setOrder(getOrderCode(csTicketModel));
-        epamTicket.setCategory(getEnumCode(csTicketModel.getCategory()));
-        epamTicket.setPriority(getEnumCode(csTicketModel.getPriority()));
-        epamTicket.setState(getEnumCode(csTicketModel.getState()));
-        epamTicket.setAssignedAgent(getUserName(csTicketModel.getAssignedAgent()));
-        epamTicket.setAssignedGroup(getGroupName(csTicketModel.getAssignedGroup()));
-        epamTicket.setHeadline(csTicketModel.getHeadline());
-        epamTicket.setCreationTime(dateFormatter.format(csTicketModel.getCreationtime()));
-        epamTicket.setModifyTime(dateFormatter.format(csTicketModel.getModifiedtime()));
+    public void populate(CsTicketModel source, EpamTicket target) throws ConversionException {
+        checkNotNull(source, "Source model should not be null");
+        target.setTicketId(source.getTicketID());
+        target.setCustomerUid(getCustomerUid(source));
+        target.setCustomerDisplayName(getCustomerDisplayName(source));
+        target.setOrder(getOrderCode(source));
+        target.setCategory(getEnumCode(source.getCategory()));
+        target.setPriority(getEnumCode(source.getPriority()));
+        target.setState(getEnumCode(source.getState()));
+        target.setAssignedAgent(getUserName(source.getAssignedAgent()));
+        target.setAssignedGroup(getGroupName(source.getAssignedGroup()));
+        target.setHeadline(source.getHeadline());
+        target.setCreationTime(dateFormatter.format(source.getCreationtime()));
+        target.setModifyTime(dateFormatter.format(source.getModifiedtime()));
         // FIXME: getEvents() is @Deprecated, but suggested method FlexibleSearchService::searchRelation
         // throws exception with message "not implemented yet" :)
-        csTicketModel.getEvents().parallelStream()
+        source.getEvents().parallelStream()
                 .map(ticketEventConverter::convert)
                 .collect(Collectors.toList());
     }
