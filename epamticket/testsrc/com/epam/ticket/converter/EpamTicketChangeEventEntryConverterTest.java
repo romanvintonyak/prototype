@@ -3,12 +3,20 @@ package com.epam.ticket.converter;
 import com.epam.ticket.data.EpamTicketChangeEventEntry;
 import de.hybris.bootstrap.annotations.UnitTest;
 import de.hybris.platform.core.model.type.AttributeDescriptorModel;
+import de.hybris.platform.servicelayer.StubLocaleProvider;
+import de.hybris.platform.servicelayer.internal.model.impl.ModelValueHistory;
+import de.hybris.platform.servicelayer.model.ItemContextBuilder;
+import de.hybris.platform.servicelayer.model.ItemModelInternalContext;
+import de.hybris.platform.servicelayer.model.strategies.DefaultFetchStrategy;
 import de.hybris.platform.ticket.events.model.CsTicketChangeEventEntryModel;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.Locale;
 
 import static org.junit.Assert.assertEquals;
 
@@ -25,8 +33,25 @@ public class EpamTicketChangeEventEntryConverterTest {
     public static final String OLD_BINARY_VALUE = "old_binary_value";
     public static final String NEW_BINARY_VALUE = "new_binary_value";
 
+    private ItemModelInternalContext ctx;
+
     @Autowired
     private EpamTicketChangeEventEntryConverter converter;
+
+    @Before
+    public void setUp() throws Exception {
+
+        ItemContextBuilder builder = new ItemContextBuilder();
+        //builder.setPk(pk);
+        //builder.setItemType(itemType);
+        //builder.setTenantID(TENANT_ID);
+        builder.setValueHistory(new ModelValueHistory());
+        builder.setFetchStrategy(new DefaultFetchStrategy());
+        builder.setLocaleProvider(new StubLocaleProvider(Locale.ENGLISH));
+        //builder.setDynamicAttributesProvider(new MockDynamicAttributesProvider(dynamicAttributes, dynamicLocAttributes));
+        //builder.setAttributeProvider(new MockAttributeProvider(attributes, locAttributes));
+        ctx = builder.build();
+    }
 
     @Test(expected = NullPointerException.class)
     public void testNullSourceConvert() {
@@ -43,7 +68,7 @@ public class EpamTicketChangeEventEntryConverterTest {
     public void testConvert() {
 
         CsTicketChangeEventEntryModel source = new CsTicketChangeEventEntryModel();
-        AttributeDescriptorModel descriptor = new AttributeDescriptorModel();
+        AttributeDescriptorModel descriptor = new AttributeDescriptorModel(ctx);
         descriptor.setName(DESCRIPTOR_NAME);
         source.setAlteredAttribute(descriptor);
         source.setOldStringValue(OLD_STRING_VALUE);
