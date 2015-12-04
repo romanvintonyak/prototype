@@ -41,6 +41,12 @@
        <property name="ticketDao" ref="epamTicketDao" />
     </bean>
 
-    <bean id="epamTicketDao" class="com.epam.ticket.dao.EpamTicketDAO" parent="abstractItemDao" scope="tenant"/>
+    <bean id="epamTicketDao" class="com.epam.ticket.dao.EpamTicketDAO" parent="abstractItemDao" scope="tenant" >
+        <property name="enumCategoryCounterStrategy" ref="defaultEnumCategoryCounterStrategy"/>
+    </bean>
+    
+    <bean id="defaultEnumCategoryCounterStrategy" class="com.epam.ticket.dao.counters.impl.DefaultEnumCategoryCounterStrategy" >
+        <property name="flexibleSearchService" ref="flexibleSearchService"/>
+    </bean>
 
 </beans>

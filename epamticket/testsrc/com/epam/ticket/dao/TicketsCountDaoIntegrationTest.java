@@ -1,15 +1,19 @@
 package com.epam.ticket.dao;
 
+import static org.junit.Assert.*;
+
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 import de.hybris.platform.servicelayer.ServicelayerTransactionalTest;
 
 public class TicketsCountDaoIntegrationTest extends ServicelayerTransactionalTest{
     
+    @SuppressWarnings("unused")
     private static Logger LOG = Logger.getLogger(TicketsCountDaoIntegrationTest.class);
     
     @Resource
@@ -20,8 +24,10 @@ public class TicketsCountDaoIntegrationTest extends ServicelayerTransactionalTes
         
         EpamTicketDAO.TicketCountsResult result = epamTicketDao.getTicketCounts();
         assertNotNull("TicketCountsResult should not be NULL", result);
-        assertTrue("Ticket count should not be null (check if there is a test data ina DB)", 
-                result.getPriority().get("Low") != 0);
+        
+        Map<String, Integer> priorityCounters = result.getFilterCategories().get("priority");
+        assertNotNull("Priority counters must be present", priorityCounters);
+        assertEquals("Priority states number must be equals 3", 3, priorityCounters.size());
     }
 
 }

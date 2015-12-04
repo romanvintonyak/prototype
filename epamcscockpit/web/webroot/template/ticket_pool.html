@@ -65,7 +65,7 @@
                                    checklist-model="ticketSearchCriteria.states" checklist-value="state"/>
                             {{state}}
                         </label>
-                        <span class="filter__item-counter"></span>
+                        <span class="filter__item-counter">{{ticketCounts.filterCategories.state[state] || 0}}</span>
                     </li>
                 </ul>
             </div>
@@ -93,7 +93,7 @@
                                    checklist-model="ticketSearchCriteria.priorities" checklist-value="priority"/>
                             {{priority}}
                         </label>
-                        <span class="filter__item-counter"> {{ticketCounts.priority[priority]}}</span>
+                        <span class="filter__item-counter">{{ticketCounts.filterCategories.priority[priority]}}</span>
                     </li>
                 </ul>
             </div>
