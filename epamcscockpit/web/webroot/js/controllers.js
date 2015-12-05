@@ -46,7 +46,7 @@ epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval, T
     $scope.ticketSorts = {
         'ticketId': 'Ticket ID',
         'creationTime': 'Date Created',
-        'customerDisplayName': 'Customer Name',
+        //'customerDisplayName': 'Customer Name',
         'modifyTime': "Time Modified",
     };
     $scope.errorMsg = "";
@@ -62,7 +62,7 @@ epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval, T
         sc.states = [];
         sc.levels = [];
         sc.priorities = [];
-        sc.sortField = [];
+        sc.sortName = [];
         sc.sortReverse = false;
     };
 
@@ -89,23 +89,24 @@ epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval, T
 
     // --- sort-related functions
     $scope.sortField = 'ticketId'; // user requested sort
-    $scope.sortFilterField = '' ; // real sorter for angular, sort field for server in SC
+    $scope.sortFilterField = [] ; // real sorter for angular, sort field for server in SC
     $scope.sortReverse = true;
 
     $scope.isServerSort = function() { // todo total cannot be correct criteria to distinguish
-		return $scope.ticketCount.total > 1;
+		return $scope.ticketCount.total > 3;
 	}
 
     $scope.order = function () {
         if($scope.isServerSort()) {
-            $scope.ticketSearchCriteria.sortField = $scope.sortField;
+            $scope.ticketSearchCriteria.sortName = $scope.sortField;
             $scope.sortFilterField = [];
             $scope.updateTicketStore();
         } else {
-            $scope.ticketSearchCriteria.sortField = [];
+            $scope.ticketSearchCriteria.sortName = [];
             $scope.sortFilterField = $scope.sortField;
         }
     };
+    $scope.order();
 
 	$scope.flipSort = function() {
 		$scope.sortReverse = !$scope.sortReverse;

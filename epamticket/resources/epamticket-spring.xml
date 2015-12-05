@@ -45,6 +45,26 @@
        <property name="ticketDao" ref="epamTicketDao" />
     </bean>
 
-    <bean id="epamTicketDao" class="com.epam.ticket.dao.EpamTicketDAO" parent="abstractItemDao" scope="tenant"/>
+    <bean id="epamTicketDao" class="com.epam.ticket.dao.EpamTicketDAO" parent="abstractItemDao" scope="tenant">
+        <property name="availableSorts">
+            <list>
+
+                <bean class="com.epam.ticket.dao.EpamCsSort">
+                    <constructor-arg name="field" value="ticketId"/>
+                </bean>
+                <bean class="com.epam.ticket.dao.EpamCsSort">
+                    <constructor-arg name="field" value="creationTime"/>
+                </bean>
+                <bean class="com.epam.ticket.dao.EpamCsSort">
+                    <constructor-arg name="field" value="modifyTime"/>
+                </bean>
+                <bean class="com.epam.ticket.dao.EpamCsSort">
+                    <constructor-arg name="name" value="customerDisplayName"/>
+                    <constructor-arg name="flexField" value="customer.displayName"/>
+                    <constructor-arg name="jsonField" value="customerDisplayName"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
 
 </beans>
