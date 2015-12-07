@@ -1,0 +1,31 @@
+<div>
+    <section class="sub-header">
+        TICKET POOL
+        <span class="sub-header_separator"></span>
+        SEARCH
+    </section>
+    <div class="container">
+
+        <aside class="sidebar filter">
+            <div class="search_type_list">
+                <a class="search_type" ng-class="{'active': type == 'ticket'}" href="#/search/ticket">TICKET</a>
+                <a class="search_type" ng-class="{'active': type == 'customer'}" href="#/search/customer">CUSTOMER</a>
+                <a class="search_type" ng-class="{'active': type == 'order'}" href="#/search/order">ORDER</a>
+            </div>
+
+            <div ng-if="type == 'order'" ng-controller="SearchOrderCtrl" ng-include="'template/search_order.html'"></div>
+            <div ng-if="type == 'customer'" ng-controller="SearchCustomerCtrl" ng-include="'template/search_customer.html'"></div>
+            <div ng-if="type == 'ticket'" ng-controller="SearchTicketCtrl" ng-include="'template/search_ticket.html'"></div>
+
+
+
+            <div class="filter__btn-wrap">
+                <button class="filter__btn filter__btn_clear" ng-click="clearTicketSearchCriteria()">clear</button>
+                <button class="filter__btn filter__btn_update" ng-click="updateTicketStore()">update</button>
+            </div>
+        </aside>
+        <section class="main">
+            Search result         {{ ran }}
+        </section>
+    </div>
+</div>

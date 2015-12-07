@@ -46,7 +46,7 @@
             </fieldset>
             <div class="header-search__cta-wrap">
                 <span class="header-search__cta">
-                    <a href="#/advanced_search" class="header-search__cta-link">advanced search</a><a href="#" class="header-search__cta-ext-link" target="_blank"></a>
+                    <a href="#/search/ticket" class="header-search__cta-link">advanced search</a><a href="#" class="header-search__cta-ext-link" target="_blank"></a>
                 </span>
             </div>
         </form>

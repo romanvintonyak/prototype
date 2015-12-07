@@ -6,8 +6,18 @@ epamcscockpit.config(["$routeProvider", "$httpProvider", function ($routeProvide
             templateUrl: 'template/ticket_pool.html',
             controller: 'TicketPoolCtrl'
         })
-        .when("/advanced_search", {
-            templateUrl: "template/advanced_search.html"
+        //.when("/search/order", {
+        //    templateUrl: "template/search_order.html",
+        //    controller: 'AdvancedSearchCtrl'
+        //})
+        //.when("/search/customer", {
+        //    templateUrl: "template/search_customer.html",
+        //    controller: 'AdvancedSearchCtrl'
+        //})
+        .when("/search/:type", {
+            templateUrl: "template/search_main.html",
+            controller: 'AdvancedSearchCtrl'
+
         })
         .when("/ticket/:ticketId", {
             templateUrl: "template/ticket_details.html",
@@ -156,4 +166,21 @@ epamcscockpit.controller("CustomerDetailsCtrl", function (CustomersResource, $ht
 });
 
 
+epamcscockpit.controller("AdvancedSearchCtrl", function(CustomersResource, $http, $scope, $routeParams) {
+    $scope.type = $routeParams.type;
+    $scope.ran = Math.random();
+});
 
+
+
+epamcscockpit.controller("SearchTicketCtrl", function($scope) {
+
+});
+
+epamcscockpit.controller("SearchCustomerCtrl", function() {
+
+});
+
+epamcscockpit.controller("SearchOrderCtrl", function() {
+
+});
