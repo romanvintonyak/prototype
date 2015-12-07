@@ -10,7 +10,7 @@ angular.module("epamcscockpitResource", ["ngResource"])
                     method: 'GET',
                     isArray: true,
                     url: resourseUrl + ':id/address'
-                },
+                }
 
             });
     }])
@@ -20,6 +20,13 @@ angular.module("epamcscockpitResource", ["ngResource"])
             {
                 id: '@ticketId'
             });
+    }])
+    .factory("TicketCreateResource", ["$resource", function ($resource) {
+        return $resource("/epamticket/v1/tickets", {
+            post: {
+                method: 'POST'
+            }
+        });
     }])
     .factory("TicketCountResource", ["$resource", function ($resource) {
         var resourseUrl = "/epamticket/v1/tickets/ticketCount";

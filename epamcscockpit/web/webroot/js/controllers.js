@@ -22,8 +22,7 @@ epamcscockpit.config(["$routeProvider", "$httpProvider", function ($routeProvide
             controller: 'OrderDetailsCtrl'
         })
         .when("/ticket_create", {
-            templateUrl: "template/ticket_create.html",
-
+            templateUrl: "template/ticket_create.html"
         })
         .when("/order_create", {
             templateUrl: "template/order_create.html"
@@ -47,7 +46,7 @@ epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval, T
         'ticketId': 'Ticket ID',
         'creationTime': 'Date Created',
         'customerDisplayName': 'Customer Name',
-        'modifyTime': "Time Modified",
+        'modifyTime': "Time Modified"
     };
     $scope.errorMsg = "";
 
@@ -94,7 +93,7 @@ epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval, T
 
     $scope.isServerSort = function() { // todo total cannot be correct criteria to distinguish
 		return $scope.ticketCount.total > 1;
-	}
+	};
 
     $scope.order = function () {
         if($scope.isServerSort()) {
@@ -129,6 +128,22 @@ epamcscockpit.controller("TicketDetailsCtrl", function ($scope, $http, $routePar
 
 });
 
+epamcscockpit.controller("TicketCreateCtrl", function ($scope, $http, TicketCreateResource/*, testconst*/) {
+    $scope.newTicket = {};
+    $scope.addTicket = function() {
+        TicketCreateResource.save(
+            $scope.newTicket,
+            function (data, status, headers, config) {
+                //alert(testconst);
+                console.log(data);
+            },
+            function () {
+                $scope.errorMsg = defaultErrrMsg
+            }
+        )
+    }
+});
+
 epamcscockpit.controller("OrderDetailsCtrl", function ($scope, $http, $routeParams, OrdersResource) {
     OrdersResource.get({
             orderCode: $routeParams.orderCode
@@ -153,6 +168,3 @@ epamcscockpit.controller("CustomerDetailsCtrl", function (CustomersResource, $ht
         $scope.errorMsg = defaultErrrMsg
     });
 });
-
-
-

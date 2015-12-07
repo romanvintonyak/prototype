@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html ng-app="epamcscockpit">
@@ -7,16 +8,18 @@
     <title></title>
     <link rel="stylesheet" href="styles/main.css"/>
     
-    <script src="js/lib/angular.js"></script> 
-    <script src="js/lib/angular-route.js"></script> 
-    <script src="js/lib/angular-resource.js"></script> 
+    <script src="js/lib/angular.js"></script>
+    <script src="js/lib/angular-route.js"></script>
+    <script src="js/lib/angular-resource.js"></script>
     <script src="js/lib/checklist-model.js"></script>
     
-    
-    
-    <script src="js/filters.js"></script> 
-    <script src="js/services.js"></script>  
-	<script src="js/controllers.js"></script> 
+    <script src="js/filters.js"></script>
+    <script src="js/services.js"></script>
+	<script src="js/controllers.js"></script>
+
+    <script type="text/javascript">
+        //epamcscockpit.constant("testconst", ${constants});
+    </script>
 </head>
 
 <body>

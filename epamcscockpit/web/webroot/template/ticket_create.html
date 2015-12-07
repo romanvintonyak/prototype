@@ -1,1 +1,39 @@
-<h1>ticket_create</h1>
+<div class="container">
+
+    <h1>New Ticket</h1>
+
+    <form ng-submit="addTicket()" ng-controller="TicketCreateCtrl">
+
+        <!-- no related field in EpamTicket and child DTO's -->
+        <label for="interventionType">Intervention type</label>
+        <select name="interventionType" id="interventionType">
+            <option value="im">IM</option>
+            <option value="email">Email</option>
+        </select>
+
+        <br/>
+
+        <label for="headline">Ticket Headline</label>
+        <input type="text" name="headline" id="headline" ng-model="newTicket.headline">
+
+        <br/>
+
+        <label for="category">Ticket Category</label>
+        <select name="category" id="category" ng-model="newTicket.category"
+                ng-options="category for category in ticketCategories">
+        </select>
+
+        <br/>
+
+        <label for="category">Ticket Priority</label>
+        <select name="priority" id="priority" ng-model="newTicket.priority"
+                ng-options="priority for priority in ticketPriorities">
+        </select>
+
+        <br/>
+
+        <input type="submit" value="Add ticket">
+    </form>
+
+</div>
+
