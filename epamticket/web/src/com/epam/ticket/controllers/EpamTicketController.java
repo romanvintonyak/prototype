@@ -4,11 +4,10 @@ import com.epam.ticket.data.EpamTicket;
 import com.epam.ticket.facades.EpamTicketSearchCriteria;
 import com.epam.ticket.facades.impl.DefaultEpamTicketFacade;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -24,6 +23,12 @@ public class EpamTicketController {
     @ResponseBody
     public Collection<EpamTicket> getTicketsByCriteria(EpamTicketSearchCriteria searchCriteria) {
         return defaultEpamTicketFacade.getTicketsByCriteria(searchCriteria);
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void addTicket(@RequestBody EpamTicket ticket) {
+        defaultEpamTicketFacade.addTicket(ticket);
     }
 
     @RequestMapping(value = "/{ticketId}", method = RequestMethod.GET)

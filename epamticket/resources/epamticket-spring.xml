@@ -9,6 +9,7 @@
           class="com.epam.ticket.facades.impl.DefaultEpamTicketFacade">
         <constructor-arg name="ticketService" ref="epamTicketService"/>
         <constructor-arg name="ticketConverter" ref="epamTicketConverter"/>
+        <constructor-arg name="csTicketConverter" ref="csTicketConverter" />
     </bean>
 
     <bean id="epamTicketConverter" class="com.epam.ticket.converter.EpamTicketConverter">
@@ -19,6 +20,12 @@
         <constructor-arg name="ticketEventConverter" ref="epamTicketEventConverter" />
         <constructor-arg name="dateFormatter" ref="dateFormatter"/>
     </bean>
+
+    <bean id="csTicketConverter" class="com.epam.ticket.converter.CsTicketConverter">
+        <constructor-arg name="populator" ref="csTicketPopulator" />
+    </bean>
+
+    <bean id="csTicketPopulator" class="com.epam.ticket.converter.CsTicketPopulator" />
 
     <bean id="epamTicketEventConverter" class="com.epam.ticket.converter.EpamTicketEventConverter">
         <constructor-arg name="populator" ref="epamTicketEventPopulator" />

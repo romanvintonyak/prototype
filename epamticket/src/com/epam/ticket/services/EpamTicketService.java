@@ -11,6 +11,8 @@ import java.util.List;
  */
 public interface EpamTicketService {
 
+    void addTicket(CsTicketModel ticket);
+
     List<CsTicketModel> getTicketsByCriteria(EpamTicketSearchCriteria searchCriteria);
 
     CsTicketModel getTicketById(String ticketId);

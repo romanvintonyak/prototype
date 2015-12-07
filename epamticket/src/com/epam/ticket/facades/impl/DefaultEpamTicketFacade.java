@@ -1,5 +1,6 @@
 package com.epam.ticket.facades.impl;
 
+import com.epam.ticket.converter.CsTicketConverter;
 import com.epam.ticket.converter.EpamTicketConverter;
 import com.epam.ticket.data.EpamTicket;
 import com.epam.ticket.facades.EpamTicketFacade;
@@ -18,11 +19,19 @@ public class DefaultEpamTicketFacade implements EpamTicketFacade {
     public static final Logger LOG = Logger.getLogger(DefaultEpamTicketFacade.class);
 
     private EpamTicketConverter ticketConverter;
+    private CsTicketConverter csTicketConverter;
     private EpamTicketService ticketService;
 
-    public DefaultEpamTicketFacade(EpamTicketConverter ticketConverter, EpamTicketService ticketService) {
+    public DefaultEpamTicketFacade(EpamTicketConverter ticketConverter, CsTicketConverter csTicketConverter,
+                                   EpamTicketService ticketService) {
         this.ticketConverter = checkNotNull(ticketConverter);
+        this.csTicketConverter = checkNotNull(csTicketConverter);
         this.ticketService = checkNotNull(ticketService);
+    }
+
+    @Override
+    public void addTicket(EpamTicket ticket) {
+        ticketService.addTicket(csTicketConverter.convert(ticket));
     }
 
     @Override

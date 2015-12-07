@@ -22,6 +22,10 @@ public class EpamTicketDAO extends DefaultTicketDao {
     public static final String QUERY_STRING = "SELECT {t:pk} FROM {CsTicket AS t} ";
     private StringBuffer query;
 
+    public void addTicket(CsTicketModel ticketModel) {
+        getModelService().save(ticketModel);
+    }
+
     public CsTicketModel getTicketById(String ticketId) {
         List<CsTicketModel> csTicketModels = this.findTicketsById(ticketId);
         if (csTicketModels.size() > 1) {

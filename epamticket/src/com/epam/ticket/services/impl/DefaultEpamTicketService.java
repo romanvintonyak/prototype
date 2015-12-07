@@ -16,6 +16,11 @@ public class DefaultEpamTicketService implements EpamTicketService {
     private EpamTicketDAO ticketDao;
 
     @Override
+    public void addTicket(CsTicketModel ticket) {
+        ticketDao.addTicket(ticket);
+    }
+
+    @Override
     public List<CsTicketModel> getTicketsByCriteria(EpamTicketSearchCriteria searchCriteria) {
         return ticketDao.findTicketsByCriteria(searchCriteria);
     }
