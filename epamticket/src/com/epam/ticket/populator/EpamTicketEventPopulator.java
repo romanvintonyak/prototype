@@ -1,5 +1,7 @@
-package com.epam.ticket.converter;
+package com.epam.ticket.populator;
 
+import com.epam.ticket.converter.EpamTicketChangeEventEntryConverter;
+import com.epam.ticket.converter.EpamTicketEmailConverter;
 import com.epam.ticket.data.EpamTicketChangeEventEntry;
 import com.epam.ticket.data.EpamTicketEvent;
 import de.hybris.platform.converters.Populator;
@@ -28,10 +30,11 @@ public class EpamTicketEventPopulator implements Populator<CsTicketEventModel, E
         checkNotNull(source, "Source model should not be null");
         target.setStartDateTime(source.getStartDateTime());
         target.setEndDateTime(source.getEndDateTime());
+        target.setText(source.getText());
         target.setEmails(source.getEmails().parallelStream()
                 .map(ticketEmailConverter::convert)
                 .collect(Collectors.toList()));
-        target.setTicketChangeEventEntries(source.getEntries().parallelStream()
+        target.setTicketChangeEventEntries(source.getEntries().stream()
                 .map(ticketChangeEventEntryConverter::convert)
                 .collect(Collectors.<EpamTicketChangeEventEntry>toSet()));
     }

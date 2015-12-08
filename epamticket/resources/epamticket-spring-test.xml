@@ -3,38 +3,40 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-       <bean id="dateFormatter" class="java.text.SimpleDateFormat">
-              <constructor-arg index="0" type="java.lang.String" value="yyyy-MM-dd'T'HH:mm:ss.SSSZ"/>
-       </bean>
+    <bean id="dateFormatter" class="java.text.SimpleDateFormat">
+        <constructor-arg index="0" type="java.lang.String" value="yyyy-MM-dd'T'HH:mm:ss.SSSZ"/>
+    </bean>
 
-       <bean id="epamTicketConverter" class="com.epam.ticket.converter.EpamTicketConverter">
-              <constructor-arg name="epamTicketPopulator" ref="epamTicketPopulator"/>
-       </bean>
+    <bean id="epamTicketConverter" class="com.epam.ticket.converter.EpamTicketConverter">
+        <constructor-arg name="epamTicketPopulator" ref="epamTicketPopulator"/>
+    </bean>
 
-       <bean id="epamTicketPopulator" class="com.epam.ticket.converter.EpamTicketPopulator">
-              <constructor-arg name="ticketEventConverter" ref="epamTicketEventConverter"/>
-              <constructor-arg name="dateFormatter" ref="dateFormatter" />
-       </bean>
+    <bean id="epamTicketPopulator" class="com.epam.ticket.populator.EpamTicketPopulator">
+        <constructor-arg name="ticketEventConverter" ref="epamTicketEventConverter"/>
+        <constructor-arg name="dateFormatter" ref="dateFormatter"/>
+    </bean>
 
-       <bean id="epamTicketEventConverter" class="com.epam.ticket.converter.EpamTicketEventConverter">
-              <constructor-arg name="populator" ref="epamTicketEventPopulator" />
-       </bean>
+    <bean id="epamTicketEventConverter" class="com.epam.ticket.converter.EpamTicketEventConverter">
+        <constructor-arg name="populator" ref="epamTicketEventPopulator"/>
+    </bean>
 
-       <bean id="epamTicketEventPopulator" class="com.epam.ticket.converter.EpamTicketEventPopulator" >
-              <property name="ticketEmailConverter" ref="epamTicketEmailConverter" />
-              <property name="ticketChangeEventEntryConverter" ref="epamTicketChangeEventEntryConverter" />
-       </bean>
+    <bean id="epamTicketEventPopulator" class="com.epam.ticket.populator.EpamTicketEventPopulator">
+        <property name="ticketEmailConverter" ref="epamTicketEmailConverter"/>
+        <property name="ticketChangeEventEntryConverter" ref="epamTicketChangeEventEntryConverter"/>
+    </bean>
 
-       <bean id="epamTicketEmailConverter" class="com.epam.ticket.converter.EpamTicketEmailConverter">
-              <constructor-arg name="populator" ref="epamTicketEmailPopulator" />
-       </bean>
+    <bean id="epamTicketEmailConverter" class="com.epam.ticket.converter.EpamTicketEmailConverter">
+        <constructor-arg name="populator" ref="epamTicketEmailPopulator"/>
+    </bean>
 
-       <bean id="epamTicketEmailPopulator" class="com.epam.ticket.converter.EpamTicketEmailPopulator" />
+    <bean id="epamTicketEmailPopulator" class="com.epam.ticket.populator.EpamTicketEmailPopulator"/>
 
-       <bean id="epamTicketChangeEventEntryConverter" class="com.epam.ticket.converter.EpamTicketChangeEventEntryConverter">
-              <constructor-arg name="populator" ref="epamTicketChangeEventEntryPopulator" />
-       </bean>
+    <bean id="epamTicketChangeEventEntryConverter"
+          class="com.epam.ticket.converter.EpamTicketChangeEventEntryConverter">
+        <constructor-arg name="populator" ref="epamTicketChangeEventEntryPopulator"/>
+    </bean>
 
-       <bean id="epamTicketChangeEventEntryPopulator" class="com.epam.ticket.converter.EpamTicketChangeEventEntryPopulator" />
+    <bean id="epamTicketChangeEventEntryPopulator"
+          class="com.epam.ticket.populator.EpamTicketChangeEventEntryPopulator"/>
 
 </beans>

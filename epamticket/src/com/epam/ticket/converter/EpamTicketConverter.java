@@ -1,5 +1,6 @@
 package com.epam.ticket.converter;
 
+import com.epam.ticket.populator.EpamTicketPopulator;
 import com.epam.ticket.data.EpamTicket;
 import de.hybris.platform.converters.impl.AbstractPopulatingConverter;
 import de.hybris.platform.servicelayer.dto.converter.ConversionException;
