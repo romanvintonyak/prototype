@@ -70,6 +70,5 @@ components-lang-addon.xml
 !utils/mysql/*.jar
 !epamcscockpit/web/webroot/js/lib
 build.xml
-extensioninfo.xsd
-beans.xsd
-items.xsd
+**/*.xsd
+*/.settings

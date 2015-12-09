@@ -10,6 +10,8 @@
 
         <constructor-arg name="ticketService" ref="epamTicketService"/>
         <constructor-arg name="ticketConverter" ref="epamTicketConverter"/>
+        <constructor-arg name="sessionService" ref="sessionService" />
+        <constructor-arg name="userService" ref="userService" />
     </bean>
 
     <bean id="epamTicketConverter" class="com.epam.ticket.converter.EpamTicketConverter">
@@ -43,10 +45,19 @@
 
     <bean id="epamTicketDao" class="com.epam.ticket.dao.EpamTicketDAO" parent="abstractItemDao" scope="tenant" >
         <property name="enumCategoryCounterStrategy" ref="defaultEnumCategoryCounterStrategy"/>
+        <property name="agentCategoryCounterStrategy" ref="defaultAgentCategoryCounterStrategy"/>
     </bean>
     
     <bean id="defaultEnumCategoryCounterStrategy" class="com.epam.ticket.dao.counters.impl.DefaultEnumCategoryCounterStrategy" >
         <property name="flexibleSearchService" ref="flexibleSearchService"/>
+    </bean>
+
+    <bean id="defaultAgentCategoryCounterStrategy" class="com.epam.ticket.dao.counters.impl.DefaultAgentCategoryCounterStrategy" >
+        <property name="flexibleSearchService" ref="flexibleSearchService"/>
+    </bean>
+    
+    <bean id = "epamticketsCountAttributeHandler" class="com.epam.ticket.attributehandlers.EpamticketsCountAttributeHandler" >
+        <property name="epamTicketService" ref="epamTicketService"/>
     </bean>
 
 </beans>

@@ -20,6 +20,20 @@
 			xsi:noNamespaceSchemaLocation="items.xsd">
 
 	<itemtypes>
+    
+        <itemtype code="EpamCsTicket" autocreate="true" generate="true">
+            <deployment table="EpamCsTickets" typecode="9100"/>
+            <attributes>
+                <attribute qualifier="code" type="java.lang.String" >
+                    <persistence type="property" />
+                    <modifiers optional="false" unique="true"/>
+                </attribute>
+                <attribute qualifier="epamTicketsCount" type="java.lang.Integer" >
+                    <persistence type="dynamic" attributeHandler="epamticketsCountAttributeHandler"/>
+                    <modifiers read="true" write="false"/>
+                </attribute>
+            </attributes>
+        </itemtype>
 <!--
 		<itemtype generate="true"
 		   code="MyProduct"

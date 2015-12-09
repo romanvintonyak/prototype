@@ -1,23 +1,25 @@
 package com.epam.ticket.controllers;
 
-import com.epam.ticket.dao.EpamTicketDAO.TicketCountsResult;
-import com.epam.ticket.data.EpamTicket;
-import com.epam.ticket.facades.EpamTicketSearchCriteria;
-import com.epam.ticket.facades.impl.DefaultEpamTicketFacade;
+import java.io.Serializable;
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.io.Serializable;
-import java.util.Collection;
+import com.epam.ticket.dao.EpamTicketDAO.TicketCountsResult;
+import com.epam.ticket.data.EpamTicket;
+import com.epam.ticket.facades.EpamTicketSearchCriteria;
+import com.epam.ticket.facades.impl.DefaultEpamTicketFacade;
 
 @Controller
 @RequestMapping("/v1/tickets")
 public class EpamTicketController {
-
+    
     @Autowired
     private DefaultEpamTicketFacade defaultEpamTicketFacade;
 
@@ -43,8 +45,9 @@ public class EpamTicketController {
 
     @RequestMapping(value = "/ticketCounts", method = RequestMethod.GET)
     @ResponseBody
-    public TicketCountsResult getTicketCounts() {
-        return defaultEpamTicketFacade.getTicketCounts();
+    public TicketCountsResult getTicketCounts(@RequestParam("userName") String userName) {
+        // TODO: GET RID of userName, when security will be ready!
+        return defaultEpamTicketFacade.getTicketCounts(userName);
     }
 
     private class TicketCounterHolder  implements Serializable{

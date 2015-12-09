@@ -37,8 +37,7 @@ public class DefaultEnumCategoryCounterStrategy implements CategoryCounterStrate
         return category;
     }
     
-    public void setFlexibleSearchService(final FlexibleSearchService flexibleSearchService)
-    {
+    public void setFlexibleSearchService(final FlexibleSearchService flexibleSearchService) {
        this.flexibleSearchService = flexibleSearchService;
     }
 
