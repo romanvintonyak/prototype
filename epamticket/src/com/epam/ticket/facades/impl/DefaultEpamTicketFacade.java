@@ -4,8 +4,10 @@ import com.epam.ticket.converter.EpamTicketConverter;
 import com.epam.ticket.data.EpamTicket;
 import com.epam.ticket.facades.EpamTicketFacade;
 import com.epam.ticket.facades.EpamTicketSearchCriteria;
+import com.epam.ticket.services.EpamTicketBusinessService;
 import com.epam.ticket.services.EpamTicketService;
 import de.hybris.platform.ticket.model.CsTicketModel;
+import de.hybris.platform.ticket.service.TicketException;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -19,10 +21,13 @@ public class DefaultEpamTicketFacade implements EpamTicketFacade {
 
     private EpamTicketConverter ticketConverter;
     private EpamTicketService ticketService;
+    private EpamTicketBusinessService ticketBusinessService;
 
-    public DefaultEpamTicketFacade(EpamTicketConverter ticketConverter, EpamTicketService ticketService) {
+    public DefaultEpamTicketFacade(EpamTicketConverter ticketConverter, EpamTicketService ticketService,
+                                   EpamTicketBusinessService ticketBusinessService) {
         this.ticketConverter = checkNotNull(ticketConverter);
         this.ticketService = checkNotNull(ticketService);
+        this.ticketBusinessService = checkNotNull(ticketBusinessService);
     }
 
     @Override
@@ -43,6 +48,12 @@ public class DefaultEpamTicketFacade implements EpamTicketFacade {
     public Integer getTotalTicketCount() {
         LOG.info("Get ticket count");
         return ticketService.getTotalTicketCount();
+    }
+
+    @Override
+    public EpamTicket changeTicketState(String ticketId, String newState, String comment) throws TicketException {
+        LOG.info(String.format("Change TicketState with : ticketId=%s, newState=%s.", ticketId, newState));
+        return ticketConverter.convert(ticketBusinessService.setTicketState(ticketId, newState, comment));
     }
 
     private List<EpamTicket> getEpamTickets(List<CsTicketModel> csTicketModels) {

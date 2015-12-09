@@ -1,6 +1,7 @@
 package com.epam.ticket.facades;
 
 import com.epam.ticket.data.EpamTicket;
+import de.hybris.platform.ticket.service.TicketException;
 
 import java.util.List;
 
@@ -12,4 +13,5 @@ public interface EpamTicketFacade {
     EpamTicket getTicketById(String ticketId);
 
     Integer getTotalTicketCount();
+    EpamTicket changeTicketState(String ticketId, String newState, String comment) throws TicketException;
 }

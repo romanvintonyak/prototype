@@ -9,6 +9,8 @@
           class="com.epam.ticket.facades.impl.DefaultEpamTicketFacade">
         <constructor-arg name="ticketService" ref="epamTicketService"/>
         <constructor-arg name="ticketConverter" ref="epamTicketConverter"/>
+        <constructor-arg name="ticketBusinessService" ref="epamTicketBusinessService"/>
+
     </bean>
 
     <bean id="epamTicketConverter" class="com.epam.ticket.converter.EpamTicketConverter">
@@ -70,7 +72,6 @@
     <bean id="epamTicketBusinessService" class="com.epam.ticket.services.impl.DefaultEpamTicketBusinessService">
         <constructor-arg ref="ticketBusinessService" />
         <constructor-arg ref="ticketService" />
-        <constructor-arg ref="epamTicketConverter" />
     </bean>
 
 </beans>

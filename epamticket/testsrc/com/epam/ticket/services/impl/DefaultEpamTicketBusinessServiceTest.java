@@ -1,7 +1,5 @@
 package com.epam.ticket.services.impl;
 
-import com.epam.ticket.converter.EpamTicketConverter;
-import com.epam.ticket.data.EpamTicket;
 import com.epam.ticket.services.EpamTicketBusinessService;
 import de.hybris.bootstrap.annotations.UnitTest;
 import de.hybris.platform.ticket.enums.CsTicketState;
@@ -35,8 +33,6 @@ public class DefaultEpamTicketBusinessServiceTest {
     @Mock
     private DefaultTicketBusinessService defaultTicketBusinessService;
     @Mock
-    private EpamTicketConverter ticketConverter;
-    @Mock
     private DefaultTicketService defaultTicketService;
 
     private static final String TICKET_ID = "ticketId";
@@ -45,19 +41,17 @@ public class DefaultEpamTicketBusinessServiceTest {
 
     @Before
     public void init() {
-        epamTicketBusinessService = new DefaultEpamTicketBusinessService(defaultTicketBusinessService, defaultTicketService, ticketConverter);
+        epamTicketBusinessService = new DefaultEpamTicketBusinessService(defaultTicketBusinessService, defaultTicketService);
     }
 
     @Test
     public void shouldCloseTicket() throws TicketException {
         //given
         CsTicketModel csTicket = new CsTicketModel();
-        EpamTicket epamTicket = new EpamTicket();
-        when(ticketConverter.convert(csTicket)).thenReturn(epamTicket);
         when(defaultTicketService.getTicketForTicketId(TICKET_ID)).thenReturn(csTicket);
         when(defaultTicketBusinessService.setTicketState(any(), any(), eq(COMMENT))).thenReturn(csTicket);
         //when
-        EpamTicket resultTicket = epamTicketBusinessService.setTicketState(TICKET_ID, CLOSED, COMMENT);
+        epamTicketBusinessService.setTicketState(TICKET_ID, CLOSED, COMMENT);
         //then
         verify(defaultTicketBusinessService).setTicketState(csTicket, CsTicketState.CLOSED, COMMENT);
     }
