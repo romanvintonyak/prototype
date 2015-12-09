@@ -1,5 +1,6 @@
 package com.epam.ticket.facades;
 
+import com.epam.ticket.data.EpamCustomerEvent;
 import com.epam.ticket.data.EpamTicket;
 
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
  */
 public interface EpamTicketFacade {
 
-    void addTicket(EpamTicket ticket);
+    void addTicket(EpamTicket ticket, EpamCustomerEvent event);
 
     List<EpamTicket> getTicketsByCriteria(EpamTicketSearchCriteria searchCriteria);
 

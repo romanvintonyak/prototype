@@ -45,9 +45,9 @@ public class EpamTicketPopulator implements Populator<CsTicketModel, EpamTicket>
         target.setModifyTime(dateFormatter.format(source.getModifiedtime()));
         // FIXME: getEvents() is @Deprecated, but suggested method FlexibleSearchService::searchRelation
         // throws exception with message "not implemented yet" :)
-        source.getEvents().parallelStream()
+        target.setEvents(source.getEvents().parallelStream()
                 .map(ticketEventConverter::convert)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
     }
 
     private String getCustomerDisplayName(CsTicketModel csTicketModel) {

@@ -1,5 +1,6 @@
 package com.epam.ticket.controllers;
 
+import com.epam.ticket.data.EpamCustomerEvent;
 import com.epam.ticket.data.EpamTicket;
 import com.epam.ticket.facades.EpamTicketSearchCriteria;
 import com.epam.ticket.facades.impl.DefaultEpamTicketFacade;
@@ -27,8 +28,8 @@ public class EpamTicketController {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void addTicket(@RequestBody EpamTicket ticket) {
-        defaultEpamTicketFacade.addTicket(ticket);
+    public void addTicket(@RequestBody EpamTicket ticket, EpamCustomerEvent event) {
+        defaultEpamTicketFacade.addTicket(ticket, event);
     }
 
     @RequestMapping(value = "/{ticketId}", method = RequestMethod.GET)

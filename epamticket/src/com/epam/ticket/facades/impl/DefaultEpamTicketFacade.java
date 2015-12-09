@@ -1,7 +1,9 @@
 package com.epam.ticket.facades.impl;
 
+import com.epam.ticket.converter.CsCustomerEventConverter;
 import com.epam.ticket.converter.CsTicketConverter;
 import com.epam.ticket.converter.EpamTicketConverter;
+import com.epam.ticket.data.EpamCustomerEvent;
 import com.epam.ticket.data.EpamTicket;
 import com.epam.ticket.facades.EpamTicketFacade;
 import com.epam.ticket.facades.EpamTicketSearchCriteria;
@@ -21,6 +23,7 @@ public class DefaultEpamTicketFacade implements EpamTicketFacade {
     private EpamTicketConverter ticketConverter;
     private CsTicketConverter csTicketConverter;
     private EpamTicketService ticketService;
+    private CsCustomerEventConverter csCustomerEventConverter;
 
     public DefaultEpamTicketFacade(EpamTicketConverter ticketConverter, CsTicketConverter csTicketConverter,
                                    EpamTicketService ticketService) {
@@ -30,8 +33,8 @@ public class DefaultEpamTicketFacade implements EpamTicketFacade {
     }
 
     @Override
-    public void addTicket(EpamTicket ticket) {
-        ticketService.addTicket(csTicketConverter.convert(ticket));
+    public void addTicket(EpamTicket ticket, EpamCustomerEvent event) {
+        ticketService.addTicket(csTicketConverter.convert(ticket), csCustomerEventConverter.convert(event));
     }
 
     @Override

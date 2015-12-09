@@ -4,6 +4,7 @@ import com.epam.ticket.dao.EpamTicketDAO;
 import com.epam.ticket.facades.EpamTicketSearchCriteria;
 import de.hybris.bootstrap.annotations.UnitTest;
 import de.hybris.platform.ticket.model.CsTicketModel;
+import de.hybris.platform.ticket.service.TicketBusinessService;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,6 +25,7 @@ public class DefaultEpamTicketServiceTest {
     private CsTicketModel expectedTicketModel;
 
     private EpamTicketDAO mockTicketDao;
+    private TicketBusinessService mockTicketBusinessService;
     private DefaultEpamTicketService ticketService;
 
     @Before
@@ -31,8 +33,37 @@ public class DefaultEpamTicketServiceTest {
         mockTicketDao = mock(EpamTicketDAO.class);
         ticketService = new DefaultEpamTicketService();
         ticketService.setTicketDao(mockTicketDao);
+        ticketService.setTicketBusinessService(mockTicketBusinessService);
 
         expectedTicketModel = new CsTicketModel();
+    }
+
+    @Test
+    public void shouldNotAddTicketWithoutCategoryAndPriority() {
+
+        /*CsTicketModel dummyWrongTicket = new CsTicketModel();
+        CsCustomerEventModel
+        doThrow(ModelSavingException.class).when(mockTicketDao).addTicket(dummyWrongTicket);
+
+        try {
+            ticketService.addTicket(dummyWrongTicket);
+        } catch (ModelSavingException expected) {
+        }
+
+        verify(mockTicketDao, times(1)).addTicket(dummyWrongTicket);*/
+    }
+
+    @Test
+    public void shouldAddTicketWithCategoryAndPriority() {
+
+        /*CsTicketModel dummyNormalTicket = new CsTicketModel();
+        dummyNormalTicket.setPriority(CsTicketPriority.HIGH);
+        dummyNormalTicket.setCategory(CsTicketCategory.INCIDENT);
+        doNothing().when(mockTicketDao).addTicket(dummyNormalTicket);
+
+        ticketService.addTicket(dummyNormalTicket);
+
+        verify(mockTicketDao, times(1)).addTicket(dummyNormalTicket);*/
     }
 
     @Test
