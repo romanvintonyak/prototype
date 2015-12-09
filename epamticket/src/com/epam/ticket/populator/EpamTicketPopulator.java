@@ -1,5 +1,6 @@
-package com.epam.ticket.converter;
+package com.epam.ticket.populator;
 
+import com.epam.ticket.converter.EpamTicketEventConverter;
 import com.epam.ticket.data.EpamTicket;
 import de.hybris.platform.converters.Populator;
 import de.hybris.platform.core.HybrisEnumValue;
@@ -45,9 +46,9 @@ public class EpamTicketPopulator implements Populator<CsTicketModel, EpamTicket>
         target.setModifyTime(dateFormatter.format(source.getModifiedtime()));
         // FIXME: getEvents() is @Deprecated, but suggested method FlexibleSearchService::searchRelation
         // throws exception with message "not implemented yet" :)
-        source.getEvents().parallelStream()
+        target.setEvents(source.getEvents().stream()
                 .map(ticketEventConverter::convert)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
     }
 
     private String getCustomerDisplayName(CsTicketModel csTicketModel) {

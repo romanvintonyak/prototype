@@ -1,4 +1,4 @@
-package com.epam.ticket.converter;
+package com.epam.ticket.populator;
 
 import com.epam.ticket.data.EpamTicketEmail;
 import de.hybris.platform.converters.Populator;

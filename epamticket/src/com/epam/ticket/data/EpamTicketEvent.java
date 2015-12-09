@@ -12,6 +12,7 @@ public class EpamTicketEvent implements Serializable {
     private Date startDateTime;
     private Date endDateTime;
     private List<EpamTicketEmail> emails;
+    private String text;
     private Set<EpamTicketChangeEventEntry> ticketChangeEventEntries;
 
     public Date getStartDateTime() {
@@ -44,5 +45,13 @@ public class EpamTicketEvent implements Serializable {
 
     public void setTicketChangeEventEntries(Set<EpamTicketChangeEventEntry> ticketChangeEventEntries) {
         this.ticketChangeEventEntries = ticketChangeEventEntries;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 }
