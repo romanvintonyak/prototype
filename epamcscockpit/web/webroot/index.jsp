@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <!DOCTYPE html>
 <html ng-app="epamcscockpit">
 <head lang="en">
@@ -10,6 +11,7 @@
     <script src="js/lib/angular.js"></script> 
     <script src="js/lib/angular-route.js"></script> 
     <script src="js/lib/angular-resource.js"></script> 
+    <script src="js/lib/angular-cookies.js"></script>
     <script src="js/lib/checklist-model.js"></script>
     
     
@@ -17,6 +19,9 @@
     <script src="js/filters.js"></script> 
     <script src="js/services.js"></script>  
 	<script src="js/controllers.js"></script> 
+	<script>
+	   epamcscockpit.value("userName", "<sec:authentication property="userName"/>")
+	</script>
 </head>
 
 <body>

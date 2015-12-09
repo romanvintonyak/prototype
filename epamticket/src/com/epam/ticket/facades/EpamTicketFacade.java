@@ -14,5 +14,5 @@ public interface EpamTicketFacade {
 
     Integer getTotalTicketCount();
     
-    TicketCountsResult getTicketCounts();
+    TicketCountsResult getTicketCounts(String userName);
 }
