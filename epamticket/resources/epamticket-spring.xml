@@ -8,6 +8,7 @@
     <bean id="defaultEpamTicketFacade"
           class="com.epam.ticket.facades.impl.DefaultEpamTicketFacade">
         <constructor-arg name="ticketService" ref="epamTicketService"/>
+        <constructor-arg name="ticketBusinessService" ref="epamTicketBusinessService" />
         <constructor-arg name="ticketConverter" ref="epamTicketConverter"/>
         <constructor-arg name="csTicketConverter" ref="csTicketConverter" />
         <constructor-arg name="csCustomerEventConverter" ref="csCustomerEventConverter" />

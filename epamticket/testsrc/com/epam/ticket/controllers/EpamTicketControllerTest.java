@@ -17,7 +17,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({/*"epamticket-web-spring.xml",*/ "/epamticket-spring-test.xml"})
-@WebAppConfiguration(value = "web/webroot")
+@WebAppConfiguration
 public class EpamTicketControllerTest {
 
     private MockMvc mockMvc;

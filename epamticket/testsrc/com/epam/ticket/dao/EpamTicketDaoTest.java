@@ -9,11 +9,14 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static org.mockito.Mockito.doReturn;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.*;
 
 @UnitTest
 @RunWith(MockitoJUnitRunner.class)
 public class EpamTicketDaoTest {
+
+    public static final String UNEXPECTED_RESULT = "Unexpected result";
 
     private EpamTicketDAO epamTicketDao;
 
@@ -32,15 +35,16 @@ public class EpamTicketDaoTest {
     @Test
     public void shouldReturnTotalTicketCount() {
         //given
-        doReturn(mockSearchResult).when(mockFlexibleSearchService).search("SELECT {pk} FROM {CsTicket}");
-        //when
-        int result = epamTicketDao.getTotalTicketCount();
-    }
+        String query = "SELECT {pk} FROM {CsTicket}";
+        Integer fakeResult = 42;
 
-    /*public Integer getTotalTicketCount() {
-        SearchResult result = getFlexibleSearchService().search("SELECT {pk} FROM {CsTicket}");
-        int totalCount = result.getTotalCount();
-        LOG.info("Ticket count:" + totalCount);
-        return totalCount;
-    }*/
+        doReturn(mockSearchResult).when(mockFlexibleSearchService).search(query);
+        doReturn(fakeResult).when(mockSearchResult).getTotalCount();
+        //when
+        Integer result = epamTicketDao.getTotalTicketCount();
+        //then
+        verify(mockFlexibleSearchService, times(1)).search(query);
+        verify(mockSearchResult, times(1)).getTotalCount();
+        assertEquals(UNEXPECTED_RESULT, fakeResult, result);
+    }
 }
