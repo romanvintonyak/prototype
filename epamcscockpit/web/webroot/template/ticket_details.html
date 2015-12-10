@@ -2,25 +2,6 @@
 
     <div class="bg-error">{{errorMsg}}</div>
 
-    <!--left-side short ticket description-->
-    <aside class="sidebar">
-        <div class="">
-            <div class="">{{ ticket.ticketId }}</div>
-            <div class="">{{ ticket.state }}</div>
-            <div class="">{{ ticket.headline }}</div>
-            <div class="">{{ ticket.creationTime | date }}</div>
-        </div>
-        <div class="">
-            <div class="">Customer</div>
-            <div class="">{{ ticket.customerDisplayName }}</div>
-        </div>
-        <div class="">
-            <div class="">Order</div>
-            <div>{{ ticket.order }}</div>
-        </div>
-        <div class="sub-header">Ticket Details</div>
-    </aside>
-
     <!--ticket details-->
     <div class="ticket__form">
 
