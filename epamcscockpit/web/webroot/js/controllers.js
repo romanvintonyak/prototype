@@ -136,7 +136,7 @@ epamcscockpit.controller("TicketDetailsCtrl", function ($scope, $http, $routePar
 
 });
 
-epamcscockpit.controller("TicketCreateCtrl", function ($scope, $http, TicketCreateResource /*, testconst*/) {
+epamcscockpit.controller("TicketCreateCtrl", function ($scope, $location, $http, TicketCreateResource /*, testconst*/) {
     fillConstants($scope);
     $scope.newTicket = {
         category: $scope.ticketCategories[1],
@@ -154,6 +154,7 @@ epamcscockpit.controller("TicketCreateCtrl", function ($scope, $http, TicketCrea
             function (data, status, headers, config) {
                 //alert(testconst);
                 console.log(data);
+                $location.path("/ticket/"+data.ticketId);
             },
             function () {
                 $scope.errorMsg = defaultErrrMsg
