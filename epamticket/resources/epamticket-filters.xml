@@ -47,26 +47,25 @@
                 <bean class="com.epam.ticket.dao.EpamCsTicketFilterCriteria">
                     <constructor-arg name="name" value="assignedToGroup"/>
                     <constructor-arg name="displayName" value="My Group"/>
-                    <constructor-arg name="filterQuery" value="SELECT {c:PK} 
-                        FROM {CsTicket AS c JOIN User AS u ON {c.assignedAgent} = {u.PK}} WHERE {u:PK} = (?session.user)"/>
-                    <constructor-arg name="filterCountQuery" value="SELECT count({c:PK}) 
-                        FROM {CsTicket AS c JOIN User AS u ON {c.assignedAgent} = {u.PK}} WHERE {u:PK} = (?session.user)"/>
+                    <constructor-arg name="filterQuery" value=""/>
+                    <constructor-arg name="filterCountQuery" value="SELECT count({c.pk}) FROM { CsTicket AS c } WHERE {c.assignedgroup} IN 
+                        ({{ SELECT targetpk FROM { User AS u JOIN PrincipalGroupRelation AS p ON {u.pk} = sourcepk}
+                                                    where {u.pk} = (?session.user) }})"/>
                 </bean>
                 <bean class="com.epam.ticket.dao.EpamCsTicketFilterCriteria">
                     <constructor-arg name="name" value="assignedToOthers"/>
                     <constructor-arg name="displayName" value="All Groups"/>
-                    <constructor-arg name="filterQuery" value="SELECT {c:PK} 
-                        FROM {CsTicket AS c JOIN User AS u ON {c.assignedAgent} = {u.PK}} WHERE {u:PK} != (?session.user)"/>
-                    <constructor-arg name="filterCountQuery" value="SELECT count({c:PK}) 
-                        FROM {CsTicket AS c JOIN User AS u ON {c.assignedAgent} = {u.PK}} WHERE {u:PK} != (?session.user)"/>
+                    <constructor-arg name="filterQuery" value=""/>
+                    <constructor-arg name="filterCountQuery" value="SELECT count({c.pk}) FROM { CsTicket AS c } WHERE {c.assignedgroup} NOT IN 
+                        ({{ SELECT targetpk FROM { User AS u JOIN PrincipalGroupRelation AS p ON {u.pk} = sourcepk}
+                                                    where {u.pk} = (?session.user) }})"/>
                 </bean>
                 <bean class="com.epam.ticket.dao.EpamCsTicketFilterCriteria">
                     <constructor-arg name="name" value="unassigned"/>
                     <constructor-arg name="displayName" value="Unassigned"/>
-                    <constructor-arg name="filterQuery" value="SELECT {c:PK} 
-                        FROM {CsTicket AS c} WHERE {c.assignedAgent} IS NULL"/>
+                    <constructor-arg name="filterQuery" value=""/>
                     <constructor-arg name="filterCountQuery" value="SELECT count({c:PK}) 
-                        FROM {CsTicket AS c} WHERE {c.assignedAgent} IS NULL"/>
+                        FROM {CsTicket AS c} WHERE {c.assignedGroup} IS NULL"/>
                     </bean>
             </list>
         </property>
@@ -111,6 +110,51 @@
                             FROM {CsTicket AS c JOIN enumerationvalue AS e ON {c.state}={e.pk} }
                             GROUP BY {state}
                             HAVING {e.code}='Closed'}}
+                        ) AS cs "/>
+                    </bean>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="epamPriorityFilter" class="com.epam.ticket.dao.EpamCsTicketFilter">
+        <constructor-arg name="name" value="priority"/>
+        <constructor-arg name="displayName" value="PRIORITY"/>
+        <property name="filterCriterias">
+            <list>
+                <bean class="com.epam.ticket.dao.EpamCsTicketFilterCriteria">
+                    <constructor-arg name="name" value="low"/>
+                    <constructor-arg name="displayName" value="Low"/>
+                    <constructor-arg name="filterQuery" value=""/>
+                    <constructor-arg name="filterCountQuery" value="SELECT count FROM 
+                        (
+                            {{SELECT {e.code} AS code, count({c.PK}) AS count
+                            FROM {CsTicket AS c JOIN enumerationvalue AS e ON {c.priority}={e.pk} }
+                            GROUP BY {priority}
+                            HAVING {e.code}='Low'}}
+                        ) AS cs "/>
+                </bean>
+                <bean class="com.epam.ticket.dao.EpamCsTicketFilterCriteria">
+                    <constructor-arg name="name" value="medium"/>
+                    <constructor-arg name="displayName" value="Medium"/>
+                    <constructor-arg name="filterQuery" value=""/>
+                    <constructor-arg name="filterCountQuery" value="SELECT count FROM 
+                        (
+                            {{SELECT {e.code} AS code, count({c.PK}) AS count
+                            FROM {CsTicket AS c JOIN enumerationvalue AS e ON {c.priority}={e.pk} }
+                            GROUP BY {priority}
+                            HAVING {e.code}='Medium'}}
+                        ) AS cs "/>
+                </bean>
+                <bean class="com.epam.ticket.dao.EpamCsTicketFilterCriteria">
+                    <constructor-arg name="name" value="high"/>
+                    <constructor-arg name="displayName" value="High"/>
+                    <constructor-arg name="filterQuery" value=""/>
+                    <constructor-arg name="filterCountQuery" value="SELECT count FROM 
+                        (
+                            {{SELECT {e.code} AS code, count({c.PK}) AS count
+                            FROM {CsTicket AS c JOIN enumerationvalue AS e ON {c.priority}={e.pk} }
+                            GROUP BY {priority}
+                            HAVING {e.code}='High'}}
                         ) AS cs "/>
                     </bean>
             </list>

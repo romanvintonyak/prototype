@@ -74,7 +74,9 @@
         <property name="availableFilters">
             <list>
                 <ref bean="epamAgentFilter"/>
+                <ref bean="epamGroupFilter"/>
                 <ref bean="epamStateFilter"/>
+                <ref bean="epamPriorityFilter"/>
             </list>
         </property>
     </bean>

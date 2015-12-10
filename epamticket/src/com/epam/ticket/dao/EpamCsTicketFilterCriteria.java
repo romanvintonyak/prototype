@@ -1,7 +1,5 @@
 package com.epam.ticket.dao;
 
-import java.util.Set;
-
 public class EpamCsTicketFilterCriteria {
     private String name;
     private String displayName;

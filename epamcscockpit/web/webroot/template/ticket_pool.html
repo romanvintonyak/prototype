@@ -51,7 +51,7 @@
                                    checklist-model="ticketSearchCriteria.group" checklist-value="group"/>
                             {{group}}
                         </label>
-                        <span class="filter__item-counter"></span>
+                        <span class="filter__item-counter">{{ticketCounts.filterCategories.group[group] || 0}}</span>
                     </li>
                 </ul>
             </div>
@@ -79,7 +79,7 @@
                                    checklist-model="ticketSearchCriteria.levels" checklist-value="level"/>
                             {{level}}
                         </label>
-                        <span class="filter__item-counter"></span>
+                        <span class="filter__item-counter">{{ticketCounts.filterCategories.priority[priority] || 0}}</span>
                     </li>
                 </ul>
             </div>
@@ -93,7 +93,7 @@
                                    checklist-model="ticketSearchCriteria.priorities" checklist-value="priority"/>
                             {{priority}}
                         </label>
-                        <span class="filter__item-counter">{{ticketCounts.filterCategories.priority[priority]}}</span>
+                        <span class="filter__item-counter">{{ticketCounts.filterCategories.priority[priority] || 0}}</span>
                     </li>
                 </ul>
             </div>

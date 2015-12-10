@@ -1,32 +1,28 @@
 package com.epam.ticket.dao;
 
 import java.io.Serializable;
-import org.apache.log4j.Logger;
-
 import com.epam.ticket.dao.counters.CategoryCounterStrategy;
 import com.epam.ticket.facades.EpamTicketSearchCriteria;
-
-import de.hybris.platform.jalo.JaloSession;
 import de.hybris.platform.servicelayer.exceptions.AmbiguousIdentifierException;
 import de.hybris.platform.servicelayer.search.SearchResult;
 import de.hybris.platform.ticket.dao.impl.DefaultTicketDao;
 import de.hybris.platform.ticket.enums.CsTicketCategory;
 import de.hybris.platform.ticket.enums.CsTicketPriority;
 import de.hybris.platform.ticket.enums.CsTicketState;
-import de.hybris.platform.ticket.jalo.CsTicket;
 import de.hybris.platform.ticket.model.CsTicketModel;
+import org.apache.log4j.Logger;
 
 import java.util.*;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
+
+import de.hybris.platform.jalo.JaloSession;
 
 public class EpamTicketDAO extends DefaultTicketDao {
 
     public static final Logger LOG = Logger.getLogger(EpamTicketDAO.class);
     public static final String QUERY_STRING = "SELECT {t:pk} FROM {CsTicket AS t} ";
     private StringBuffer query;
-    private CategoryCounterStrategy enumCategoryCounterStrategy;
-    private CategoryCounterStrategy agentCategoryCounterStrategy;
     private Set<EpamCsTicketFilter> availableFilters;
     
     public CsTicketModel getTicketById(String ticketId) {
@@ -99,19 +95,12 @@ public class EpamTicketDAO extends DefaultTicketDao {
     public TicketCountsResult getTicketCounts() {
         TicketCountsResult result = new TicketCountsResult();
         LOG.info(JaloSession.getCurrentSession().getUser().getName());
-        result.addFilerCategoryCounters(CsTicket.PRIORITY, enumCategoryCounterStrategy.countCategory(CsTicket.PRIORITY));
-//        result.addFilerCategoryCounters(CsTicket.STATE, enumCategoryCounterStrategy.countCategory(CsTicket.STATE));
-//        result.addFilerCategoryCounters(CsTicket.ASSIGNEDAGENT, agentCategoryCounterStrategy.countCategory(CsTicket.ASSIGNEDAGENT));
         
         for (EpamCsTicketFilter filter : getAvailableFilters()) {
             result.addFilerCategoryCounters(filter.getName(), FilterQueryExecuter.execute(getFlexibleSearchService(), filter.getFilterCriterias()));
         }
         
         LOG.info("Ticket counts:" + result);
-
-        for (EpamCsTicketFilter filter : this.availableFilters) {
-            LOG.info(filter.getDisplayName());
-        }
 
         return result;
     }
