@@ -9,10 +9,6 @@ import de.hybris.platform.ticket.service.TicketBusinessService;
 
 import java.util.List;
 
-/**
- * @author Dmitry Adonin
- * @since 27-Nov-15
- */
 public class DefaultEpamTicketService implements EpamTicketService {
 
     private TicketBusinessService ticketBusinessService;

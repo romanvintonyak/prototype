@@ -6,10 +6,6 @@ import de.hybris.platform.ticket.model.CsTicketModel;
 
 import java.util.List;
 
-/**
- * @author Dmitry Adonin
- * @since 27-Nov-15
- */
 public interface EpamTicketService {
 
     void addTicket(CsTicketModel ticket, CsCustomerEventModel creationEvent);

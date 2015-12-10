@@ -10,9 +10,7 @@ import de.hybris.platform.ticket.enums.CsTicketState;
 import de.hybris.platform.ticket.model.CsTicketModel;
 import org.apache.log4j.Logger;
 
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
 
@@ -63,6 +61,18 @@ public class EpamTicketDAO extends DefaultTicketDao {
             paramMap.put("agent", agentId);
         }
 
+        String field = criteria.getSortName(); //todo validate field
+        if (!isNullOrEmpty(field)) {
+            EpamCsSort sort = sorts.get(criteria.getSortName());
+            if(sort == null)
+                throw new IllegalArgumentException("Sort " + criteria.getSortName() + " not found");
+            query.append("ORDER BY {t.");
+            query.append(sort.getFlexField()).append("} "); // danger, may cause FlexSearch manipulation
+            query.append(criteria.getSortReverse()
+                    ? "DESC" : "ASC");
+
+        }
+
         LOG.info("Running query: " + query + " with params: " + paramMap);
         SearchResult<CsTicketModel> resultTickets = getFlexibleSearchService()
                 .search(query.toString(), paramMap);
@@ -81,5 +91,20 @@ public class EpamTicketDAO extends DefaultTicketDao {
         return query.length() == QUERY_STRING.length() ? " WHERE " : " AND ";
 
     }
+
+    protected Map<String, EpamCsSort> sorts = new HashMap<>();
+
+    public Collection<EpamCsSort> getAvailableSorts() {
+        return sorts.values();
+    }
+
+    public void setAvailableSorts(Collection<EpamCsSort> sorts) {
+        Map<String, EpamCsSort> res = new HashMap<>();
+        for (EpamCsSort sort : sorts) {
+            res.put(sort.getName(), sort);
+        }
+        this.sorts = res;
+    }
+
 
 }

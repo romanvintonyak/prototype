@@ -13,6 +13,9 @@ public class EpamTicketSearchCriteria implements Serializable{
     private List<CsTicketState> states;
     private List<CsTicketCategory> categories;
     private String agentId;
+    private String sortName;
+    private Boolean sortReverse = false;
+
 
     public void setPriorities(List<CsTicketPriority> priorities) {
         this.priorities = priorities;
@@ -46,7 +49,23 @@ public class EpamTicketSearchCriteria implements Serializable{
 		this.categories = categories;
 	}
 
-	@Override
+    public String getSortName() {
+        return sortName;
+    }
+
+    public void setSortName(String sortName) {
+        this.sortName = sortName;
+    }
+
+    public Boolean getSortReverse() {
+        return sortReverse;
+    }
+
+    public void setSortReverse(Boolean sortReverse) {
+        this.sortReverse = sortReverse;
+    }
+
+    @Override
     public String toString() {
         return "EpamTicketSearchCriteria{" +
                 "priorities=" + priorities +

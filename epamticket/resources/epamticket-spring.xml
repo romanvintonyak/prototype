@@ -16,7 +16,7 @@
         <constructor-arg name="epamTicketPopulator" ref="epamTicketPopulator"/>
     </bean>
 
-    <bean id="epamTicketPopulator" class="com.epam.ticket.converter.EpamTicketPopulator">
+    <bean id="epamTicketPopulator" class="com.epam.ticket.populator.EpamTicketPopulator">
         <constructor-arg name="ticketEventConverter" ref="epamTicketEventConverter" />
         <constructor-arg name="dateFormatter" ref="dateFormatter"/>
     </bean>
@@ -31,7 +31,7 @@
         <constructor-arg name="populator" ref="epamTicketEventPopulator" />
     </bean>
 
-    <bean id="epamTicketEventPopulator" class="com.epam.ticket.converter.EpamTicketEventPopulator" >
+    <bean id="epamTicketEventPopulator" class="com.epam.ticket.populator.EpamTicketEventPopulator" >
         <property name="ticketEmailConverter" ref="epamTicketEmailConverter" />
         <property name="ticketChangeEventEntryConverter" ref="epamTicketChangeEventEntryConverter" />
     </bean>
@@ -40,18 +40,44 @@
         <constructor-arg name="populator" ref="epamTicketEmailPopulator" />
     </bean>
 
-    <bean id="epamTicketEmailPopulator" class="com.epam.ticket.converter.EpamTicketEmailPopulator" />
+    <bean id="epamTicketEmailPopulator" class="com.epam.ticket.populator.EpamTicketEmailPopulator" />
 
     <bean id="epamTicketChangeEventEntryConverter" class="com.epam.ticket.converter.EpamTicketChangeEventEntryConverter">
         <constructor-arg name="populator" ref="epamTicketChangeEventEntryPopulator" />
     </bean>
 
-    <bean id="epamTicketChangeEventEntryPopulator" class="com.epam.ticket.converter.EpamTicketChangeEventEntryPopulator" />
+    <bean id="epamTicketChangeEventEntryPopulator" class="com.epam.ticket.populator.EpamTicketChangeEventEntryPopulator" />
 
     <bean id="epamTicketService" class="com.epam.ticket.services.impl.DefaultEpamTicketService" scope="tenant">
        <property name="ticketDao" ref="epamTicketDao" />
     </bean>
 
-    <bean id="epamTicketDao" class="com.epam.ticket.dao.EpamTicketDAO" parent="abstractItemDao" scope="tenant"/>
+    <bean id="epamTicketDao" class="com.epam.ticket.dao.EpamTicketDAO" parent="abstractItemDao" scope="tenant">
+        <property name="availableSorts">
+            <list>
+
+                <bean class="com.epam.ticket.dao.EpamCsSort">
+                    <constructor-arg name="field" value="ticketId"/>
+                </bean>
+                <bean class="com.epam.ticket.dao.EpamCsSort">
+                    <constructor-arg name="field" value="creationTime"/>
+                </bean>
+                <bean class="com.epam.ticket.dao.EpamCsSort">
+                    <constructor-arg name="field" value="modifyTime"/>
+                </bean>
+                <bean class="com.epam.ticket.dao.EpamCsSort">
+                    <constructor-arg name="name" value="customerDisplayName"/>
+                    <constructor-arg name="flexField" value="customer.displayName"/>
+                    <constructor-arg name="jsonField" value="customerDisplayName"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="epamTicketBusinessService" class="com.epam.ticket.services.impl.DefaultEpamTicketBusinessService">
+        <constructor-arg ref="ticketBusinessService" />
+        <constructor-arg ref="ticketService" />
+        <constructor-arg ref="epamTicketConverter" />
+    </bean>
 
 </beans>

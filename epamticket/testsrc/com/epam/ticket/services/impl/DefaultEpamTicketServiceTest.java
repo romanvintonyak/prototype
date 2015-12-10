@@ -14,10 +14,6 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
-/**
- * @author Dmitry Adonin
- * @since 27-Nov-15
- */
 @UnitTest
 public class DefaultEpamTicketServiceTest {
 
