@@ -97,7 +97,6 @@
     <bean id="epamTicketBusinessService" class="com.epam.ticket.services.impl.DefaultEpamTicketBusinessService">
         <constructor-arg ref="ticketBusinessService" />
         <constructor-arg ref="ticketService" />
-        <constructor-arg ref="epamTicketConverter" />
     </bean>
 
     <bean id = "epamticketsCountAttributeHandler" class="com.epam.ticket.attributehandlers.EpamticketsCountAttributeHandler" >
