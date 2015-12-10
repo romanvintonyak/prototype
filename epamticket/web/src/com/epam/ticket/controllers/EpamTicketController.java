@@ -34,8 +34,8 @@ public class EpamTicketController {
 
     @RequestMapping(method = POST, consumes = APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void addTicket(@RequestBody EpamNewTicket ticket) {
-        defaultEpamTicketFacade.addTicket(ticket.getNewTicket(), ticket.getCreationEvent());
+    public EpamTicket addTicket(@RequestBody EpamNewTicket ticket) {
+        return defaultEpamTicketFacade.addTicket(ticket.getNewTicket(), ticket.getCreationEvent());
     }
 
     @RequestMapping(value = "/{ticketId}", method = GET)

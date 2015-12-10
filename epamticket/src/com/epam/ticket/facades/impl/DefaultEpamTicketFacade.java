@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static de.hybris.platform.ticket.enums.CsTicketState.OPEN;
 
 public class DefaultEpamTicketFacade implements EpamTicketFacade {
 
@@ -39,6 +40,7 @@ public class DefaultEpamTicketFacade implements EpamTicketFacade {
 
     @Override
     public EpamTicket addTicket(EpamTicket ticket, EpamCustomerEvent event) {
+        ticket.setState(OPEN.getCode());
         return ticketConverter.convert(
                 ticketBusinessService.addTicket(csTicketConverter.convert(ticket), csCustomerEventConverter.convert(event)));
     }
