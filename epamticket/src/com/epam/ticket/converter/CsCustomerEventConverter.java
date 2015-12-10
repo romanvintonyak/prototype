@@ -1,6 +1,7 @@
 package com.epam.ticket.converter;
 
 import com.epam.ticket.data.EpamCustomerEvent;
+import com.epam.ticket.populator.CsCustomerEventPopulator;
 import de.hybris.platform.converters.impl.AbstractPopulatingConverter;
 import de.hybris.platform.servicelayer.dto.converter.ConversionException;
 import de.hybris.platform.ticket.events.model.CsCustomerEventModel;
@@ -10,6 +11,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class CsCustomerEventConverter extends AbstractPopulatingConverter<EpamCustomerEvent, CsCustomerEventModel> {
 
     private CsCustomerEventPopulator populator;
+
+    public CsCustomerEventConverter(CsCustomerEventPopulator populator) {
+        this.populator = populator;
+    }
 
     @Override
     protected CsCustomerEventModel createTarget() {

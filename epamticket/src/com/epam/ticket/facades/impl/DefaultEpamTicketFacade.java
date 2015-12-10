@@ -7,6 +7,7 @@ import com.epam.ticket.data.EpamCustomerEvent;
 import com.epam.ticket.data.EpamTicket;
 import com.epam.ticket.facades.EpamTicketFacade;
 import com.epam.ticket.facades.EpamTicketSearchCriteria;
+import com.epam.ticket.services.EpamTicketBusinessService;
 import com.epam.ticket.services.EpamTicketService;
 import de.hybris.platform.ticket.model.CsTicketModel;
 import org.apache.log4j.Logger;
@@ -23,18 +24,22 @@ public class DefaultEpamTicketFacade implements EpamTicketFacade {
     private EpamTicketConverter ticketConverter;
     private CsTicketConverter csTicketConverter;
     private EpamTicketService ticketService;
+    private EpamTicketBusinessService ticketBusinessService;
     private CsCustomerEventConverter csCustomerEventConverter;
 
     public DefaultEpamTicketFacade(EpamTicketConverter ticketConverter, CsTicketConverter csTicketConverter,
-                                   EpamTicketService ticketService) {
+                                   CsCustomerEventConverter csCustomerEventConverter, EpamTicketService ticketService,
+                                   EpamTicketBusinessService ticketBusinessService) {
         this.ticketConverter = checkNotNull(ticketConverter);
         this.csTicketConverter = checkNotNull(csTicketConverter);
+        this.csCustomerEventConverter = checkNotNull(csCustomerEventConverter);
         this.ticketService = checkNotNull(ticketService);
+        this.ticketBusinessService = checkNotNull(ticketBusinessService);
     }
 
     @Override
     public void addTicket(EpamTicket ticket, EpamCustomerEvent event) {
-        ticketService.addTicket(csTicketConverter.convert(ticket), csCustomerEventConverter.convert(event));
+        ticketBusinessService.addTicket(csTicketConverter.convert(ticket), csCustomerEventConverter.convert(event));
     }
 
     @Override

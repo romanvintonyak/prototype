@@ -17,7 +17,13 @@
               <constructor-arg ref="csTicketPopulator"/>
        </bean>
 
-       <bean id="csTicketPopulator" class="com.epam.ticket.converter.CsTicketPopulator" />
+       <bean id="csTicketPopulator" class="com.epam.ticket.populator.CsTicketPopulator" />
+
+    <bean id="csCustomerEventConverter" class="com.epam.ticket.converter.CsCustomerEventConverter">
+        <constructor-arg ref="csCustomerEventPopulator" />
+    </bean>
+
+    <bean id="csCustomerEventPopulator" class="com.epam.ticket.populator.CsCustomerEventPopulator" />
 
     <bean id="epamTicketConverter" class="com.epam.ticket.converter.EpamTicketConverter">
         <constructor-arg name="epamTicketPopulator" ref="epamTicketPopulator"/>

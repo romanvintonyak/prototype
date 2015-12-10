@@ -28,7 +28,7 @@ public class EpamTicketController {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void addTicket(@RequestBody EpamTicket ticket, EpamCustomerEvent event) {
+    public void addTicket(@RequestParam("ticket") EpamTicket ticket, @RequestParam("event") EpamCustomerEvent event) {
         defaultEpamTicketFacade.addTicket(ticket, event);
     }
 

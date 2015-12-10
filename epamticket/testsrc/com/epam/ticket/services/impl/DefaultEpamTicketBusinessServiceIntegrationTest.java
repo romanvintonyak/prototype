@@ -1,13 +1,12 @@
 package com.epam.ticket.services.impl;
 
-import com.epam.ticket.data.EpamTicket;
-import com.epam.ticket.data.EpamTicketChangeEventEntry;
 import com.epam.ticket.services.EpamTicketBusinessService;
 import de.hybris.platform.core.model.order.OrderModel;
 import de.hybris.platform.servicelayer.model.ModelService;
 import de.hybris.platform.servicelayer.user.UserService;
 import de.hybris.platform.ticket.enums.CsTicketState;
 import de.hybris.platform.ticket.events.model.CsCustomerEventModel;
+import de.hybris.platform.ticket.events.model.CsTicketChangeEventEntryModel;
 import de.hybris.platform.ticket.jalo.AbstractTicketsystemTest;
 import de.hybris.platform.ticket.model.CsTicketModel;
 import de.hybris.platform.ticket.service.TicketBusinessService;
@@ -49,17 +48,26 @@ public class DefaultEpamTicketBusinessServiceIntegrationTest extends AbstractTic
     {
         super.setUp();
     }
+
     @Test
-    public void shouldCloseTicketWhen() throws TicketException {
+    public void shouldCreateTicket() {
         //given
         CsTicketModel ticket = prepareTicketWithEvents();
         //when
-        EpamTicket epamTicket = epamTicketBusinessService.setTicketState(ticket.getTicketID(), CLOSED, COMMENT);
+
+    }
+
+    @Test
+    public void shouldCloseTicketWhen() throws TicketException {
         //given
-        assertEquals(CLOSED, epamTicket.getState());
-        assertEquals(2, epamTicket.getEvents().size());
-        assertEquals(COMMENT, epamTicket.getEvents().get(1).getText());
-        EpamTicketChangeEventEntry entry = epamTicket.getEvents().get(1).getTicketChangeEventEntries().iterator().next();
+        CsTicketModel inTicket = prepareTicketWithEvents();
+        //when
+        CsTicketModel outTicket = epamTicketBusinessService.setTicketState(inTicket.getTicketID(), CLOSED, COMMENT);
+        //given
+        assertEquals(CLOSED, outTicket.getState().getCode());
+        assertEquals(2, outTicket.getEvents().size());
+        assertEquals(COMMENT, outTicket.getEvents().get(1).getText());
+        CsTicketChangeEventEntryModel entry = outTicket.getEvents().get(1).getEntries().iterator().next();
         assertEquals("Open", entry.getOldStringValue());
         assertEquals(CLOSED, entry.getNewStringValue());
     }
@@ -73,7 +81,7 @@ public class DefaultEpamTicketBusinessServiceIntegrationTest extends AbstractTic
         thrown.expect(TicketException.class);
         thrown.expectMessage("The ticket must not have been previously updated before specifically changing the state");
         //when
-        EpamTicket epamTicket = epamTicketBusinessService.setTicketState(ticket.getTicketID(), CLOSED, COMMENT);
+        CsTicketModel epamTicket = epamTicketBusinessService.setTicketState(ticket.getTicketID(), CLOSED, COMMENT);
         //given
     }
 
