@@ -1,39 +1,65 @@
 <div class="container">
 
-    <h1>New Ticket</h1>
+    <h1 class="ticket__form_header">New Ticket</h1>
 
-    <form ng-submit="addTicket()" ng-controller="TicketCreateCtrl">
 
-        <!-- no related field in EpamTicket and child DTO's -->
-        <label for="interventionType">Intervention type</label>
-        <select name="interventionType" id="interventionType">
-            <option value="im">IM</option>
-            <option value="email">Email</option>
-        </select>
+    <div class="ticket__form container">
+        <form ng-submit="addTicket()" ng-controller="TicketCreateCtrl">
 
-        <br/>
+            <!-- no related field in EpamTicket and child DTO's -->
+            <div class="ticket__form_element">
+                <label class="ticket__form_label" for="interventionType">Intervention type</label>
+                <select name="interventionType"
+                        class="ticket__form_input"
+                        ng-model="newTicket.intervention"
+                        ng-options="type for type in ticketInterventions"
+                        id="interventionType">
+                </select>
+            </div>
+            <div class="ticket__form_element">
+                <label class="ticket__form_label"
+                       for="headline">Ticket Headline</label>
+                <input class="ticket__form_input"
+                       type="text"
+                       name="headline"
+                       id="headline"
+                       ng-model="newTicket.headline">
+            </div>
+            <div class="ticket__form_element">
+                <label class="ticket__form_label"
+                       for="category">Ticket Category</label>
+                <select name="category" id="category"
+                        ng-model="newTicket.category"
+                        class="ticket__form_input"
+                        ng-options="category for category in ticketCategories">
+                </select>
+            </div>
+            <div class="ticket__form_element">
+                <label class="ticket__form_label" for="category">Ticket Priority</label>
+                <select class="ticket__form_input"
+                        name="priority" id="priority"
+                        ng-model="newTicket.priority"
+                        ng-options="priority for priority in ticketPriorities">
+                </select>
+            </div>
+            <div class="ticket__form_element comment">
+                <label class="ticket__form_label"for="comment">Comment</label>
+                <textarea id="comment" name="comment"
+                          class="ticket__form_input"
+                          ng-model="newEvent.comment"></textarea>
+            </div>
+            <div class="ticket__form_element">
+                <input  class="filter__btn filter__btn_update"
+                        type="submit" value="Add ticket">
+                {{ newTicket | json }}
+                {{ newEvent | json }}
+            </div>
+        </form>
+    </div>
 
-        <label for="headline">Ticket Headline</label>
-        <input type="text" name="headline" id="headline" ng-model="newTicket.headline">
-
-        <br/>
-
-        <label for="category">Ticket Category</label>
-        <select name="category" id="category" ng-model="newTicket.category"
-                ng-options="category for category in ticketCategories">
-        </select>
-
-        <br/>
-
-        <label for="category">Ticket Priority</label>
-        <select name="priority" id="priority" ng-model="newTicket.priority"
-                ng-options="priority for priority in ticketPriorities">
-        </select>
-
-        <br/>
-
-        <input type="submit" value="Add ticket">
-    </form>
+    </div>
 
 </div>
+</div>
+
 
