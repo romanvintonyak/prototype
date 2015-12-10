@@ -3,12 +3,14 @@ package com.epam.ticket.dao;
 import java.io.Serializable;
 import com.epam.ticket.dao.counters.CategoryCounterStrategy;
 import com.epam.ticket.facades.EpamTicketSearchCriteria;
+
 import de.hybris.platform.servicelayer.exceptions.AmbiguousIdentifierException;
 import de.hybris.platform.servicelayer.search.SearchResult;
 import de.hybris.platform.ticket.dao.impl.DefaultTicketDao;
 import de.hybris.platform.ticket.enums.CsTicketCategory;
 import de.hybris.platform.ticket.enums.CsTicketPriority;
 import de.hybris.platform.ticket.enums.CsTicketState;
+import de.hybris.platform.ticket.jalo.CsTicket;
 import de.hybris.platform.ticket.model.CsTicketModel;
 import org.apache.log4j.Logger;
 
@@ -113,7 +115,6 @@ public class EpamTicketDAO extends DefaultTicketDao {
     public class TicketCountsResult implements Serializable {
         private static final long serialVersionUID = 1L;
         private final Map<String, Map<String, Integer>> filterCategories = new HashMap<>();
-
         public void addFilerCategoryCounters(final String filterCategory, final Map<String, Integer> categoryStates) {
             filterCategories.put(filterCategory, categoryStates);
         }
