@@ -138,8 +138,14 @@ epamcscockpit.controller("TicketDetailsCtrl", function ($scope, $http, $routePar
 
 epamcscockpit.controller("TicketCreateCtrl", function ($scope, $http, TicketCreateResource /*, testconst*/) {
     fillConstants($scope);
-    $scope.newTicket = {assignedGroup: "admingroup", assignedAgent: "admin"};
-    $scope.newEvent  = {};
+    $scope.newTicket = {
+        category: $scope.ticketCategories[1],
+        priority: $scope.ticketPriorities[1]
+    };
+    $scope.newEvent  = {
+        interventionType: $scope.ticketInterventions[1],
+        reason: $scope.ticketEventReason[1]
+    };
 
 
     $scope.addTicket = function() {
