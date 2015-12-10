@@ -6,7 +6,7 @@ import de.hybris.platform.ticket.service.TicketException;
 
 public interface EpamTicketBusinessService {
 
-    void addTicket(CsTicketModel ticket, CsCustomerEventModel creationEvent);
+    CsTicketModel addTicket(CsTicketModel ticket, CsCustomerEventModel creationEvent);
 
     CsTicketModel setTicketState(String ticketId, String state, String comment) throws TicketException;
 }

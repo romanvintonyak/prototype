@@ -38,8 +38,9 @@ public class DefaultEpamTicketFacade implements EpamTicketFacade {
     }
 
     @Override
-    public void addTicket(EpamTicket ticket, EpamCustomerEvent event) {
-        ticketBusinessService.addTicket(csTicketConverter.convert(ticket), csCustomerEventConverter.convert(event));
+    public EpamTicket addTicket(EpamTicket ticket, EpamCustomerEvent event) {
+        return ticketConverter.convert(
+                ticketBusinessService.addTicket(csTicketConverter.convert(ticket), csCustomerEventConverter.convert(event)));
     }
 
     @Override

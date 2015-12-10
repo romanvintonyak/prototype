@@ -143,7 +143,7 @@ epamcscockpit.controller("TicketCreateCtrl", function ($scope, $http, TicketCrea
 
     $scope.addTicket = function() {
         TicketCreateResource.save(
-            {ticket: $scope.newTicket, event: $scope.newEvent},
+            {newTicket: $scope.newTicket, creationEvent: $scope.newEvent},
             function (data, status, headers, config) {
                 //alert(testconst);
                 console.log(data);

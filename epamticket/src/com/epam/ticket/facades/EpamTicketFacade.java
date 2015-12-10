@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface EpamTicketFacade {
 
-    void addTicket(EpamTicket ticket, EpamCustomerEvent event);
+    EpamTicket addTicket(EpamTicket ticket, EpamCustomerEvent event);
 
     List<EpamTicket> getTicketsByCriteria(EpamTicketSearchCriteria searchCriteria);
 

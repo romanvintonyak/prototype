@@ -23,8 +23,8 @@ public class DefaultEpamTicketBusinessService implements EpamTicketBusinessServi
     }
 
     @Override
-    public void addTicket(CsTicketModel ticket, CsCustomerEventModel creationEvent) {
-        defaultTicketBusinessService.createTicket(ticket.getCustomer(), ticket.getCategory(), ticket.getPriority(),
+    public CsTicketModel addTicket(CsTicketModel ticket, CsCustomerEventModel creationEvent) {
+        return defaultTicketBusinessService.createTicket(ticket.getCustomer(), ticket.getCategory(), ticket.getPriority(),
                 ticket.getAssignedAgent(), ticket.getAssignedGroup(), ticket.getHeadline(),
                 creationEvent.getInterventionType(), creationEvent.getReason(), creationEvent.getText());
     }
