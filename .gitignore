@@ -69,3 +69,6 @@ components-lang-addon.xml
 !utils/mysql/*.zip
 !utils/mysql/*.jar
 !epamcscockpit/web/webroot/js/lib
+build.xml
+**/*.xsd
+*/.settings

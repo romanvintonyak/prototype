@@ -20,33 +20,43 @@ import org.springframework.security.core.userdetails.UserDetails;
  */
 
 public class EpamCoreAuthenticationProvider extends CoreAuthenticationProvider {
-	@Override
-	protected Authentication createSuccessAuthentication(final Authentication authentication, final UserDetails userDetails) {
-		final User user = UserManager.getInstance().getUserByLogin(userDetails.getUsername());
-		final EpamAuthenticationToken result = new EpamAuthenticationToken(userDetails.getUsername(), authentication.getCredentials(),
-				userDetails.getAuthorities());
-		result.setDetails(authentication.getDetails());
-		result.setDisplayName(user.getDisplayName());
-		return result;
-	}
+    @Override
+    protected Authentication createSuccessAuthentication(final Authentication authentication, final UserDetails userDetails) {
+        final User user = UserManager.getInstance().getUserByLogin(userDetails.getUsername());
+        final EpamAuthenticationToken result = new EpamAuthenticationToken(userDetails.getUsername(), authentication.getCredentials(),
+                userDetails.getAuthorities());
+        result.setDetails(authentication.getDetails());
+        result.setDisplayName(user.getDisplayName());
+        result.setUserName(userDetails.getUsername());
+        return result;
+    }
 
-	private class EpamAuthenticationToken extends UsernamePasswordAuthenticationToken {
-		private String displayName;
+    private class EpamAuthenticationToken extends UsernamePasswordAuthenticationToken {
+        private String displayName;
+        private String userName;
 
-		public EpamAuthenticationToken(final Object principal, final Object credentials,final Collection<? extends GrantedAuthority> authorities) {
-			super(principal,credentials,authorities);
-		}
+        public EpamAuthenticationToken(final Object principal, final Object credentials, final Collection<? extends GrantedAuthority> authorities) {
+            super(principal, credentials, authorities);
+        }
 
-		@SuppressWarnings("unused")
-		public String getDisplayName() {
-			return displayName;
-		}
+        @SuppressWarnings("unused")
+        public String getDisplayName() {
+            return displayName;
+        }
 
-		public void setDisplayName(String displayName) {
-			this.displayName = displayName;
-		}
+        public void setDisplayName(final String displayName) {
+            this.displayName = displayName;
+        }
 
-		
-	}
+        @SuppressWarnings("unused")
+        public String getUserName() {
+            return userName;
+        }
+
+        public void setUserName(final String userName) {
+            this.userName = userName;
+        }
+
+    }
 
 }

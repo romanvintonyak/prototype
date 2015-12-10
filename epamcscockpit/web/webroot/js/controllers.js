@@ -1,4 +1,4 @@
-var epamcscockpit = angular.module("epamcscockpit", ["ngRoute", "checklist-model", "epamcscockpitResource", "epamcscockpitFilters"]);
+var epamcscockpit = angular.module("epamcscockpit", ["ngRoute", "ngCookies", "checklist-model", "epamcscockpitResource", "epamcscockpitFilters"]);
 var defaultErrrMsg = "An error occurred while loading the data";
 epamcscockpit.config(["$routeProvider", "$httpProvider", function ($routeProvider, $httpProvider) {
     $routeProvider
@@ -36,7 +36,7 @@ epamcscockpit.config(["$routeProvider", "$httpProvider", function ($routeProvide
         });
 }]);
 
-epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval, TicketsResource, TicketCountResource) {
+epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval, $cookieStore, TicketsResource, TicketCountResource, TicketCountsResource, Auth, userName) {
     $scope.ticketPriorities = ['Low', 'Medium', 'High'];
     $scope.ticketStates = ['New', 'Open', 'Closed'];
     $scope.ticketCategories = [null, 'Problem', 'Incident', 'Complaint', 'Fraud', 'Note'];
@@ -65,7 +65,6 @@ epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval, T
         sc.sortName = [];
         sc.sortReverse = false;
     };
-
     $scope.clearTicketSearchCriteria();
 
     $scope.updateTicketStore = function () {
@@ -85,7 +84,11 @@ epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval, T
     };
 
     $scope.updateTicketStore();
+    
+    $cookieStore.put('userName', userName);
+    Auth.setCredentials("csagent" , "1234");
     $scope.ticketCount = TicketCountResource.get();
+    $scope.ticketCounts = TicketCountsResource.get({userName: userName});
 
     // --- sort-related functions
     $scope.sortField = 'ticketId'; // user requested sort

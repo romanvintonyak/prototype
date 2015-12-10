@@ -9,5 +9,7 @@
 	<classpathentry kind="src" output="eclipsebin/web/classes" path="web/src"/>
 	<classpathentry kind="src" output="eclipsebin/classes" path="testsrc"/>
 	<classpathentry kind="src" output="eclipsebin/classes" path="gensrc"/>
+	<classpathentry kind="lib" path="/platform/lib/dbdriver/mysql-connector-java-5.1.35-bin.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/platformwebservices"/>
 	<classpathentry kind="output" path="eclipsebin/notused"/>
 </classpath>
