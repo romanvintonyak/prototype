@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import org.apache.log4j.Logger;
@@ -30,6 +31,7 @@ public class EpamTicketDAO extends DefaultTicketDao {
     private StringBuffer query;
     private CategoryCounterStrategy enumCategoryCounterStrategy;
     private CategoryCounterStrategy agentCategoryCounterStrategy;
+    private Set<EpamCsTicketFilter> availableFilters;
     
     public CsTicketModel getTicketById(String ticketId) {
         List<CsTicketModel> csTicketModels = this.findTicketsById(ticketId);
@@ -90,9 +92,19 @@ public class EpamTicketDAO extends DefaultTicketDao {
         TicketCountsResult result = new TicketCountsResult();
         LOG.info(JaloSession.getCurrentSession().getUser().getName());
         result.addFilerCategoryCounters(CsTicket.PRIORITY, enumCategoryCounterStrategy.countCategory(CsTicket.PRIORITY));
-        result.addFilerCategoryCounters(CsTicket.STATE, enumCategoryCounterStrategy.countCategory(CsTicket.STATE));
-        result.addFilerCategoryCounters(CsTicket.ASSIGNEDAGENT, agentCategoryCounterStrategy.countCategory(CsTicket.ASSIGNEDAGENT));
+//        result.addFilerCategoryCounters(CsTicket.STATE, enumCategoryCounterStrategy.countCategory(CsTicket.STATE));
+//        result.addFilerCategoryCounters(CsTicket.ASSIGNEDAGENT, agentCategoryCounterStrategy.countCategory(CsTicket.ASSIGNEDAGENT));
+        
+        for (EpamCsTicketFilter filter : getAvailableFilters()) {
+            result.addFilerCategoryCounters(filter.getName(), FilterQueryExecuter.execute(getFlexibleSearchService(), filter.getFilterCriterias()));
+        }
+        
         LOG.info("Ticket counts:" + result);
+
+        for (EpamCsTicketFilter filter : this.availableFilters) {
+            LOG.info(filter.getDisplayName());
+        }
+
         return result;
     }
 
@@ -136,5 +148,13 @@ public class EpamTicketDAO extends DefaultTicketDao {
 
     public void setAgentCategoryCounterStrategy(CategoryCounterStrategy agentCategoryCounterStrategy) {
         this.agentCategoryCounterStrategy = agentCategoryCounterStrategy;
+    }
+
+    public Set<EpamCsTicketFilter> getAvailableFilters() {
+        return availableFilters;
+    }
+
+    public void setAvailableFilters(Set<EpamCsTicketFilter> availableFilters) {
+        this.availableFilters = availableFilters;
     }
 }

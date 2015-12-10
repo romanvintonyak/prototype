@@ -5,6 +5,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <import resource="classpath:epamticket-filters.xml" />
+
     <bean id="defaultEpamTicketFacade"
           class="com.epam.ticket.facades.impl.DefaultEpamTicketFacade">
 
@@ -46,6 +48,12 @@
     <bean id="epamTicketDao" class="com.epam.ticket.dao.EpamTicketDAO" parent="abstractItemDao" scope="tenant" >
         <property name="enumCategoryCounterStrategy" ref="defaultEnumCategoryCounterStrategy"/>
         <property name="agentCategoryCounterStrategy" ref="defaultAgentCategoryCounterStrategy"/>
+        <property name="availableFilters">
+            <list>
+                <ref bean="epamAgentFilter"/>
+                <ref bean="epamStateFilter"/>
+            </list>
+        </property>
     </bean>
     
     <bean id="defaultEnumCategoryCounterStrategy" class="com.epam.ticket.dao.counters.impl.DefaultEnumCategoryCounterStrategy" >
