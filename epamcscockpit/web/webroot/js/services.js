@@ -22,7 +22,7 @@ angular.module("epamcscockpitResource", ["ngResource" , "ngCookies"])
             });
     }])
     .factory("TicketCountResource", ["$resource", function ($resource) {
-        var resourseUrl = "/ws410/rest/epamcstickets/epamvalue/";
+        var resourseUrl = "/epamticket/v1/tickets/ticketCount";
         return $resource(resourseUrl,{}, { get: {
             method: 'GET',
             responseType: 'text'

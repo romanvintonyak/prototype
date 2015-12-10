@@ -86,7 +86,6 @@ epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval, $
     $scope.updateTicketStore();
     
     $cookieStore.put('userName', userName);
-    Auth.setCredentials("csagent" , "1234");
     $scope.ticketCount = TicketCountResource.get();
     $scope.ticketCounts = TicketCountsResource.get({userName: userName});
 
