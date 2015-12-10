@@ -45,7 +45,7 @@ public class EpamTicketController {
 
     @RequestMapping(value = "/ticketCounts", method = RequestMethod.GET)
     @ResponseBody
-    public TicketCountsResult getTicketCounts(@RequestParam("userName") String userName) {
+    public TicketCountsResult getTicketCounts(@RequestParam(value = "userName", required = false, defaultValue = "csagent") String userName) {
         // TODO: GET RID of userName, when security will be ready!
         return defaultEpamTicketFacade.getTicketCounts(userName);
     }
