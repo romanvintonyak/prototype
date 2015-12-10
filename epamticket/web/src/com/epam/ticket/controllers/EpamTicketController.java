@@ -1,9 +1,12 @@
 package com.epam.ticket.controllers;
 
 import com.epam.ticket.data.EpamTicket;
+import com.epam.ticket.data.EpamTicketStateHolder;
 import com.epam.ticket.facades.EpamTicketSearchCriteria;
 import com.epam.ticket.facades.impl.DefaultEpamTicketFacade;
 import de.hybris.platform.ticket.service.TicketException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -20,6 +23,8 @@ import java.util.Collection;
 @Controller
 @RequestMapping("/v1/tickets")
 public class EpamTicketController {
+
+    private static final Logger LOG = LoggerFactory.getLogger(EpamTicketController.class);
 
     @Autowired
     private DefaultEpamTicketFacade defaultEpamTicketFacade;
@@ -47,17 +52,18 @@ public class EpamTicketController {
     @RequestMapping(value = "/{ticketId}/changestate", method = RequestMethod.PUT)
     @ResponseBody
     public EpamTicket changeTicketState(@PathVariable("ticketId") String ticketId, @RequestBody EpamTicketStateHolder stateHolder) {
-        EpamTicket ticket;
+        LOG.info(String.format("Invoke the changestate with ticketId=%s.", ticketId));
+        EpamTicket ticket = new EpamTicket();
         try {
-             ticket = defaultEpamTicketFacade.changeTicketState(stateHolder.getTicketId(),
-                                                                stateHolder.getNewState(), stateHolder.getComment());
+            ticket = defaultEpamTicketFacade.changeTicketState(ticketId,
+                    stateHolder.getNewState(), stateHolder.getComment());
         } catch (TicketException e) {
-            throw new TicketNotFoundException("ticket Not Found");
+            throw new TicketNotFoundException("Ticket change state exception:" + e.getMessage());
         }
-        return  ticket;
+        return ticket;
     }
 
-    private class TicketCounterHolder  implements Serializable{
+    private class TicketCounterHolder implements Serializable {
         private Integer total;
 
         public Integer getTotal() {
@@ -69,44 +75,12 @@ public class EpamTicketController {
         }
     }
 
-    @ResponseStatus(value= HttpStatus.NOT_FOUND, reason="Ticket not Found by Id")  // 404
+    @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Ticket not Found by Id")  // 404
     public class TicketNotFoundException extends RuntimeException {
-        public TicketNotFoundException(String id){
-            super("Ticket not found with id ="+id);
+        public TicketNotFoundException(String id) {
+            super("Ticket not found with id =" + id);
         }
 
     }
 
-    private class EpamTicketStateHolder {
-        private String ticketId;
-        private String newState;
-        private String comment;
-
-        public String getNewState() {
-            return newState;
-        }
-
-        public void setNewState(String newState) {
-            this.newState = newState;
-        }
-
-        public String getTicketId() {
-            return ticketId;
-        }
-
-        public void setTicketId(String ticketId) {
-            this.ticketId = ticketId;
-        }
-
-        public String getComment() {
-            return comment;
-        }
-
-        public void setComment(String comment) {
-            this.comment = comment;
-        }
-
-
-
-    }
 }
