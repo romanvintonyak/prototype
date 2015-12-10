@@ -5,8 +5,16 @@
 
     <div class="ticket__form container">
         <form ng-submit="addTicket()" ng-controller="TicketCreateCtrl">
+            <div class="ticket__form_element comment">
+                <label class="ticket__form_label"
+                       for="headline">Ticket Headline</label>
+                <input class="ticket__form_input"
+                       type="text"
+                       name="headline"
+                       id="headline"
+                       ng-model="newTicket.headline">
+            </div>
 
-            <!-- no related field in EpamTicket and child DTO's -->
             <div class="ticket__form_element">
                 <label class="ticket__form_label" for="interventionType">Intervention type</label>
                 <select name="interventionType"
@@ -16,15 +24,17 @@
                         id="interventionType">
                 </select>
             </div>
+
             <div class="ticket__form_element">
-                <label class="ticket__form_label"
-                       for="headline">Ticket Headline</label>
-                <input class="ticket__form_input"
-                       type="text"
-                       name="headline"
-                       id="headline"
-                       ng-model="newTicket.headline">
+                <label class="ticket__form_label" for="reason">Reason</label>
+                <select name="reason"
+                        class="ticket__form_input"
+                        ng-model="newEvent.reason"
+                        ng-options="type for type in ticketEventReason"
+                        id="reason">
+                </select>
             </div>
+
             <div class="ticket__form_element">
                 <label class="ticket__form_label"
                        for="category">Ticket Category</label>
@@ -34,6 +44,7 @@
                         ng-options="category for category in ticketCategories">
                 </select>
             </div>
+
             <div class="ticket__form_element">
                 <label class="ticket__form_label" for="category">Ticket Priority</label>
                 <select class="ticket__form_input"
@@ -42,6 +53,7 @@
                         ng-options="priority for priority in ticketPriorities">
                 </select>
             </div>
+
             <div class="ticket__form_element comment">
                 <label class="ticket__form_label"for="comment">Comment</label>
                 <textarea id="comment" name="comment"

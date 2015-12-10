@@ -8,6 +8,7 @@ function fillConstants($scope) { // todo quick and dirty hack, waiting for confi
     $scope.ticketLevels = ['All', 'Sales', 'Service', 'Automated', 'Interactive', 'Physical store CS transfer'];
     $scope.ticketGroup = ['My Group', 'All Groups', 'Unassigned'];
     $scope.ticketAgent = ['Assigned to me', 'All Group Users', 'Unassigned'];
+    $scope.ticketEventReason = ["Complaint","Update","FirstContact"];
     $scope.ticketInterventions = ['IM', 'E-mail', 'Call'];
     $scope.ticketSorts = {
         'ticketId': 'Ticket ID',

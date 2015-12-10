@@ -929,14 +929,13 @@ ul {
   border: 1px;
 }
 .ticket__form_element {
-  padding: 15px;
+  padding: 10px;
   border-bottom: solid #eee 1px;
   width: 50%;
   float: left;
-  height: 70px;
+  min-height: 70px;
 }
 .ticket__form_element.comment {
-  height: 150px;
   width: 100%;
 }
 .ticket__form_header {
