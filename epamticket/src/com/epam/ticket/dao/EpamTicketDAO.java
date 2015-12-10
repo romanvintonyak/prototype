@@ -153,14 +153,6 @@ public class EpamTicketDAO extends DefaultTicketDao {
         this.sorts = res;
     }
 
-    public void setEnumCategoryCounterStrategy(CategoryCounterStrategy enumCategoryCounterStrategy) {
-        this.enumCategoryCounterStrategy = enumCategoryCounterStrategy;
-    }
-
-    public void setAgentCategoryCounterStrategy(CategoryCounterStrategy agentCategoryCounterStrategy) {
-        this.agentCategoryCounterStrategy = agentCategoryCounterStrategy;
-    }
-
     public Set<EpamCsTicketFilter> getAvailableFilters() {
         return availableFilters;
     }
