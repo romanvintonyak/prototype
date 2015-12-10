@@ -23,21 +23,6 @@ angular.module("epamcscockpitResource", ["ngResource"])
     }])
     .factory("TicketCreateResource", ["$resource", function ($resource) {
         return $resource("/epamticket/v1/tickets", null, {
-            //post: {
-            //    method: 'POST'
-            //
-            //},
-            save: {
-                method: 'POST',
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                transformRequest: function (data, headersGetter) {
-                    var str = [];
-                    for (var d in data)
-                        str.push(encodeURIComponent(d) + "=" + encodeURIComponent(
-                                angular.toJson(data[d],false)));
-                    return str.join("&");
-                }
-            }
         })
     }])
     .factory("TicketCountResource", ["$resource", function ($resource) {
