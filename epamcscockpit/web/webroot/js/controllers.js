@@ -1,5 +1,23 @@
 var epamcscockpit = angular.module("epamcscockpit", ["ngRoute", "checklist-model", "epamcscockpitResource", "epamcscockpitFilters"]);
 var defaultErrrMsg = "An error occurred while loading the data";
+
+function fillConstants($scope) { // todo quick and dirty hack, waiting for config service
+    $scope.ticketPriorities = ['Low', 'Medium', 'High'];
+    $scope.ticketStates = ['New', 'Open', 'Closed'];
+    $scope.ticketCategories = [null, 'Problem', 'Incident', 'Complaint', 'Fraud', 'Note'];
+    $scope.ticketLevels = ['All', 'Sales', 'Service', 'Automated', 'Interactive', 'Physical store CS transfer'];
+    $scope.ticketGroup = ['My Group', 'All Groups', 'Unassigned'];
+    $scope.ticketAgent = ['Assigned to me', 'All Group Users', 'Unassigned'];
+    $scope.ticketInterventions = ['IM', 'E-mail', 'Call'];
+    $scope.ticketSorts = {
+        'ticketId': 'Ticket ID',
+        'creationTime': 'Date Created',
+        'customerDisplayName': 'Customer Name',
+        'modifyTime': "Time Modified"
+    };
+}
+
+
 epamcscockpit.config(["$routeProvider", "$httpProvider", function ($routeProvider, $httpProvider) {
     $routeProvider
         .when("/", {
@@ -36,18 +54,7 @@ epamcscockpit.config(["$routeProvider", "$httpProvider", function ($routeProvide
 }]);
 
 epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval, TicketsResource, TicketCountResource) {
-    $scope.ticketPriorities = ['Low', 'Medium', 'High'];
-    $scope.ticketStates = ['New', 'Open', 'Closed'];
-    $scope.ticketCategories = [null, 'Problem', 'Incident', 'Complaint', 'Fraud', 'Note'];
-    $scope.ticketLevels = ['All', 'Sales', 'Service', 'Automated', 'Interactive', 'Physical store CS transfer'];
-    $scope.ticketGroup = ['My Group', 'All Groups', 'Unassigned'];
-    $scope.ticketAgent = ['Assigned to me', 'All Group Users', 'Unassigned'];
-    $scope.ticketSorts = {
-        'ticketId': 'Ticket ID',
-        'creationTime': 'Date Created',
-        'customerDisplayName': 'Customer Name',
-        'modifyTime': "Time Modified"
-    };
+    fillConstants($scope);
     $scope.errorMsg = "";
 
     $scope.ticketStore = [];
@@ -128,11 +135,15 @@ epamcscockpit.controller("TicketDetailsCtrl", function ($scope, $http, $routePar
 
 });
 
-epamcscockpit.controller("TicketCreateCtrl", function ($scope, $http, TicketCreateResource/*, testconst*/) {
+epamcscockpit.controller("TicketCreateCtrl", function ($scope, $http, TicketCreateResource /*, testconst*/) {
+    fillConstants($scope);
     $scope.newTicket = {};
+    $scope.newEvent  = {};
+
+
     $scope.addTicket = function() {
         TicketCreateResource.save(
-            $scope.newTicket,
+            {ticket: $scope.newTicket, event: $scope.newEvent},
             function (data, status, headers, config) {
                 //alert(testconst);
                 console.log(data);
