@@ -5,11 +5,6 @@ import de.hybris.bootstrap.annotations.UnitTest;
 import de.hybris.platform.core.model.order.AbstractOrderModel;
 import de.hybris.platform.core.model.user.EmployeeModel;
 import de.hybris.platform.core.model.user.UserModel;
-import de.hybris.platform.servicelayer.StubLocaleProvider;
-import de.hybris.platform.servicelayer.internal.model.impl.ModelValueHistory;
-import de.hybris.platform.servicelayer.model.ItemContextBuilder;
-import de.hybris.platform.servicelayer.model.ItemModelInternalContext;
-import de.hybris.platform.servicelayer.model.strategies.DefaultFetchStrategy;
 import de.hybris.platform.ticket.enums.CsTicketCategory;
 import de.hybris.platform.ticket.enums.CsTicketPriority;
 import de.hybris.platform.ticket.enums.CsTicketState;
@@ -28,19 +23,16 @@ import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Locale;
 
 import static org.junit.Assert.assertEquals;
 
 /*
-* Parent converter includes related converters according to model graph, so that testing this is enough
+* Parent csToEpamConverter includes related converters according to model graph, so that testing this is enough
 */
 @UnitTest
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("/epamticket-spring-test.xml")
-public class EpamTicketConvertorTest {
-
-    public static final String UNEXPECTED_CONVERTED_VALUE = "Unexpected converted value";
+public class TicketConversionTest extends AbstractConversionTest {
 
     public static final String TICKET_ID = "ticket_id";
     public static final String CUSTOMER_ID = "customer_id";
@@ -55,38 +47,74 @@ public class EpamTicketConvertorTest {
     public static final Date CREATION_TIME = new Date();
     public static final Date MODIFY_TIME = new Date();
 
-    private ItemModelInternalContext ctx;
+    @Autowired
+    private EpamTicketConverter csToEpamConverter;
 
     @Autowired
-    private EpamTicketConverter converter;
+    private CsTicketConverter epamToCsConverter;
 
     @Autowired
     private DateFormat dateFormatter;
 
     @Before
     public void setUp() throws Exception {
+        super.setUp();
+    }
 
-        ItemContextBuilder builder = new ItemContextBuilder();
-        //builder.setPk(pk);
-        //builder.setItemType(itemType);
-        //builder.setTenantID(TENANT_ID);
-        builder.setValueHistory(new ModelValueHistory());
-        builder.setFetchStrategy(new DefaultFetchStrategy());
-        builder.setLocaleProvider(new StubLocaleProvider(Locale.ENGLISH));
-        //builder.setDynamicAttributesProvider(new MockDynamicAttributesProvider(dynamicAttributes, dynamicLocAttributes));
-        //builder.setAttributeProvider(new MockAttributeProvider(attributes, locAttributes));
-        ctx = builder.build();
+    @Test(expected = NullPointerException.class)
+    public void shouldFailWithNullSource() {
+        csToEpamConverter.convert(null);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldFailWithNullEmailsListAndChangesSet() {
+        CsTicketModel source = new CsTicketModel();
+        csToEpamConverter.convert(source);
+    }
+
+    @Test
+    public void shouldMakeSuccessConvertation() {
+
+        EpamTicket source = new EpamTicket();
+        source.setTicketId(TICKET_ID);
+        source.setCustomerUid(CUSTOMER_ID);
+        source.setCustomerDisplayName(CUSTOMER_NAME);
+        source.setOrder(ORDER_CODE);
+        source.setCategory(CATEGORY.getCode());
+        source.setPriority(PRIORITY.getCode());
+        source.setState(STATE.getCode());
+        source.setAssignedAgent(AGENT_NAME);
+        source.setAssignedGroup(GROUP_NAME);
+        source.setHeadline(HEADLINE);
+        source.setCreationTime(dateFormatter.format(CREATION_TIME));
+        source.setModifyTime(dateFormatter.format(MODIFY_TIME));
+        source.setEvents(new ArrayList<>());
+
+        CsTicketModel target = epamToCsConverter.convert(source);
+
+        assertEquals(UNEXPECTED_CONVERTED_VALUE, target.getTicketID(), TICKET_ID);
+        assertEquals(UNEXPECTED_CONVERTED_VALUE, target.getCustomer().getUid(), CUSTOMER_ID);
+        assertEquals(UNEXPECTED_CONVERTED_VALUE, target.getCustomer().getDisplayName(), CUSTOMER_NAME);
+        assertEquals(UNEXPECTED_CONVERTED_VALUE, target.getOrder().getCode(), ORDER_CODE);
+        assertEquals(UNEXPECTED_CONVERTED_VALUE, target.getCategory().getCode(), CATEGORY.getCode());
+        assertEquals(UNEXPECTED_CONVERTED_VALUE, target.getPriority().getCode(), PRIORITY.getCode());
+        assertEquals(UNEXPECTED_CONVERTED_VALUE, target.getState().getCode(), STATE.getCode());
+        assertEquals(UNEXPECTED_CONVERTED_VALUE, target.getAssignedAgent().getDisplayName(), AGENT_NAME);
+        assertEquals(UNEXPECTED_CONVERTED_VALUE, target.getAssignedGroup().getDisplayName(), GROUP_NAME);
+        assertEquals(UNEXPECTED_CONVERTED_VALUE, target.getHeadline(), HEADLINE);
+        assertEquals(UNEXPECTED_CONVERTED_VALUE, target.getCreationtime(), CREATION_TIME);
+        assertEquals(UNEXPECTED_CONVERTED_VALUE, target.getModifiedtime(), MODIFY_TIME);
     }
 
     @Test(expected = NullPointerException.class)
     public void testNullSourceConvert() {
-        converter.convert(null);
+        csToEpamConverter.convert(null);
     }
 
     @Test(expected = NullPointerException.class) //empty list of emails and set of changes with initial change should be set at least
     public void testFailConvert() {
         CsTicketModel source = new CsTicketModel();
-        converter.convert(source);
+        csToEpamConverter.convert(source);
     }
 
     @Test
@@ -125,7 +153,7 @@ public class EpamTicketConvertorTest {
         // CsTicketEventModel conversion being tested in separate test, so that we use an empty list of events
         ReflectionUtils.setField(eventsField, source, new ArrayList<CsTicketEventModel>());
 
-        EpamTicket target = converter.convert(source);
+        EpamTicket target = csToEpamConverter.convert(source);
 
         assertEquals(UNEXPECTED_CONVERTED_VALUE, target.getTicketId(), TICKET_ID);
         assertEquals(UNEXPECTED_CONVERTED_VALUE, target.getCustomerUid(), CUSTOMER_ID);

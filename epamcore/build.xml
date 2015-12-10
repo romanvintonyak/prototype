@@ -13,7 +13,7 @@
 
 -->
 
-<project name="epamcore" default="all">
+<project name="cms2lib" default="all">
 	<property file="platformhome.properties" />
 
 	<!-- next line is only for eclipse to get rid of warnings -->

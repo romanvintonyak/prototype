@@ -912,6 +912,41 @@ ul {
 .ticket__category {
   margin-bottom: 0.5em;
 }
+.ticket__form {
+  display: block;
+  white-space: nowrap;
+}
+.ticket__form_label {
+  font-family: "open_sans_semibold";
+  float: left;
+  width: 100%;
+  color: deepskyblue;
+}
+.ticket__form_input {
+  font-family: "open_sans_regular";
+  display: block;
+  width: 100%;
+  clear: both;
+  font-size: 20px;
+  border: 1px;
+}
+.ticket__form_element {
+  padding: 10px;
+  border-bottom: solid #eee 1px;
+  width: 50%;
+  float: left;
+  min-height: 70px;
+}
+.ticket__form_element.comment {
+  width: 100%;
+}
+.ticket__form_header {
+  font-family: "open_sans_regular";
+  color: gray;
+  background: #F3F5F6;
+  margin: 0;
+  padding: 10px 15px;
+}
 
 .login-page {
   background: url("../img/login-page.jpg") no-repeat;

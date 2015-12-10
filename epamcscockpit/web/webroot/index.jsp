@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-
+<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
+<%--<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>--%>
+<%--<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>--%>
 <!DOCTYPE html>
 <html ng-app="epamcscockpit">
 <head lang="en">
@@ -21,6 +21,7 @@
 	<script src="js/controllers.js"></script> 
 	<script>
 	   epamcscockpit.value("userName", "<sec:authentication property="userName"/>")
+       //epamcscockpit.constant("testconst", ${constants});
 	</script>
 </head>
 

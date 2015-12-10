@@ -110,3 +110,41 @@
         margin-bottom: .5em
 
     &__level
+
+
+    &__form
+        display: block
+        white-space: nowrap
+
+        &_label
+            font-family: 'open_sans_semibold'
+            float: left
+            width: 100%
+            color: deepskyblue
+
+
+        &_input
+            font-family: 'open_sans_regular'
+            display: block
+            width: 100%
+            clear: both
+            font-size: 20px
+            border: 1px
+
+
+        &_element
+            padding: 10px
+            border-bottom: solid #eee 1px
+            width: 50%
+            float: left
+            min-height: 70px
+
+            &.comment
+                width: 100%
+
+        &_header
+            font-family: 'open_sans_regular'
+            color: gray // todo macros
+            @include grayback
+            margin: 0
+            padding: 10px 15px

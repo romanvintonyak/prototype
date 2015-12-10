@@ -1,4 +1,93 @@
 <div class="container">
-	<pre >{{ticket | json}}</pre>
-	<div class="bg-error">{{errorMsg}}</div>
+
+    <div class="bg-error">{{errorMsg}}</div>
+
+    <!--ticket details-->
+    <div class="ticket__form">
+
+        <h2 class="ticket__form_header">Ticket {{ticket.ticketId}} Details</h2>
+
+        <div class="container">
+            <div class="ticket__form_element">
+                <div class="ticket__form_label">assigned agent</div>
+                <div class="ticket__form_input">{{ ticket.assignedAgent }}</div>
+            </div>
+            <div class="ticket__form_element">
+                <div class="ticket__form_label">agent group</div>
+                <div class="ticket__form_input">{{ ticket.assignedGroup }}</div>
+            </div>
+            <div class="ticket__form_element">
+                <div class="ticket__form_label">ticket headline</div>
+                <div class="ticket__form_input">{{ ticket.headline }}</div>
+            </div>
+
+
+            <div class="ticket__form_element">
+                <div class="ticket__form_label">ticket id</div>
+                <div class="ticket__form_input">{{ ticket.ticketId }}</div>
+            </div>
+            <div class="ticket__form_element">
+                <div class="ticket__form_label">ticket level</div>
+                <div class="ticket__form_input">hardcode</div>
+            </div>
+            <div class="ticket__form_element">
+                <div class="ticket__form_label">ticket category</div>
+                <div class="ticket__form_input">{{ ticket.category }}</div>
+            </div>
+            <div class="ticket__form_element">
+                <div class="ticket__form_label">ticket state</div>
+                <div class="ticket__form_input">{{ ticket.state }}</div>
+            </div>
+            <div class="ticket__form_element">
+                <div class="ticket__form_label">order phone number</div>
+                <div class="ticket__form_input">hardcode</div>
+            </div>
+            <div class="ticket__form_element">
+                <div class="ticket__form_label">ticket priority</div>
+                <div class="ticket__form_input">{{ ticket.priority }}</div>
+            </div>
+            <div class="ticket__form_element">
+                <div class="ticket__form_label">phone number</div>
+                <div class="ticket__form_input">hardcode</div>
+            </div>
+            <div class="ticket__form_element">
+                <div class="ticket__form_label">email address</div>
+                <div class="ticket__form_input">hardcode</div>
+            </div>
+            <div class="ticket__form_element">
+                <div class="ticket__form_label">customer contact name</div>
+                <div class="ticket__form_input">{{ ticket.customerDisplayName }}</div>
+            </div>
+            <div class="ticket__form_element">
+                <div class="ticket__form_label">city</div>
+                <div class="ticket__form_input">hardcode</div>
+            </div>
+            <div class="ticket__form_element">
+                <button id="assignToAgentButton">Assign To Agent</button>
+                <button id="addNoteToTicketButton">Add Note To Ticket</button>
+                <button id="closeTicketButton">Close Ticket</button>
+            </div>
+        </div>
+
+
+    </div>
+
+    <!--ticket events-->
+    <div class="ticket__form">
+
+        <div class="ticket__form_header">Ticket Events</div>
+
+        <div ng-repeat="event in ticket.events">
+            <!--populate with fields from CsTicketEventModel-->
+            <div ng-repeat="entry in event.ticketChangeEventEntries">
+                <div class="">{{ entry.alteredAttribute }}</div>
+                <div class="">{{ event.startDateTime }}</div>
+                <div class="">{{ entry.oldStringValue }} -> {{ entry.newStringValue }}</div>
+                <div class="">hardcode - it seems comment message is absent in model, to investigate</div>
+                <div class="">hardcode - to clarify about agent name placed here</div>
+            </div>
+        </div>
+
+    </div>
+
 </div>

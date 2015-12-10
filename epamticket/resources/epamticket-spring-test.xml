@@ -3,9 +3,27 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="dateFormatter" class="java.text.SimpleDateFormat">
-        <constructor-arg index="0" type="java.lang.String" value="yyyy-MM-dd'T'HH:mm:ss.SSSZ"/>
+       <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper" />
+
+       <bean id="defaultEpamTicketFacadeMock" class="org.mockito.Mockito" factory-method="mock">
+              <constructor-arg value="com.epam.ticket.facades.impl.DefaultEpamTicketFacade" />
+       </bean>
+
+       <bean id="dateFormatter" class="java.text.SimpleDateFormat">
+              <constructor-arg index="0" type="java.lang.String" value="yyyy-MM-dd'T'HH:mm:ss.SSSZ"/>
+       </bean>
+
+       <bean id="csTicketConverter" class="com.epam.ticket.converter.CsTicketConverter">
+              <constructor-arg ref="csTicketPopulator"/>
+       </bean>
+
+       <bean id="csTicketPopulator" class="com.epam.ticket.populator.CsTicketPopulator" />
+
+    <bean id="csCustomerEventConverter" class="com.epam.ticket.converter.CsCustomerEventConverter">
+        <constructor-arg ref="csCustomerEventPopulator" />
     </bean>
+
+    <bean id="csCustomerEventPopulator" class="com.epam.ticket.populator.CsCustomerEventPopulator" />
 
     <bean id="epamTicketConverter" class="com.epam.ticket.converter.EpamTicketConverter">
         <constructor-arg name="epamTicketPopulator" ref="epamTicketPopulator"/>

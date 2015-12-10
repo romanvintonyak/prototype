@@ -5,6 +5,7 @@ import com.epam.ticket.data.EpamTicket;
 import com.epam.ticket.services.EpamTicketBusinessService;
 import de.hybris.bootstrap.annotations.UnitTest;
 import de.hybris.platform.ticket.enums.CsTicketState;
+import de.hybris.platform.ticket.events.model.CsCustomerEventModel;
 import de.hybris.platform.ticket.model.CsTicketModel;
 import de.hybris.platform.ticket.service.TicketException;
 import de.hybris.platform.ticket.service.impl.DefaultTicketBusinessService;
@@ -20,8 +21,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import static org.junit.rules.ExpectedException.none;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @UnitTest
 @RunWith(MockitoJUnitRunner.class)
@@ -45,7 +45,25 @@ public class DefaultEpamTicketBusinessServiceTest {
 
     @Before
     public void init() {
-        epamTicketBusinessService = new DefaultEpamTicketBusinessService(defaultTicketBusinessService, defaultTicketService, ticketConverter);
+        epamTicketBusinessService = new DefaultEpamTicketBusinessService(defaultTicketBusinessService, defaultTicketService);
+    }
+
+    //TODO: check mandatory parameters for ticket creation and write fail-test
+    @Test
+    public void shouldAddTicket() {
+        //given
+        CsTicketModel ticket = new CsTicketModel();
+        CsCustomerEventModel creationEvent = new CsCustomerEventModel();
+
+        doReturn(ticket).when(defaultTicketBusinessService).createTicket(ticket.getCustomer(), ticket.getCategory(),
+                ticket.getPriority(), ticket.getAssignedAgent(), ticket.getAssignedGroup(), ticket.getHeadline(),
+                creationEvent.getInterventionType(), creationEvent.getReason(), creationEvent.getText());
+        //when
+        epamTicketBusinessService.addTicket(ticket, creationEvent);
+        //then
+        verify(defaultTicketBusinessService, times(1)).createTicket(ticket.getCustomer(), ticket.getCategory(),
+                ticket.getPriority(), ticket.getAssignedAgent(), ticket.getAssignedGroup(), ticket.getHeadline(),
+                creationEvent.getInterventionType(), creationEvent.getReason(), creationEvent.getText());
     }
 
     @Test
@@ -57,7 +75,7 @@ public class DefaultEpamTicketBusinessServiceTest {
         when(defaultTicketService.getTicketForTicketId(TICKET_ID)).thenReturn(csTicket);
         when(defaultTicketBusinessService.setTicketState(any(), any(), eq(COMMENT))).thenReturn(csTicket);
         //when
-        EpamTicket resultTicket = epamTicketBusinessService.setTicketState(TICKET_ID, CLOSED, COMMENT);
+        CsTicketModel resultTicket = epamTicketBusinessService.setTicketState(TICKET_ID, CLOSED, COMMENT);
         //then
         verify(defaultTicketBusinessService).setTicketState(csTicket, CsTicketState.CLOSED, COMMENT);
     }
