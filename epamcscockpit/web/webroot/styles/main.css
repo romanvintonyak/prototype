@@ -919,12 +919,14 @@ ul {
 .ticket__form_label {
   font-family: "open_sans_semibold";
   float: left;
+  width: 100%;
   color: deepskyblue;
 }
 .ticket__form_input {
   font-family: "open_sans_regular";
   display: block;
   width: 100%;
+  clear: both;
   font-size: 20px;
   border: 1px;
 }

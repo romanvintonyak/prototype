@@ -55,23 +55,16 @@
             </div>
 
             <div class="ticket__form_element comment">
-                <label class="ticket__form_label"for="comment">Comment</label>
+                <label class="ticket__form_label" for="comment">Comment</label>
                 <textarea id="comment" name="comment"
                           class="ticket__form_input"
                           ng-model="newEvent.text"></textarea>
             </div>
             <div class="ticket__form_element">
-                <input  class="filter__btn filter__btn_update"
-                        type="submit" value="Add ticket">
-                {{ newTicket | json }}
-                {{ newEvent | json }}
+                <input class="filter__btn filter__btn_update"
+                       type="submit" value="Add ticket">
             </div>
         </form>
     </div>
 
-    </div>
-
 </div>
-</div>
-
-
