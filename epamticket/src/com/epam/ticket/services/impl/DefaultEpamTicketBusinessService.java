@@ -1,8 +1,11 @@
 package com.epam.ticket.services.impl;
 
+import com.epam.ticket.converter.EpamTicketConverter;
+import com.epam.ticket.data.EpamTicket;
 import com.epam.ticket.services.EpamTicketBusinessService;
 import com.google.common.base.Preconditions;
 import de.hybris.platform.ticket.enums.CsTicketState;
+import de.hybris.platform.ticket.events.model.CsCustomerEventModel;
 import de.hybris.platform.ticket.model.CsTicketModel;
 import de.hybris.platform.ticket.service.TicketException;
 import de.hybris.platform.ticket.service.impl.DefaultTicketBusinessService;
@@ -14,11 +17,22 @@ public class DefaultEpamTicketBusinessService implements EpamTicketBusinessServi
 
     private DefaultTicketBusinessService defaultTicketBusinessService;
     private DefaultTicketService defaultTicketService;
+    private EpamTicketConverter ticketConverter;
 
     public DefaultEpamTicketBusinessService(DefaultTicketBusinessService defaultTicketBusinessService,
-                                            DefaultTicketService defaultTicketService) {
+                                            DefaultTicketService defaultTicketService,
+                                            EpamTicketConverter ticketConverter) {
         this.defaultTicketBusinessService = defaultTicketBusinessService;
         this.defaultTicketService = defaultTicketService;
+        this.ticketConverter = ticketConverter;
+    }
+
+    @Override
+    public CsTicketModel setTicketState(final String ticketId, final String newState, final String comment) throws TicketException {
+    public CsTicketModel addTicket(CsTicketModel ticket, CsCustomerEventModel creationEvent) {
+        return defaultTicketBusinessService.createTicket(ticket.getCustomer(), ticket.getCategory(), ticket.getPriority(),
+                ticket.getAssignedAgent(), ticket.getAssignedGroup(), ticket.getHeadline(),
+                creationEvent.getInterventionType(), creationEvent.getReason(), creationEvent.getText());
     }
 
     @Override

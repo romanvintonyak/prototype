@@ -49,11 +49,16 @@ public class DefaultEpamTicketBusinessServiceIntegrationTest extends AbstractTic
         super.setUp();
     }
     @Test
-    public void shouldCloseTicketWhen() throws TicketException {
+    public void shouldCreateTicket() {
         //given
         CsTicketModel ticket = prepareTicketWithEvents();
         //when
         CsTicketModel resultTicket = epamTicketBusinessService.setTicketState(ticket.getTicketID(), CLOSED, COMMENT);
+
+    }
+
+    @Test
+    public void shouldCloseTicketWhen() throws TicketException {
         //given
         assertEquals(CsTicketState.CLOSED, resultTicket.getState());
         assertEquals(2, resultTicket.getEvents().size());

@@ -18,9 +18,7 @@ import static org.junit.Assert.assertEquals;
 @UnitTest
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("/epamticket-spring-test.xml")
-public class EpamTicketEventConvertorTest {
-
-    public static final String UNEXPECTED_CONVERTED_VALUE = "Unexpected converted value";
+public class TicketEventConversionTest extends AbstractConversionTest {
 
     public static final Date START_DATE = new Date();
     public static final Date END_DATE = new Date();

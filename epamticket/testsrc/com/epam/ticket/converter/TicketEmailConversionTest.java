@@ -14,9 +14,7 @@ import static org.junit.Assert.assertEquals;
 @UnitTest
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("/epamticket-spring-test.xml")
-public class EpamTicketEmailConverterTest {
-
-    public static final String UNEXPECTED_CONVERTED_VALUE = "Unexpected converted value";
+public class TicketEmailConversionTest extends AbstractConversionTest {
 
     public static final String MESSAGE_ID = "message_id";
     public static final String FROM = "from";

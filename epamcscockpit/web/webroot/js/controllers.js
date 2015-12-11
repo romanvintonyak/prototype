@@ -1,5 +1,24 @@
-var epamcscockpit = angular.module("epamcscockpit", ["ngRoute", "checklist-model", "epamcscockpitResource", "epamcscockpitFilters"]);
+var epamcscockpit = angular.module("epamcscockpit", ["ngRoute", "ngCookies", "checklist-model", "epamcscockpitResource", "epamcscockpitFilters"]);
 var defaultErrrMsg = "An error occurred while loading the data";
+
+function fillConstants($scope) { // todo quick and dirty hack, waiting for config service
+    $scope.ticketPriorities = ['Low', 'Medium', 'High'];
+    $scope.ticketStates = ['New', 'Open', 'Closed'];
+    $scope.ticketCategories = [null, 'Problem', 'Incident', 'Complaint', 'Fraud', 'Note'];
+    $scope.ticketLevels = ['All', 'Sales', 'Service', 'Automated', 'Interactive', 'Physical store CS transfer'];
+    $scope.ticketGroup = ['My Group', 'All Groups', 'Unassigned'];
+    $scope.ticketAgent = ['Assigned to me', 'All Group Users', 'Unassigned'];
+    $scope.ticketEventReason = ["Complaint","Update","FirstContact"];
+    $scope.ticketInterventions = ['IM', 'E-mail', 'Call'];
+    $scope.ticketSorts = {
+        'ticketId': 'Ticket ID',
+        'creationTime': 'Date Created',
+        'customerDisplayName': 'Customer Name',
+        'modifyTime': "Time Modified"
+    };
+}
+
+
 epamcscockpit.config(["$routeProvider", "$httpProvider", function ($routeProvider, $httpProvider) {
     $routeProvider
         .when("/", {
@@ -22,8 +41,7 @@ epamcscockpit.config(["$routeProvider", "$httpProvider", function ($routeProvide
             controller: 'OrderDetailsCtrl'
         })
         .when("/ticket_create", {
-            templateUrl: "template/ticket_create.html",
-
+            templateUrl: "template/ticket_create.html"
         })
         .when("/order_create", {
             templateUrl: "template/order_create.html"
@@ -36,19 +54,9 @@ epamcscockpit.config(["$routeProvider", "$httpProvider", function ($routeProvide
         });
 }]);
 
-epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval, TicketsResource, TicketCountResource) {
-    $scope.ticketPriorities = ['Low', 'Medium', 'High'];
-    $scope.ticketStates = ['New', 'Open', 'Closed'];
-    $scope.ticketCategories = [null, 'Problem', 'Incident', 'Complaint', 'Fraud', 'Note'];
-    $scope.ticketLevels = ['All', 'Sales', 'Service', 'Automated', 'Interactive', 'Physical store CS transfer'];
-    $scope.ticketGroup = ['My Group', 'All Groups', 'Unassigned'];
-    $scope.ticketAgent = ['Assigned to me', 'All Group Users', 'Unassigned'];
-    $scope.ticketSorts = {
-        'ticketId': 'Ticket ID',
-        'creationTime': 'Date Created',
-        //'customerDisplayName': 'Customer Name',
-        'modifyTime': "Time Modified",
-    };
+epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval, $cookieStore,
+                                                     TicketsResource, TicketCountResource, TicketCountsResource, userName) {
+    fillConstants($scope);
     $scope.errorMsg = "";
 
     $scope.ticketStore = [];
@@ -85,16 +93,19 @@ epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval, T
     };
 
     $scope.updateTicketStore();
+    
+    $cookieStore.put('userName', userName);
     $scope.ticketCount = TicketCountResource.get();
+    $scope.ticketCounts = TicketCountsResource.get({userName: userName});
 
     // --- sort-related functions
     $scope.sortField = 'ticketId'; // user requested sort
-    $scope.sortFilterField = [] ; // real sorter for angular, sort field for server in SC
+    $scope.sortFilterField = '' ; // real sorter for angular, sort field for server in SC
     $scope.sortReverse = true;
 
     $scope.isServerSort = function() { // todo total cannot be correct criteria to distinguish
-		return $scope.ticketCount.total > 3;
-	}
+		return false;//$scope.ticketCount.total > 1;
+	};
 
     $scope.order = function () {
         if($scope.isServerSort()) {
@@ -106,7 +117,6 @@ epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval, T
             $scope.sortFilterField = $scope.sortField;
         }
     };
-    $scope.order();
 
 	$scope.flipSort = function() {
 		$scope.sortReverse = !$scope.sortReverse;
@@ -128,6 +138,33 @@ epamcscockpit.controller("TicketDetailsCtrl", function ($scope, $http, $routePar
             $scope.errorMsg = defaultErrrMsg
         });
 
+});
+
+epamcscockpit.controller("TicketCreateCtrl", function ($scope, $location, $http, TicketCreateResource /*, testconst*/) {
+    fillConstants($scope);
+    $scope.newTicket = {
+        category: $scope.ticketCategories[1],
+        priority: $scope.ticketPriorities[1]
+    };
+    $scope.newEvent  = {
+        interventionType: $scope.ticketInterventions[1],
+        reason: $scope.ticketEventReason[1]
+    };
+
+
+    $scope.addTicket = function() {
+        TicketCreateResource.save(
+            {newTicket: $scope.newTicket, creationEvent: $scope.newEvent},
+            function (data, status, headers, config) {
+                //alert(testconst);
+                console.log(data);
+                $location.path("/ticket/"+data.ticketId);
+            },
+            function () {
+                $scope.errorMsg = defaultErrrMsg
+            }
+        )
+    }
 });
 
 epamcscockpit.controller("OrderDetailsCtrl", function ($scope, $http, $routeParams, OrdersResource) {

@@ -10,6 +10,7 @@
     <script src="js/lib/angular.js"></script> 
     <script src="js/lib/angular-route.js"></script> 
     <script src="js/lib/angular-resource.js"></script> 
+    <script src="js/lib/angular-cookies.js"></script>
     <script src="js/lib/checklist-model.js"></script>
     
     
@@ -17,6 +18,10 @@
     <script src="js/filters.js"></script> 
     <script src="js/services.js"></script>  
 	<script src="js/controllers.js"></script> 
+	<script>
+	   epamcscockpit.value("userName", "<sec:authentication property="userName"/>");
+       //epamcscockpit.constant("testconst", ${constants});
+	</script>
 </head>
 
 <body>
