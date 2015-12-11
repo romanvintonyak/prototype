@@ -100,8 +100,8 @@ epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval, $
 
     // --- sort-related functions
     $scope.sortField = 'ticketId'; // user requested sort
-    $scope.sortFilterField = '' ; // real sorter for angular, sort field for server in SC
-    $scope.sortReverse = true;
+    $scope.sortFilterField = 'ticketId' ; // real sorter for angular, sort field for server in SC
+    $scope.sortReverse = false;
 
     $scope.isServerSort = function() { // todo total cannot be correct criteria to distinguish
 		return false;//$scope.ticketCount.total > 1;
