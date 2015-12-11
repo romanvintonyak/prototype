@@ -70,7 +70,7 @@ epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval, $
         sc.states = [];
         sc.levels = [];
         sc.priorities = [];
-        sc.sortField = [];
+        sc.sortName = [];
         sc.sortReverse = false;
     };
 
@@ -104,16 +104,16 @@ epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval, $
     $scope.sortReverse = true;
 
     $scope.isServerSort = function() { // todo total cannot be correct criteria to distinguish
-		return $scope.ticketCount.total > 1;
+		return false;//$scope.ticketCount.total > 1;
 	};
 
     $scope.order = function () {
         if($scope.isServerSort()) {
-            $scope.ticketSearchCriteria.sortField = $scope.sortField;
+            $scope.ticketSearchCriteria.sortName = $scope.sortField;
             $scope.sortFilterField = [];
             $scope.updateTicketStore();
         } else {
-            $scope.ticketSearchCriteria.sortField = [];
+            $scope.ticketSearchCriteria.sortName = [];
             $scope.sortFilterField = $scope.sortField;
         }
     };
