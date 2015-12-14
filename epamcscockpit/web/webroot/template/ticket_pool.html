@@ -23,12 +23,6 @@
 
         <aside class="sidebar filter">
             <div class="filter__section">
-                <h3 class="filter__title">category</h3>
-                <select ng-model="ticketSearchCriteria.categories"
-                        ng-options="category for category in ticketCategories">
-                </select>
-            </div>
-            <div class="filter__section">
                 <h3 class="filter__title">agent</h3>
                 <ul>
                     <li ng-repeat="agent in ticketAgent" class="filter__item">
@@ -66,20 +60,6 @@
                             {{state}}
                         </label>
                         <span class="filter__item-counter">{{ticketCounts.filterCategories.state[state] || 0}}</span>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="filter__section">
-                <h3 class="filter__title">level</h3>
-                <ul>
-                    <li ng-repeat="level in ticketLevels" class="filter__item">
-                        <label class="filter__item-name">
-                            <input class="filter__item-checkbox" type="checkbox"
-                                   checklist-model="ticketSearchCriteria.levels" checklist-value="level"/>
-                            {{level}}
-                        </label>
-                        <span class="filter__item-counter">{{ticketCounts.filterCategories.priority[priority] || 0}}</span>
                     </li>
                 </ul>
             </div>
