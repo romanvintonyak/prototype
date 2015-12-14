@@ -88,12 +88,12 @@
             </list>
         </property>
         <property name="availableFilters">
-            <list>
+            <set>
                 <ref bean="epamAgentFilter"/>
                 <ref bean="epamGroupFilter"/>
                 <ref bean="epamStateFilter"/>
                 <ref bean="epamPriorityFilter"/>
-            </list>
+            </set>
         </property>
     </bean>
 

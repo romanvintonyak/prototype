@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.doReturn;
@@ -136,5 +137,11 @@ public class EpamTicketControllerTest {
 
     protected String toJsonString(Object object) throws JsonProcessingException {
         return objectMapper.writeValueAsString(object);
+    }
+    
+    @Test
+    public void testGetFilterMetadata() {
+       // mockMvc.perform(get("http://localhost:9001/epamticket/v1/tickets/filters"))
+        
     }
 }
