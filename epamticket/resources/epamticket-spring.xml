@@ -72,16 +72,21 @@
                     <constructor-arg name="field" value="ticketId"/>
                 </bean>
                 <bean class="com.epam.ticket.dao.EpamCsSort">
-                    <constructor-arg name="field" value="creationTime"/>
+                    <constructor-arg name="name" value="creationTime"/>
+                    <constructor-arg name="flexField" value="creationTime"/>
+                    <constructor-arg name="jsonField" value="creationTime"/>
+
                 </bean>
                 <bean class="com.epam.ticket.dao.EpamCsSort">
-                    <constructor-arg name="field" value="modifyTime"/>
+                    <constructor-arg name="name" value="modifyTime"/>
+                    <constructor-arg name="flexField" value="modifiedTime"/>
+                    <constructor-arg name="jsonField" value="modifyTime"/>
                 </bean>
-                <bean class="com.epam.ticket.dao.EpamCsSort">
+                <!--<bean class="com.epam.ticket.dao.EpamCsSort">
                     <constructor-arg name="name" value="customerDisplayName"/>
                     <constructor-arg name="flexField" value="customer.displayName"/>
                     <constructor-arg name="jsonField" value="customerDisplayName"/>
-                </bean>
+                </bean>-->
             </list>
         </property>
         <property name="availableFilters">
