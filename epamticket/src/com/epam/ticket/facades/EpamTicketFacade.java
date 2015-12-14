@@ -21,5 +21,4 @@ public interface EpamTicketFacade {
     EpamTicket changeTicketState(String ticketId, String newState, String comment) throws TicketException;
     
     EpamFilteredTicketsCounts getFilteredTicketsCounts();
-
 }

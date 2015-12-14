@@ -4,6 +4,7 @@ import com.epam.dto.EpamCustomerEvent;
 import com.epam.dto.EpamFilteredTicketsCounts;
 import com.epam.dto.EpamTicket;
 import com.epam.dto.EpamTicketSearchCriteria;
+import com.epam.dto.EpamFilteredTicketsCounts;
 import com.epam.ticket.converter.CsCustomerEventConverter;
 import com.epam.ticket.converter.CsTicketConverter;
 import com.epam.ticket.converter.EpamTicketConverter;

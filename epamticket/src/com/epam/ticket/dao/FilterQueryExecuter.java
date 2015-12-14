@@ -2,6 +2,7 @@ package com.epam.ticket.dao;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -9,6 +10,8 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 
 import com.epam.ticket.dao.counters.impl.DefaultAgentCategoryCounterStrategy;
+import com.epam.ticket.data.EpamTicketFrontFilter;
+import com.epam.ticket.data.EpamTicketFrontFilterCriteria;
 
 import de.hybris.platform.servicelayer.search.FlexibleSearchQuery;
 import de.hybris.platform.servicelayer.search.FlexibleSearchService;
@@ -25,6 +28,23 @@ public class FilterQueryExecuter {
             result.put(criteria.getDisplayName(), searchForCount(flexibleSearchService, criteria.getFilterCountQuery()));
         }
 
+        return result;
+    }
+
+    public static EpamTicketFrontFilter executeFilter(FlexibleSearchService flexibleSearchService, EpamCsTicketFilter filter) {
+        final EpamTicketFrontFilter result = new EpamTicketFrontFilter();
+
+        Set<EpamTicketFrontFilterCriteria> frontCriterias = new HashSet<>();
+        for (EpamCsTicketFilterCriteria criteria : filter.getFilterCriterias()) {
+            EpamTicketFrontFilterCriteria frontCriteria = new EpamTicketFrontFilterCriteria();
+            frontCriteria.setName(criteria.getName());
+            frontCriteria.setDisplayName(criteria.getDisplayName());
+            frontCriteria.setCount(searchForCount(flexibleSearchService, criteria.getFilterCountQuery()));
+            frontCriterias.add(frontCriteria);
+        }
+        result.setCriterias(frontCriterias);
+        result.setName(filter.getName());
+        result.setDisplayName(filter.getDisplayName());
         return result;
     }
 

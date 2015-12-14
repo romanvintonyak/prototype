@@ -97,7 +97,8 @@ public class EpamTicketDAO extends DefaultTicketDao {
         EpamFilteredTicketsCounts ticketsCounts = new EpamFilteredTicketsCounts();
         
         for (EpamCsTicketFilter filter : getAvailableFilters()) {
-            ticketsCounts.addFilerCategoryCounters(filter.getName(), FilterQueryExecuter.execute(getFlexibleSearchService(), filter.getFilterCriterias()));
+            ticketsCounts.addFilter(FilterQueryExecuter.executeFilter(getFlexibleSearchService(), filter));
+            ticketsCounts.addFilterCategoryCounters(filter.getName(), FilterQueryExecuter.execute(getFlexibleSearchService(), filter.getFilterCriterias()));
         }
         
         return ticketsCounts;

@@ -1,20 +1,24 @@
-package com.epam.dto;
+package com.epam.ticket.data;
 
+import java.io.Serializable;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
-public class EpamFilteredTicketsCounts {
+public class TicketCountsResult implements Serializable {
+    private static final long serialVersionUID = 1L;
     private final Map<String, Map<String, Integer>> filterCategories = new HashMap<>();
     private final Set<EpamTicketFrontFilter> filters = new HashSet<>();
 
-    public void addFilerCategoryCounters(final String filterCategory, final Map<String, Integer> categoryStates) {
+    public void addFilterCategoryCounters(final String filterCategory, final Map<String, Integer> categoryStates) {
         filterCategories.put(filterCategory, categoryStates);
     }
-
+    
     public void addFilter(EpamTicketFrontFilter filter) {
         filters.add(filter);
     }
-
+    
     public Map<String, Map<String, Integer>> getFilterCategories() {
         return filterCategories;
     }
@@ -25,12 +29,12 @@ public class EpamFilteredTicketsCounts {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder();
         builder.append("TicketCountsResult [filterCategories=\n");
-        for (final String category : filterCategories.keySet()) {
+        for (String category : filterCategories.keySet()) {
             builder.append("\t" + category + ": ");
-            final Map<String, Integer> states = filterCategories.get(category);
-            for (final String state : states.keySet()) {
+            Map<String, Integer> states = filterCategories.get(category);
+            for (String state : states.keySet()) {
                 builder.append(state + "-" + states.get(state) + ", ");
             }
             builder.append("\n");
@@ -38,4 +42,5 @@ public class EpamFilteredTicketsCounts {
         builder.append("]");
         return builder.toString();
     }
+
 }
