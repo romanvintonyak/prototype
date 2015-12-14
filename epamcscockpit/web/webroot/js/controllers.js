@@ -13,7 +13,7 @@ function fillConstants($scope) { // todo quick and dirty hack, waiting for confi
     $scope.ticketSorts = {
         'ticketId': 'Ticket ID',
         'creationTime': 'Date Created',
-        'customerDisplayName': 'Customer Name',
+        /*'customerDisplayName': 'Customer Name',*/
         'modifyTime': "Time Modified"
     };
 }
@@ -100,11 +100,11 @@ epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval, $
 
     // --- sort-related functions
     $scope.sortField = 'ticketId'; // user requested sort
-    $scope.sortFilterField = '' ; // real sorter for angular, sort field for server in SC
-    $scope.sortReverse = true;
+    $scope.sortFilterField = 'ticketId' ; // real sorter for angular, sort field for server in SC
+    $scope.sortReverse = false;
 
     $scope.isServerSort = function() { // todo total cannot be correct criteria to distinguish
-		return false;//$scope.ticketCount.total > 1;
+		return true;//$scope.ticketCount.total > 1;
 	};
 
     $scope.order = function () {
