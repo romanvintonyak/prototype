@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"file:web/webroot/WEB-INF/springmvc-servlet.xml","/epamcscockpit-spring-test.xml" })
 @WebAppConfiguration
-public class RestTicketControllerTest {
+public class CockpitTicketControllerTest {
 
     @Autowired
     private WebApplicationContext webApplicationContext;
