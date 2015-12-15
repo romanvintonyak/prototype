@@ -7,6 +7,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * Indented to call rest services
+ */
 public class RestHelper {
 
     @Autowired
