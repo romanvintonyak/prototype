@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="sonar-ant-task-2.1">
-    <CLASSES>
-      <root url="jar://$HYBRIS_DIR$/bin/platform/resources/ant/sonar/lib/sonar-ant-task-2.1.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

@@ -1,7 +1,7 @@
 package com.epam.ticket.services.impl;
 
+import com.epam.dto.EpamTicket;
 import com.epam.ticket.converter.EpamTicketConverter;
-import com.epam.ticket.data.EpamTicket;
 import com.epam.ticket.services.EpamTicketBusinessService;
 import de.hybris.bootstrap.annotations.UnitTest;
 import de.hybris.platform.ticket.enums.CsTicketState;

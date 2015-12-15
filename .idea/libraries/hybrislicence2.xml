@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="hybrislicence2">
-    <CLASSES>
-      <root url="jar://$HYBRIS_DIR$/bin/platform/resources/configtemplates/production/licence/hybrislicence.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

@@ -5,24 +5,14 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-
-    <!-- Spring managed FilterChain for hybris Filter stack -->
     <bean id="epamticketPlatformFilterChain" class="de.hybris.platform.servicelayer.web.PlatformFilterChain">
         <constructor-arg>
             <list>
                 <ref bean="log4jFilter"/>
-                <ref bean="dynamicTenantActivationFilter"/>
+                <ref bean="tenantActivationFilter"/>
                 <ref bean="sessionFilter"/>
-                <ref bean="epamticketSecureMediaFilter"/>
             </list>
         </constructor-arg>
-    </bean>
-
-    <bean id="epamticketSecureMediaFilter" class="de.hybris.platform.servicelayer.web.SecureMediaFilter">
-        <property name="mediaPermissionService" ref="mediaPermissionService"/>
-        <property name="modelService" ref="modelService"/>
-        <property name="userService" ref="userService"/>
-        <property name="mediaService" ref="mediaService"/>
     </bean>
 
 </beans>

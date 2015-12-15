@@ -1,7 +1,7 @@
 package com.epam.ticket.populator;
 
+import com.epam.dto.EpamTicket;
 import com.epam.ticket.converter.EpamTicketEventConverter;
-import com.epam.ticket.data.EpamTicket;
 import de.hybris.platform.converters.Populator;
 import de.hybris.platform.core.HybrisEnumValue;
 import de.hybris.platform.core.model.order.AbstractOrderModel;

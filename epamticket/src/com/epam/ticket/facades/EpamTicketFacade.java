@@ -1,8 +1,8 @@
 package com.epam.ticket.facades;
 
+import com.epam.dto.EpamTicket;
 import com.epam.ticket.data.EpamCustomerEvent;
 import com.epam.ticket.dao.EpamTicketDAO.TicketCountsResult;
-import com.epam.ticket.data.EpamTicket;
 
 import java.util.List;
 

@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="catalogserver">
-    <CLASSES>
-      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/catalog/bin/catalogserver.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

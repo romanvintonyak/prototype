@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="deliveryzoneserver1">
-    <CLASSES>
-      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/deliveryzone/bin/deliveryzoneserver.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

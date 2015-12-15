@@ -5,7 +5,7 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://www.springframework.org/schema/beans
                     http://www.springframework.org/schema/beans/spring-beans.xsd
-                    http://www.springframework.org/schema/security 
+                    http://www.springframework.org/schema/security
                     http://www.springframework.org/schema/security/spring-security.xsd"
              default-autowire="byName">
 
@@ -18,7 +18,6 @@
         <intercept-url pattern="/js/**" access="permitAll"/>
         <intercept-url pattern="/favicon.ico" access="permitAll"/>
         <intercept-url pattern="/template/**" access="hasRole('ROLE_ADMINGROUP') or hasRole('ROLE_CSAGENTGROUP')"/>
-        <intercept-url pattern="/rest/**" access="hasRole('ROLE_ADMINGROUP') or hasRole('ROLE_CSAGENTGROUP')"/>
         <intercept-url pattern="/**" access="hasRole('ROLE_ADMINGROUP') or hasRole('ROLE_CSAGENTGROUP')"/>
 
         <form-login
@@ -28,13 +27,10 @@
                 default-target-url="/index.jsp"
         />
         <logout logout-url="/logout" logout-success-url="/auth/login.jsp"/>
-
-        <!--<remember-me services-ref="rememberMeServices" key="cockpit"/>-->
     </http>
 
     <authentication-manager>
         <authentication-provider ref="coreAuthenticationProvider"/>
-        <!--<authentication-provider ref="casAuthenticationProvider"/>-->
     </authentication-manager>
 
     <beans:bean id="fixation"
@@ -57,7 +53,5 @@
     </beans:bean>
 
     <beans:bean id="coreUserDetailsService" class="de.hybris.platform.spring.security.CoreUserDetailsService"/>
-
-    <beans:bean id="restHelper" class="com.epam.helper.RestHelper"/>
 
 </beans:beans>
