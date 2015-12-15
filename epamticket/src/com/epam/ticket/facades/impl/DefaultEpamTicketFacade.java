@@ -3,24 +3,17 @@ package com.epam.ticket.facades.impl;
 import com.epam.dto.EpamTicket;
 import com.epam.ticket.converter.CsCustomerEventConverter;
 import com.epam.ticket.converter.CsTicketConverter;
-import static com.google.common.base.Preconditions.checkNotNull;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.log4j.Logger;
-
 import com.epam.ticket.converter.EpamTicketConverter;
+import com.epam.ticket.dao.EpamTicketDAO;
 import com.epam.ticket.data.EpamCustomerEvent;
-import com.epam.ticket.dao.EpamTicketDAO.TicketCountsResult;
 import com.epam.ticket.facades.EpamTicketFacade;
 import com.epam.ticket.facades.EpamTicketSearchCriteria;
 import com.epam.ticket.services.EpamTicketBusinessService;
 import com.epam.ticket.services.EpamTicketService;
-
 import de.hybris.platform.servicelayer.session.SessionService;
 import de.hybris.platform.servicelayer.user.UserService;
 import de.hybris.platform.ticket.model.CsTicketModel;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +24,7 @@ import static de.hybris.platform.ticket.enums.CsTicketState.OPEN;
 public class DefaultEpamTicketFacade implements EpamTicketFacade {
 
     public static final Logger LOG = Logger.getLogger(DefaultEpamTicketFacade.class);
-    
+
     private EpamTicketConverter ticketConverter;
     private CsTicketConverter csTicketConverter;
     private EpamTicketService ticketService;
@@ -42,7 +35,7 @@ public class DefaultEpamTicketFacade implements EpamTicketFacade {
 
     public DefaultEpamTicketFacade(EpamTicketConverter ticketConverter, CsTicketConverter csTicketConverter,
                                    CsCustomerEventConverter csCustomerEventConverter, EpamTicketService ticketService,
-                                   EpamTicketBusinessService ticketBusinessService, SessionService sessionService, 
+                                   EpamTicketBusinessService ticketBusinessService, SessionService sessionService,
                                    UserService userService) {
         this.ticketConverter = checkNotNull(ticketConverter);
         this.csTicketConverter = checkNotNull(csTicketConverter);
@@ -87,7 +80,7 @@ public class DefaultEpamTicketFacade implements EpamTicketFacade {
     }
 
     @Override
-    public TicketCountsResult getTicketCounts(String userName) {
+    public EpamTicketDAO.TicketCountsResult getTicketCounts(String userName) {
         // TODO: GET RID of userName, when security will be ready!
         userService.setCurrentUser(userService.getUserForUID(userName));
         return ticketService.getTicketCounts();

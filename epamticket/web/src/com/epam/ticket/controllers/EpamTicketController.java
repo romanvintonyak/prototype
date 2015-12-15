@@ -1,6 +1,7 @@
 package com.epam.ticket.controllers;
 
 import com.epam.dto.EpamTicket;
+import com.epam.dto.TicketCounterHolder;
 import com.epam.ticket.dao.EpamTicketDAO.TicketCountsResult;
 import com.epam.ticket.data.EpamNewTicket;
 import com.epam.ticket.facades.EpamTicketSearchCriteria;
@@ -8,7 +9,6 @@ import com.epam.ticket.facades.impl.DefaultEpamTicketFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.Serializable;
 import java.util.Collection;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -48,17 +48,5 @@ public class EpamTicketController {
     public TicketCountsResult getTicketCounts(@RequestParam(value = "userName", required = false, defaultValue = "csagent") String userName) {
         // TODO: GET RID of userName, when security will be ready!
         return defaultEpamTicketFacade.getTicketCounts(userName);
-    }
-
-    private class TicketCounterHolder  implements Serializable{
-        private Integer total;
-
-        public Integer getTotal() {
-            return total;
-        }
-
-        public void setTotal(Integer total) {
-            this.total = total;
-        }
     }
 }
