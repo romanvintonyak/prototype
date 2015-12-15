@@ -1,9 +1,10 @@
-package com.epam.ticket.data;
+package com.epam.dto;
 
 import java.io.Serializable;
 import java.util.List;
 
-public class EpamTicket  implements Serializable{
+public class EpamTicket implements Serializable{
+
     private String ticketId;
     private String customerDisplayName;
     private String customerUid;

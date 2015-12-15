@@ -1,6 +1,6 @@
 package com.epam.ticket.converter;
 
-import com.epam.ticket.data.EpamTicketChangeEventEntry;
+import com.epam.dto.EpamTicketChangeEventEntry;
 import de.hybris.bootstrap.annotations.UnitTest;
 import de.hybris.platform.core.model.type.AttributeDescriptorModel;
 import de.hybris.platform.ticket.events.model.CsTicketChangeEventEntryModel;

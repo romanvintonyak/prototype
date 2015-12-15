@@ -1,5 +1,7 @@
 package com.epam.ticket.data;
 
+import com.epam.dto.EpamTicket;
+
 import java.io.Serializable;
 
 public class EpamNewTicket implements Serializable {

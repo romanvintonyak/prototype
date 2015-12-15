@@ -1,8 +1,8 @@
 package com.epam.ticket.controllers;
 
+import com.epam.dto.EpamTicket;
 import com.epam.ticket.data.EpamCustomerEvent;
 import com.epam.ticket.data.EpamNewTicket;
-import com.epam.ticket.data.EpamTicket;
 import com.epam.ticket.facades.impl.DefaultEpamTicketFacade;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

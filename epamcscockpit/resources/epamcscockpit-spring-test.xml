@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+       <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper" />
+
+    <bean id="restHelper" class="com.epam.helper.RestHelper"/>
+
+    <bean id="fixation"
+                class="de.hybris.platform.servicelayer.security.spring.HybrisSessionFixationProtectionStrategy"/>
+
+    <alias name="defaultCorePreAuthenticationChecks" alias="corePreAuthenticationChecks"/>
+    <bean id="defaultCorePreAuthenticationChecks"
+                class="de.hybris.platform.spring.security.RejectUserPreAuthenticationChecks">
+        <property name="allowedUserGroups">
+            <list merge="false">
+                <value>Admingroup</value>
+                <value>csagentgroup</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="coreAuthenticationProvider" class="com.epam.security.EpamCoreAuthenticationProvider">
+        <property name="preAuthenticationChecks" ref="corePreAuthenticationChecks"/>
+        <property name="userDetailsService" ref="coreUserDetailsService"/>
+    </bean>
+
+    <bean id="coreUserDetailsService" class="de.hybris.platform.spring.security.CoreUserDetailsService"/>
+
+</beans>

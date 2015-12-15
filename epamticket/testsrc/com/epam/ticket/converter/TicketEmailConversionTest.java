@@ -1,6 +1,6 @@
 package com.epam.ticket.converter;
 
-import com.epam.ticket.data.EpamTicketEmail;
+import com.epam.dto.EpamTicketEmail;
 import de.hybris.bootstrap.annotations.UnitTest;
 import de.hybris.platform.ticket.events.model.CsTicketEmailModel;
 import org.junit.Test;

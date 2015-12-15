@@ -1,8 +1,8 @@
 package com.epam.ticket.controllers;
 
+import com.epam.dto.EpamTicket;
 import com.epam.ticket.dao.EpamTicketDAO.TicketCountsResult;
 import com.epam.ticket.data.EpamNewTicket;
-import com.epam.ticket.data.EpamTicket;
 import com.epam.ticket.data.EpamTicketStateHolder;
 import com.epam.ticket.facades.EpamTicketSearchCriteria;
 import com.epam.ticket.facades.impl.DefaultEpamTicketFacade;

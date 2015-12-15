@@ -1,5 +1,7 @@
 package com.epam.ticket.data;
 
+import com.epam.dto.EpamTicketEvent;
+
 import java.io.Serializable;
 
 public class EpamCustomerEvent extends EpamTicketEvent implements Serializable {
