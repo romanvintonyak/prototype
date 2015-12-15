@@ -15,7 +15,7 @@ angular.module("epamcscockpitResource", ["ngResource" , "ngCookies"])
             });
     }])
     .factory("TicketsResource", ["$resource", function ($resource) {
-        var resourseUrl = "/epamticket/v1/tickets";
+        var resourseUrl = "/epamcscockpit/rest/tickets";
         return $resource(resourseUrl + '/:ticketId',
             {
                 id: '@ticketId'
@@ -26,7 +26,7 @@ angular.module("epamcscockpitResource", ["ngResource" , "ngCookies"])
         })
     }])
     .factory("TicketCountResource", ["$resource", function ($resource) {
-        var resourseUrl = "/epamticket/v1/tickets/ticketCount";
+        var resourseUrl = "/epamcscockpit/rest/tickets/ticketCount";
         return $resource(resourseUrl,{}, { get: {
             method: 'GET',
             responseType: 'text'

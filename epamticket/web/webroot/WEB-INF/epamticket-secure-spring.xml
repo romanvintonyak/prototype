@@ -5,11 +5,11 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://www.springframework.org/schema/beans
                     http://www.springframework.org/schema/beans/spring-beans.xsd
-                    http://www.springframework.org/schema/security 
+                    http://www.springframework.org/schema/security
                     http://www.springframework.org/schema/security/spring-security.xsd"
              default-autowire="byName">
 
-    <http use-expressions="true">
+    <http use-expressions="true" auto-config="true">
         <anonymous username="anonymous" granted-authority="ROLE_ANONYMOUS"/>
         <intercept-url pattern="/styles/**" access="permitAll"/>
         <intercept-url pattern="/auth/**" access="permitAll"/>
@@ -17,25 +17,15 @@
         <intercept-url pattern="/fonts/**" access="permitAll"/>
         <intercept-url pattern="/js/**" access="permitAll"/>
         <intercept-url pattern="/favicon.ico" access="permitAll"/>
-        <intercept-url pattern="/template/**" access="hasRole('ROLE_ADMINGROUP') or hasRole('ROLE_CSAGENTGROUP')"/>
-        <intercept-url pattern="/rest/**" access="hasRole('ROLE_ADMINGROUP') or hasRole('ROLE_CSAGENTGROUP')"/>
+        <intercept-url pattern="/v1/**" access="hasRole('ROLE_ADMINGROUP') or hasRole('ROLE_CSAGENTGROUP')"/>
         <intercept-url pattern="/**" access="hasRole('ROLE_ADMINGROUP') or hasRole('ROLE_CSAGENTGROUP')"/>
-
-        <form-login
-                always-use-default-target="false"
-                login-page="/auth/login.jsp"
-                authentication-failure-url="/auth/login.jsp"
-                default-target-url="/index.jsp"
-        />
-        <logout logout-url="/logout" logout-success-url="/auth/login.jsp"/>
-
-        <!--<remember-me services-ref="rememberMeServices" key="cockpit"/>-->
+        <logout logout-url="/logout"/>
     </http>
 
     <authentication-manager>
         <authentication-provider ref="coreAuthenticationProvider"/>
-        <!--<authentication-provider ref="casAuthenticationProvider"/>-->
     </authentication-manager>
+
 
     <beans:bean id="fixation"
                 class="de.hybris.platform.servicelayer.security.spring.HybrisSessionFixationProtectionStrategy"/>
@@ -58,6 +48,5 @@
 
     <beans:bean id="coreUserDetailsService" class="de.hybris.platform.spring.security.CoreUserDetailsService"/>
 
-    <beans:bean id="restHelper" class="com.epam.helper.RestHelper"/>
 
 </beans:beans>

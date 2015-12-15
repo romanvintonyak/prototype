@@ -1,7 +1,7 @@
 package com.epam.ticket.converter;
 
+import com.epam.dto.EpamTicketEvent;
 import com.epam.ticket.populator.EpamTicketEventPopulator;
-import com.epam.ticket.data.EpamTicketEvent;
 import de.hybris.platform.converters.impl.AbstractPopulatingConverter;
 import de.hybris.platform.ticket.events.model.CsTicketEventModel;
 

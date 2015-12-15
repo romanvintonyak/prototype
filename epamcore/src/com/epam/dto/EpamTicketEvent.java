@@ -1,4 +1,4 @@
-package com.epam.ticket.data;
+package com.epam.dto;
 
 import java.io.Serializable;
 import java.util.Date;

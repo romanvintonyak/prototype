@@ -1,6 +1,6 @@
 package com.epam.ticket.converter;
 
-import com.epam.ticket.data.EpamTicket;
+import com.epam.dto.EpamTicket;
 import de.hybris.bootstrap.annotations.UnitTest;
 import de.hybris.platform.core.model.order.AbstractOrderModel;
 import de.hybris.platform.core.model.user.EmployeeModel;
