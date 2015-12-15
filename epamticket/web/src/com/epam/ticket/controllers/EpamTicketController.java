@@ -9,23 +9,15 @@ import com.epam.ticket.facades.impl.DefaultEpamTicketFacade;
 import de.hybris.platform.ticket.service.TicketException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.io.Serializable;
-import java.util.Collection;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -73,10 +65,9 @@ public class EpamTicketController {
     }
 
     @RequestMapping(value = "/{ticketId}/changestate", method = RequestMethod.PUT)
-    @ResponseBody
     public EpamTicket changeTicketState(@PathVariable("ticketId") String ticketId, @RequestBody EpamTicketStateHolder stateHolder) {
         LOG.info(String.format("Invoke the changestate with ticketId=%s.", ticketId));
-        EpamTicket ticket = new EpamTicket();
+        EpamTicket ticket;
         try {
             ticket = defaultEpamTicketFacade.changeTicketState(ticketId,
                     stateHolder.getNewState(), stateHolder.getComment());
