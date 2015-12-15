@@ -8,7 +8,7 @@ import java.util.List;
 
 @RequestMapping("/rest/tickets")
 @RestController
-public class EpamTicketController {
+public class CockpitTicketController {
 
     private static final String ALL_TICKETS = "http://localhost:9001/epamticket/v1/tickets";
     private static final String TICKET_BY_ID = "http://localhost:9001/epamticket/v1/tickets/%s";
