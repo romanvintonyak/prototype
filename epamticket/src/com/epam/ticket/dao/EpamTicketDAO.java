@@ -40,14 +40,14 @@ public class EpamTicketDAO extends DefaultTicketDao {
         query = new StringBuffer(QUERY_STRING);
         Map<String, Object> paramMap = new TreeMap<>();
 
-        List<CsTicketPriority> priorities = criteria.getPriorities();
+        List<CsTicketPriority> priorities = criteria.getPriority();
         if (priorities != null && priorities.size() != 0) {
             query.append(getJoiningString());
             query.append("{priority} IN (?priority)");
             paramMap.put("priority", priorities);
         }
 
-        List<CsTicketState> states = criteria.getStates();
+        List<CsTicketState> states = criteria.getState();
         if (states != null && states.size() != 0) {
             query.append(getJoiningString());
             query.append("{state} IN (?state)");
@@ -98,7 +98,6 @@ public class EpamTicketDAO extends DefaultTicketDao {
         
         for (EpamCsTicketFilter filter : getAvailableFilters()) {
             ticketsCounts.addFilter(FilterQueryExecuter.executeFilter(getFlexibleSearchService(), filter));
-            ticketsCounts.addFilterCategoryCounters(filter.getName(), FilterQueryExecuter.execute(getFlexibleSearchService(), filter.getFilterCriterias()));
         }
         
         return ticketsCounts;

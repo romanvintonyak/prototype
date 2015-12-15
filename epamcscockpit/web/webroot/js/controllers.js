@@ -54,7 +54,7 @@ epamcscockpit.config(["$routeProvider", "$httpProvider", function ($routeProvide
         });
 }]);
 
-epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval,
+epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval, $filter,
                                                      TicketsResource, TicketCountResource, FilteredTicketsCountResource) {
     fillConstants($scope);
     $scope.errorMsg = "";
@@ -67,16 +67,29 @@ epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval,
         sc.categories = [];
         sc.agent = [];
         sc.group = [];
-        sc.states = [];
+        sc.state = [];
         sc.levels = [];
-        sc.priorities = [];
+        sc.priority = [];
         sc.sortName = [];
         sc.sortReverse = false;
     };
-
+    
     $scope.clearTicketSearchCriteria();
 
     $scope.updateTicketStore = function () {
+        //$cookieStore.put('userName', userName);
+        $scope.ticketCount = TicketCountResource.get();
+        
+        FilteredTicketsCountResource.get({userName: userName}, 
+            function (data, status, headers, config) {
+                $scope.ticketConfig = data;
+            },
+            function () {
+                $scope.errorMsg = defaultErrrMsg;
+            }
+        );
+        
+        
         TicketsResource.query(
             $scope.ticketSearchCriteria,
             function (data, status, headers, config) {
@@ -93,9 +106,6 @@ epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval,
     };
 
     $scope.updateTicketStore();
-
-    $scope.ticketCount = TicketCountResource.get();
-    $scope.filteredTicketsCounts = FilteredTicketsCountResource.get();
 
     // --- sort-related functions
     $scope.sortField = 'ticketId'; // user requested sort

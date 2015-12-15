@@ -22,61 +22,25 @@
     <div class="container">
 
         <aside class="sidebar filter">
-            <div class="filter__section">
-                <h3 class="filter__title">agent</h3>
-                <ul>
-                    <li ng-repeat="agent in ticketAgent" class="filter__item">
-                        <label class="filter__item-name">
-                            <input class="filter__item-checkbox" type="checkbox"
-                                   checklist-model="ticketSearchCriteria.agent" checklist-value="agent"/>
-                            {{agent}}
-                        </label>
-                        <span class="filter__item-counter">{{filteredTicketsCounts.filterCategories.agent[agent] || 0}}</span>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="filter__section">
-                <h3 class="filter__title">group</h3>
-                <ul>
-                    <li ng-repeat="group in ticketGroup" class="filter__item">
-                        <label class="filter__item-name">
-                            <input class="filter__item-checkbox" type="checkbox"
-                                   checklist-model="ticketSearchCriteria.group" checklist-value="group"/>
-                            {{group}}
-                        </label>
-                        <span class="filter__item-counter">{{filteredTicketsCounts.filterCategories.group[group] || 0}}</span>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="filter__section">
-                <h3 class="filter__title">state</h3>
-                <ul>
-                    <li ng-repeat="state in ticketStates" class="filter__item">
-                        <label class="filter__item-name">
-                            <input class="filter__item-checkbox" type="checkbox"
-                                   checklist-model="ticketSearchCriteria.states" checklist-value="state"/>
-                            {{state}}
-                        </label>
-                        <span class="filter__item-counter">{{filteredTicketsCounts.filterCategories.state[state] || 0}}</span>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="filter__section">
-                <h3 class="filter__title">priority</h3>
-                <ul>
-                    <li ng-repeat="priority in ticketPriorities" class="filter__item">
-                        <label class="filter__item-name">
-                            <input class="filter__item-checkbox" type="checkbox"
-                                   checklist-model="ticketSearchCriteria.priorities" checklist-value="priority"/>
-                            {{priority}}
-                        </label>
-                        <span class="filter__item-counter">{{filteredTicketsCounts.filterCategories.priority[priority] || 0}}</span>
-                    </li>
-                </ul>
-            </div>
+        
+            <!-- NEW FILTERS -->
+            <ul>
+                <li ng-repeat="filter in ticketConfig.filters | orderBy:'name'" class="filter__item">
+                <div class="filter__section">
+                    <h3 class="filter__title">{{filter.displayName}}</h3>
+                    <ul>
+                        <li ng-repeat="criteria in filter.criterias | orderBy:'name'" class="filter__item">
+                            <label class="filter__item-name">
+                                <input class="filter__item-checkbox" type="checkbox"
+                                   checklist-model="ticketSearchCriteria[filter.name]" checklist-value="criteria.displayName"/>
+                                {{criteria.displayName}}
+                            </label>
+                            <span class="filter__item-counter">{{criteria.count || 0}}</span>
+                        </li>
+                    </ul>
+                </div>
+                </li>
+            </ul>
 
             <div class="filter__btn-wrap">
                 <button class="filter__btn filter__btn_clear" ng-click="clearTicketSearchCriteria()">clear</button>

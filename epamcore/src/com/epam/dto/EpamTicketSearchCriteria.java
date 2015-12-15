@@ -1,27 +1,29 @@
 package com.epam.dto;
 
+import java.io.Serializable;
+import java.util.List;
+
 import de.hybris.platform.ticket.enums.CsTicketCategory;
 import de.hybris.platform.ticket.enums.CsTicketPriority;
 import de.hybris.platform.ticket.enums.CsTicketState;
 
-import java.io.Serializable;
-import java.util.List;
-
 public class EpamTicketSearchCriteria implements Serializable {
 
-    private List<CsTicketPriority> priorities;
-    private List<CsTicketState> states;
-    private List<CsTicketCategory> categories;
+public class EpamTicketSearchCriteria implements Serializable{
+    private List<CsTicketPriority> priority;
+    private List<CsTicketState> state;
+    private List<CsTicketCategory> category;
     private String agentId;
     private String sortName;
     private Boolean sortReverse = Boolean.FALSE;
 
-    public void setPriorities(final List<CsTicketPriority> priorities) {
-        this.priorities = priorities;
+
+    public void setPriority(List<CsTicketPriority> priority) {
+        this.priority = priority;
     }
 
-    public List<CsTicketPriority> getPriorities() {
-        return priorities;
+    public List<CsTicketPriority> getPriority() {
+        return priority;
     }
 
     public String getAgentId() {
@@ -32,20 +34,20 @@ public class EpamTicketSearchCriteria implements Serializable {
         this.agentId = agentId;
     }
 
-    public List<CsTicketState> getStates() {
-        return states;
+    public List<CsTicketState> getState() {
+        return state;
     }
 
-    public void setStates(final List<CsTicketState> states) {
-        this.states = states;
+    public void setState(List<CsTicketState> state) {
+        this.state = state;
     }
-
+    
     public List<CsTicketCategory> getCategories() {
-        return categories;
+        return category;
     }
 
-    public void setCategories(final List<CsTicketCategory> categories) {
-        this.categories = categories;
+    public void setCategories(List<CsTicketCategory> categories) {
+        this.category = categories;
     }
 
     public String getSortName() {
@@ -66,7 +68,11 @@ public class EpamTicketSearchCriteria implements Serializable {
 
     @Override
     public String toString() {
-        return "EpamTicketSearchCriteria{" + "priorities=" + priorities + "states=" + states + ", agentId='" + agentId + '\'' + '}';
+        return "EpamTicketSearchCriteria{" +
+                "priorities=" + priority +
+                "states=" + state +
+                ", agentId='" + agentId + '\'' +
+                '}';
     }
 
 }

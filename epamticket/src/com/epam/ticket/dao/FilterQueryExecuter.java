@@ -1,10 +1,8 @@
 package com.epam.ticket.dao;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -20,16 +18,6 @@ import de.hybris.platform.servicelayer.search.SearchResult;
 public class FilterQueryExecuter {
     @SuppressWarnings("unused")
     private final static Logger log = Logger.getLogger(DefaultAgentCategoryCounterStrategy.class);
-
-    public static Map<String, Integer> execute(FlexibleSearchService flexibleSearchService, Set<EpamCsTicketFilterCriteria> criterias) {
-        final Map<String, Integer> result = new HashMap<>();
-
-        for (EpamCsTicketFilterCriteria criteria : criterias) {
-            result.put(criteria.getDisplayName(), searchForCount(flexibleSearchService, criteria.getFilterCountQuery()));
-        }
-
-        return result;
-    }
 
     public static EpamTicketFrontFilter executeFilter(FlexibleSearchService flexibleSearchService, EpamCsTicketFilter filter) {
         final EpamTicketFrontFilter result = new EpamTicketFrontFilter();
