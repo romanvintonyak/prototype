@@ -94,11 +94,14 @@ public class EpamTicketDAO extends DefaultTicketDao {
         return totalCount;
     }
     
-    public List<Integer> getTicketCountWithCriteria(EpamTicketsFilterCriteria criteria) {
-        final FlexibleSearchQuery query = new FlexibleSearchQuery(criteria.getFilterCountQuery());
-        query.setResultClassList(Collections.singletonList(Integer.class));
-        final SearchResult<Integer> searchResult = getFlexibleSearchService().search(query);
-        return searchResult.getResult();
+    public EpamFilteredTicketsCounts getFilteredTicketsCounts() {
+        EpamFilteredTicketsCounts ticketsCounts = new EpamFilteredTicketsCounts();
+        
+        for (EpamCsTicketFilter filter : getAvailableFilters()) {
+            ticketsCounts.addFilter(FilterQueryExecuter.executeFilter(getFlexibleSearchService(), filter));
+        }
+        
+        return ticketsCounts;
     }
 
     private String getJoiningString() {

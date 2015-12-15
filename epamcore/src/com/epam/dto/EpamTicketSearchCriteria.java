@@ -1,11 +1,11 @@
 package com.epam.dto;
 
+import java.io.Serializable;
+import java.util.List;
+
 import de.hybris.platform.ticket.enums.CsTicketCategory;
 import de.hybris.platform.ticket.enums.CsTicketPriority;
 import de.hybris.platform.ticket.enums.CsTicketState;
-
-import java.io.Serializable;
-import java.util.List;
 
 public class EpamTicketSearchCriteria implements Serializable {
 
@@ -39,7 +39,7 @@ public class EpamTicketSearchCriteria implements Serializable {
     public void setState(final List<CsTicketState> state) {
         this.state = state;
     }
-
+    
     public List<CsTicketCategory> getCategories() {
         return category;
     }
