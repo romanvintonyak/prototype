@@ -41,7 +41,7 @@ public class DefaultEpamTicketBusinessServiceTest {
 
     @Before
     public void init() {
-        epamTicketBusinessService = new DefaultEpamTicketBusinessService(defaultTicketBusinessService, defaultTicketService, ticketConverter);
+        epamTicketBusinessService = new DefaultEpamTicketBusinessService(defaultTicketBusinessService, defaultTicketService);
     }
 
     //TODO: check mandatory parameters for ticket creation and write fail-test
@@ -63,25 +63,38 @@ public class DefaultEpamTicketBusinessServiceTest {
     }
 
     @Test
-    public void shouldCloseTicket() throws TicketException {
+    public void shouldCloseTicketWhenMethodInvoke() throws TicketException {
         //given
         CsTicketModel csTicket = new CsTicketModel();
         when(defaultTicketService.getTicketForTicketId(TICKET_ID)).thenReturn(csTicket);
         when(defaultTicketBusinessService.setTicketState(any(), any(), eq(COMMENT))).thenReturn(csTicket);
         //when
-        EpamTicket resultTicket = epamTicketBusinessService.setTicketState(TICKET_ID, CLOSED, COMMENT);
+        epamTicketBusinessService.setTicketState(TICKET_ID, CLOSED, COMMENT);
         //then
         verify(defaultTicketBusinessService).setTicketState(csTicket, CsTicketState.CLOSED, COMMENT);
     }
 
     @Test
-    public void shouldThrowException() throws TicketException {
+    public void shouldThrowExceptionWhenTiketIdIsEmpty() throws TicketException {
+        //given
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("TicketId cannot be empty");
         //when
         epamTicketBusinessService.setTicketState(null, CLOSED, COMMENT);
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenTicketNotFound() throws TicketException {
+        //given
+        thrown.expect(TicketException.class);
+        thrown.expectMessage("Can not find ticket with id = ticketId");
+        CsTicketModel csTicket = new CsTicketModel();
+        when(defaultTicketService.getTicketForTicketId(TICKET_ID)).thenReturn(null);
+        //when
+        epamTicketBusinessService.setTicketState(TICKET_ID, CLOSED, COMMENT);
         //then
 
     }
+
 
 }

@@ -2,22 +2,15 @@ package com.epam.ticket.facades.impl;
 
 import com.epam.ticket.converter.CsCustomerEventConverter;
 import com.epam.ticket.converter.CsTicketConverter;
-import static com.google.common.base.Preconditions.checkNotNull;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.log4j.Logger;
-
 import com.epam.ticket.converter.EpamTicketConverter;
-import com.epam.ticket.data.EpamCustomerEvent;
 import com.epam.ticket.dao.EpamTicketDAO.TicketCountsResult;
+import com.epam.ticket.data.EpamCustomerEvent;
 import com.epam.ticket.data.EpamTicket;
 import com.epam.ticket.facades.EpamTicketFacade;
 import com.epam.ticket.facades.EpamTicketSearchCriteria;
 import com.epam.ticket.services.EpamTicketBusinessService;
 import com.epam.ticket.services.EpamTicketService;
-
+import com.google.common.base.Preconditions;
 import de.hybris.platform.servicelayer.session.SessionService;
 import de.hybris.platform.servicelayer.user.UserService;
 import de.hybris.platform.ticket.model.CsTicketModel;
@@ -28,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Strings.isNullOrEmpty;
 import static de.hybris.platform.ticket.enums.CsTicketState.OPEN;
 
 public class DefaultEpamTicketFacade implements EpamTicketFacade {
@@ -85,6 +79,7 @@ public class DefaultEpamTicketFacade implements EpamTicketFacade {
     @Override
     public EpamTicket changeTicketState(String ticketId, String newState, String comment) throws TicketException {
         LOG.info(String.format("Change TicketState with : ticketId=%s, newState=%s.", ticketId, newState));
+        Preconditions.checkArgument(!isNullOrEmpty(ticketId), "TicketId cannot be empty");
         return ticketConverter.convert(ticketBusinessService.setTicketState(ticketId, newState, comment));
     }
 
