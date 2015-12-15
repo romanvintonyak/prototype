@@ -13,12 +13,12 @@ public class RestHelper {
     private RestAuthServiceImpl restAuthService;
 
     private static final String AUTHORIZATION = "Authorization";
-    private static final String BASIC_S = "Basic %s";
+    private static final String BASIC_PARAMS = "Basic %s";
 
     public <T> T call(final String url, final Class<T> clazz) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
-        headers.add(AUTHORIZATION, String.format(BASIC_S, restAuthService.getCredentials().getBase64Presentation()));
+        headers.add(AUTHORIZATION, String.format(BASIC_PARAMS, restAuthService.getCredentials().getBase64Presentation()));
         HttpEntity<String> request = new HttpEntity<>(headers);
         return restTemplate.exchange(url, HttpMethod.GET, request, clazz).getBody();
     }

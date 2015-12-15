@@ -9,7 +9,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -38,9 +37,6 @@ public class RestAuthServiceTest {
 
     private static final Credentials CREDENTIALS = new Credentials(USER, PASSWORD);
     private static final String PASSWORD_STRING = String.valueOf(CREDENTIALS.getPassword());
-
-    @Mock
-    private SecurityContext securityContext;
 
     static {
         SecurityContextHolder.getContext().setAuthentication(
