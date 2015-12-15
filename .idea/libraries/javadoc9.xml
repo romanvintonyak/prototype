@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="javadoc9">
+    <CLASSES>
+      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/commons/doc/javadoc/fop-1.0-javadoc.jar!/" />
+      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/commons/doc/javadoc/avalon-framework-impl-4.3.1-javadoc.jar!/" />
+      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/commons/doc/javadoc/avalon-framework-api-4.3.1-javadoc.jar!/" />
+      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/commons/doc/javadoc/commons-logging-1.0.4-javadoc.jar!/" />
+      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/commons/doc/javadoc/batik-xml-1.7-javadoc.jar!/" />
+      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/commons/doc/javadoc/xmlgraphics-commons-1.4-javadoc.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

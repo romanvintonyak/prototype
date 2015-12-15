@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="bin3">
+    <CLASSES>
+      <root url="jar://$HYBRIS_DIR$/bin/platform/bootstrap/bin/yant.jar!/" />
+      <root url="jar://$HYBRIS_DIR$/bin/platform/bootstrap/bin/models.jar!/" />
+      <root url="jar://$HYBRIS_DIR$/bin/platform/bootstrap/bin/ytomcat.jar!/" />
+      <root url="jar://$HYBRIS_DIR$/bin/platform/bootstrap/bin/ybootstrap.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

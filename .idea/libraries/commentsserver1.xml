@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="commentsserver1">
+    <CLASSES>
+      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/comments/bin/commentsserver.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

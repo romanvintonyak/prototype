@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="coreserver">
+    <CLASSES>
+      <root url="jar://$HYBRIS_DIR$/bin/platform/ext/core/bin/coreserver.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
