@@ -33,7 +33,7 @@ public class CockpitTicketController {
     @SuppressWarnings("unchecked")
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public List<EpamTicket> getAll(HttpServletRequest request) 
+    public List<EpamTicket> getAll(final HttpServletRequest request) 
     {
         return restHelper.call(PATH + "?" + request.getQueryString(), List.class);
         // TODO: need to cover base context url
@@ -54,7 +54,7 @@ public class CockpitTicketController {
 
     @RequestMapping(value = "/filteredTicketsCounts", method = RequestMethod.GET)
     @ResponseBody
-    public EpamFilteredTicketsCounts getTicketCounts(HttpServletRequest request) {
+    public EpamFilteredTicketsCounts getTicketCounts() {
         return restHelper.call(PATH + "filteredTicketsCounts", EpamFilteredTicketsCounts.class);
     }
 }

@@ -90,13 +90,13 @@ public class EpamTicketDAO extends DefaultTicketDao {
     }
     
     public EpamFilteredTicketsCounts getFilteredTicketsCounts() {
-        EpamFilteredTicketsCounts result = new EpamFilteredTicketsCounts();
+        EpamFilteredTicketsCounts ticketsCounts = new EpamFilteredTicketsCounts();
         
         for (EpamCsTicketFilter filter : getAvailableFilters()) {
-            result.addFilerCategoryCounters(filter.getName(), FilterQueryExecuter.execute(getFlexibleSearchService(), filter.getFilterCriterias()));
+            ticketsCounts.addFilerCategoryCounters(filter.getName(), FilterQueryExecuter.execute(getFlexibleSearchService(), filter.getFilterCriterias()));
         }
         
-        return result;
+        return ticketsCounts;
     }
 
     private String getJoiningString() {
