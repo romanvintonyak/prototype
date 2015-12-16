@@ -1,5 +1,16 @@
 package com.epam.ticket.facades;
 
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+
 import com.epam.dto.EpamTicket;
 import com.epam.ticket.converter.CsCustomerEventConverter;
 import com.epam.ticket.converter.CsTicketConverter;
@@ -8,18 +19,10 @@ import com.epam.ticket.data.EpamCustomerEvent;
 import com.epam.ticket.facades.impl.DefaultEpamTicketFacade;
 import com.epam.ticket.services.EpamTicketBusinessService;
 import com.epam.ticket.services.EpamTicketService;
+
 import de.hybris.bootstrap.annotations.UnitTest;
-import de.hybris.platform.servicelayer.session.SessionService;
-import de.hybris.platform.servicelayer.user.UserService;
 import de.hybris.platform.ticket.events.model.CsCustomerEventModel;
 import de.hybris.platform.ticket.model.CsTicketModel;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-
-import static org.mockito.Mockito.*;
 
 @UnitTest
 @RunWith(MockitoJUnitRunner.class)
@@ -42,16 +45,10 @@ public class DefaultEpamTicketFacadeTest {
     @Mock
     private CsCustomerEventConverter mockCsCustomerEventConverter;
 
-    @Mock
-    private SessionService mockSessionService;
-
-    @Mock
-    private UserService mockUserService;
-
     @Before
     public void setUp() {
         defaultEpamTicketFacade = new DefaultEpamTicketFacade(mockTicketConverter, mockCsTicketConverter,
-                mockCsCustomerEventConverter, mockTicketService, mockTicketBusinessService, mockSessionService, mockUserService);
+                mockCsCustomerEventConverter, mockTicketService, mockTicketBusinessService);
     }
 
     @Test

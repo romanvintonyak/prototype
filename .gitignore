@@ -72,3 +72,5 @@ components-lang-addon.xml
 build.xml
 **/*.xsd
 */.settings
+*/build.xml
+*/.classpath

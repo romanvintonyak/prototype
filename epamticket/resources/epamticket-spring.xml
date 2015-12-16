@@ -14,8 +14,6 @@
         <constructor-arg name="ticketConverter" ref="epamTicketConverter"/>
         <constructor-arg name="csTicketConverter" ref="csTicketConverter" />
         <constructor-arg name="csCustomerEventConverter" ref="csCustomerEventConverter" />
-        <constructor-arg name="sessionService" ref="sessionService" />
-        <constructor-arg name="userService" ref="userService" />
     </bean>
 
     <bean id="epamTicketConverter" class="com.epam.ticket.converter.EpamTicketConverter">

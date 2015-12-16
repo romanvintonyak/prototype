@@ -18,10 +18,6 @@
     <script src="js/filters.js"></script> 
     <script src="js/services.js"></script>  
 	<script src="js/controllers.js"></script> 
-	<script>
-	   epamcscockpit.value("userName", "<sec:authentication property="userName"/>");
-       //epamcscockpit.constant("testconst", ${constants});
-	</script>
 </head>
 
 <body>

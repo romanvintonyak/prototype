@@ -1,6 +1,5 @@
 package com.epam.ticket.attributehandlers;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,14 +10,12 @@ import de.hybris.platform.servicelayer.model.attribute.AbstractDynamicAttributeH
 
 @Component
 public class EpamticketsCountAttributeHandler extends AbstractDynamicAttributeHandler<Integer, EpamCsTicketModel> {
-    public static final Logger LOG = Logger.getLogger(EpamticketsCountAttributeHandler.class);
     
     @Autowired
     private EpamTicketService epamTicketService;
 
     @Override
     public Integer get(EpamCsTicketModel model) {
-        LOG.info("In countHandler");
         return epamTicketService.getTotalTicketCount();
     }
     
