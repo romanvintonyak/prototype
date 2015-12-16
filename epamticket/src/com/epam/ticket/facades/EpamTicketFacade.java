@@ -1,10 +1,8 @@
 package com.epam.ticket.facades;
 
+import com.epam.dto.EpamFilteredTicketsCounts;
 import com.epam.dto.EpamTicket;
 import com.epam.dto.EpamTicketSearchCriteria;
-import com.epam.dto.EpamFilteredTicketsCounts;
-import com.epam.ticket.data.EpamCustomerEvent;
-import com.epam.ticket.dao.EpamTicketDAO.TicketCountsResult;
 import com.epam.ticket.data.EpamCustomerEvent;
 import de.hybris.platform.ticket.service.TicketException;
 

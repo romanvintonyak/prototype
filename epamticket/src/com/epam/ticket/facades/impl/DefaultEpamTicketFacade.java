@@ -1,25 +1,18 @@
 package com.epam.ticket.facades.impl;
 
+import com.epam.dto.EpamFilteredTicketsCounts;
 import com.epam.dto.EpamTicket;
 import com.epam.dto.EpamTicketSearchCriteria;
-import com.epam.dto.EpamFilteredTicketsCounts;
 import com.epam.ticket.converter.CsCustomerEventConverter;
 import com.epam.ticket.converter.CsTicketConverter;
 import com.epam.ticket.converter.EpamTicketConverter;
-import com.epam.ticket.dao.EpamTicketDAO.TicketCountsResult;
-import com.epam.ticket.data.EpamCustomerEvent;
-import com.epam.ticket.dao.EpamTicketDAO;
 import com.epam.ticket.data.EpamCustomerEvent;
 import com.epam.ticket.facades.EpamTicketFacade;
 import com.epam.ticket.services.EpamTicketBusinessService;
 import com.epam.ticket.services.EpamTicketService;
 import com.google.common.base.Preconditions;
-import de.hybris.platform.servicelayer.session.SessionService;
-import de.hybris.platform.servicelayer.user.UserService;
-
 import de.hybris.platform.ticket.model.CsTicketModel;
 import de.hybris.platform.ticket.service.TicketException;
-import org.apache.log4j.Logger;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;

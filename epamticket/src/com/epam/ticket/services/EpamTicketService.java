@@ -1,11 +1,10 @@
 package com.epam.ticket.services;
 
-import java.util.List;
-
 import com.epam.dto.EpamFilteredTicketsCounts;
 import com.epam.dto.EpamTicketSearchCriteria;
-
 import de.hybris.platform.ticket.model.CsTicketModel;
+
+import java.util.List;
 
 public interface EpamTicketService {
 
