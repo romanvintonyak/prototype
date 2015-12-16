@@ -1,7 +1,9 @@
 package com.epam.ticket.controllers;
 
 import com.epam.dto.EpamTicket;
-import com.epam.ticket.dao.EpamTicketDAO.TicketCountsResult;
+import com.epam.dto.TicketCounterHolder;
+import com.epam.dto.EpamTicketSearchCriteria;
+import com.epam.dto.EpamFilteredTicketsCounts;
 import com.epam.ticket.data.EpamNewTicket;
 import com.epam.ticket.data.EpamTicketStateHolder;
 import com.epam.ticket.facades.EpamTicketSearchCriteria;
@@ -19,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.Serializable;
 import java.util.Collection;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -58,6 +59,9 @@ public class EpamTicketController {
         return ticketCounterHolder;
     }
 
+    @RequestMapping(value = "/filteredTicketsCounts", method = RequestMethod.GET)
+    public EpamFilteredTicketsCounts getFilteredTicketsCounts() {
+        return defaultEpamTicketFacade.getFilteredTicketsCounts();
     @RequestMapping(value = "/ticketCounts", method = RequestMethod.GET)
     public TicketCountsResult getTicketCounts(@RequestParam(value = "userName", required = false, defaultValue = "csagent") String userName) {
         // TODO: GET RID of userName, when security will be ready!

@@ -1,20 +1,25 @@
 package com.epam.ticket.facades.impl;
 
 import com.epam.dto.EpamTicket;
+import com.epam.dto.EpamTicketSearchCriteria;
+import com.epam.dto.EpamFilteredTicketsCounts;
 import com.epam.ticket.converter.CsCustomerEventConverter;
 import com.epam.ticket.converter.CsTicketConverter;
 import com.epam.ticket.converter.EpamTicketConverter;
 import com.epam.ticket.dao.EpamTicketDAO.TicketCountsResult;
 import com.epam.ticket.data.EpamCustomerEvent;
+import com.epam.ticket.dao.EpamTicketDAO;
+import com.epam.ticket.data.EpamCustomerEvent;
 import com.epam.ticket.facades.EpamTicketFacade;
-import com.epam.ticket.facades.EpamTicketSearchCriteria;
 import com.epam.ticket.services.EpamTicketBusinessService;
 import com.epam.ticket.services.EpamTicketService;
 import com.google.common.base.Preconditions;
 import de.hybris.platform.servicelayer.session.SessionService;
 import de.hybris.platform.servicelayer.user.UserService;
+
 import de.hybris.platform.ticket.model.CsTicketModel;
 import de.hybris.platform.ticket.service.TicketException;
+import org.apache.log4j.Logger;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -27,26 +32,21 @@ import static de.hybris.platform.ticket.enums.CsTicketState.OPEN;
 public class DefaultEpamTicketFacade implements EpamTicketFacade {
 
     public static final Logger LOG = Logger.getLogger(DefaultEpamTicketFacade.class);
-    
+
     private EpamTicketConverter ticketConverter;
     private CsTicketConverter csTicketConverter;
     private EpamTicketService ticketService;
     private EpamTicketBusinessService ticketBusinessService;
     private CsCustomerEventConverter csCustomerEventConverter;
-    private SessionService sessionService;
-    private UserService userService;
 
     public DefaultEpamTicketFacade(EpamTicketConverter ticketConverter, CsTicketConverter csTicketConverter,
                                    CsCustomerEventConverter csCustomerEventConverter, EpamTicketService ticketService,
-                                   EpamTicketBusinessService ticketBusinessService, SessionService sessionService, 
-                                   UserService userService) {
+                                   EpamTicketBusinessService ticketBusinessService) {
         this.ticketConverter = checkNotNull(ticketConverter);
         this.csTicketConverter = checkNotNull(csTicketConverter);
         this.csCustomerEventConverter = checkNotNull(csCustomerEventConverter);
         this.ticketService = checkNotNull(ticketService);
         this.ticketBusinessService = checkNotNull(ticketBusinessService);
-        this.sessionService = checkNotNull(sessionService);
-        this.userService = checkNotNull(userService);
     }
 
     @Override
@@ -72,7 +72,6 @@ public class DefaultEpamTicketFacade implements EpamTicketFacade {
 
     @Override
     public Integer getTotalTicketCount() {
-        LOG.info("Get ticket count");
         return ticketService.getTotalTicketCount();
     }
 
@@ -90,10 +89,8 @@ public class DefaultEpamTicketFacade implements EpamTicketFacade {
     }
 
     @Override
-    public TicketCountsResult getTicketCounts(String userName) {
-        // TODO: GET RID of userName, when security will be ready!
-        userService.setCurrentUser(userService.getUserForUID(userName));
-        return ticketService.getTicketCounts();
+    public EpamFilteredTicketsCounts getFilteredTicketsCounts() {
+        return ticketService.getFilteredTicketsCounts();
     }
 
 }

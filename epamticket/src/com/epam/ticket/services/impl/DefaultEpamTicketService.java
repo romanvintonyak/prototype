@@ -1,8 +1,8 @@
 package com.epam.ticket.services.impl;
 
+import com.epam.dto.EpamFilteredTicketsCounts;
+import com.epam.dto.EpamTicketSearchCriteria;
 import com.epam.ticket.dao.EpamTicketDAO;
-import com.epam.ticket.dao.EpamTicketDAO.TicketCountsResult;
-import com.epam.ticket.facades.EpamTicketSearchCriteria;
 import com.epam.ticket.services.EpamTicketService;
 import de.hybris.platform.ticket.model.CsTicketModel;
 
@@ -32,7 +32,7 @@ public class DefaultEpamTicketService implements EpamTicketService {
     }
 
     @Override
-    public TicketCountsResult getTicketCounts() {
-        return ticketDao.getTicketCounts();
+    public EpamFilteredTicketsCounts getFilteredTicketsCounts() {
+        return ticketDao.getFilteredTicketsCounts();
     }
 }
