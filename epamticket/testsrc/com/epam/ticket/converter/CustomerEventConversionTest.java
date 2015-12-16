@@ -1,6 +1,6 @@
 package com.epam.ticket.converter;
 
-import com.epam.ticket.data.EpamCustomerEvent;
+import com.epam.dto.EpamCustomerEvent;
 import de.hybris.bootstrap.annotations.UnitTest;
 import de.hybris.platform.ticket.enums.CsEventReason;
 import de.hybris.platform.ticket.enums.CsInterventionType;

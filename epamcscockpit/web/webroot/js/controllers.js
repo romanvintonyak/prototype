@@ -157,7 +157,7 @@ epamcscockpit.controller("TicketCreateCtrl", function ($scope, $location, $http,
             function (data, status, headers, config) {
                 //alert(testconst);
                 console.log(data);
-                $location.path("/ticket/"+data.ticketId);
+                $location.path("/ticket/" + data.ticketId);
             },
             function () {
                 $scope.errorMsg = defaultErrrMsg
