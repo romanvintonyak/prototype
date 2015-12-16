@@ -1,4 +1,4 @@
-package com.epam.ticket.data;
+package com.epam.dto;
 
 public class EpamTicketFrontFilterCriteria {
     private String name;
