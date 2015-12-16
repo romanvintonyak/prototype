@@ -5,15 +5,14 @@ import com.epam.dto.TicketCounterHolder;
 import com.epam.helper.RestHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RequestMapping("/rest/tickets")
 @RestController
 public class CockpitTicketController {
 
-    private static final String ALL_TICKETS = "http://localhost:9001/epamticket/v1/tickets";
-    private static final String TICKET_BY_ID = "http://localhost:9001/epamticket/v1/tickets/%s";
-    private static final String TICKET_COUNT = "http://localhost:9001/epamticket/v1/tickets/ticketCount";
+    private static final String PATH = "http://localhost:9001/epamticket/v1/tickets/";
 
     @Autowired
     private RestHelper restHelper;
@@ -21,20 +20,21 @@ public class CockpitTicketController {
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public List<EpamTicket> getAll() {
-        return restHelper.call(ALL_TICKETS, List.class);
+        return restHelper.call(PATH, List.class);
         // TODO: need to cover base context url
     }
 
     @RequestMapping(value = "/{ticketId}", method = RequestMethod.GET)
     @ResponseBody
     public EpamTicket getById(@PathVariable("ticketId") final String ticketId) {
-        return restHelper.call(String.format(TICKET_BY_ID, ticketId), EpamTicket.class);
+        return restHelper.call(PATH + ticketId, EpamTicket.class);
         // TODO: need to cover base context url
 
     }
+
     @RequestMapping(value = "/ticketCount", method = RequestMethod.GET)
     @ResponseBody
     public TicketCounterHolder getCount() {
-        return restHelper.call(TICKET_COUNT, TicketCounterHolder.class);
+        return restHelper.call(PATH + "ticketCount", TicketCounterHolder.class);
     }
 }
