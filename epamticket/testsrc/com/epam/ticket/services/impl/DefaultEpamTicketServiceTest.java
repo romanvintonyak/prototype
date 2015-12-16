@@ -1,7 +1,8 @@
 package com.epam.ticket.services.impl;
 
+import com.epam.dto.EpamTicketSearchCriteria;
 import com.epam.ticket.dao.EpamTicketDAO;
-import com.epam.ticket.facades.EpamTicketSearchCriteria;
+
 import de.hybris.bootstrap.annotations.UnitTest;
 import de.hybris.platform.ticket.model.CsTicketModel;
 import org.junit.Before;

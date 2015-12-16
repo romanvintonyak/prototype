@@ -38,7 +38,6 @@
         </property>
     </bean>
            
-    <!-- TODO: Group queries are fakes!!! -->       
     <bean id="epamGroupFilter" class="com.epam.ticket.dao.EpamCsTicketFilter">
         <constructor-arg name="name" value="group"/>
         <constructor-arg name="displayName" value="GROUP"/>

@@ -1,8 +1,7 @@
 package com.epam.ticket.dao;
 
-import java.io.Serializable;
-import com.epam.ticket.dao.counters.CategoryCounterStrategy;
-import com.epam.ticket.facades.EpamTicketSearchCriteria;
+import com.epam.dto.EpamFilteredTicketsCounts;
+import com.epam.dto.EpamTicketSearchCriteria;
 
 import de.hybris.platform.servicelayer.exceptions.AmbiguousIdentifierException;
 import de.hybris.platform.servicelayer.search.SearchResult;
@@ -10,15 +9,12 @@ import de.hybris.platform.ticket.dao.impl.DefaultTicketDao;
 import de.hybris.platform.ticket.enums.CsTicketCategory;
 import de.hybris.platform.ticket.enums.CsTicketPriority;
 import de.hybris.platform.ticket.enums.CsTicketState;
-import de.hybris.platform.ticket.jalo.CsTicket;
 import de.hybris.platform.ticket.model.CsTicketModel;
 import org.apache.log4j.Logger;
 
 import java.util.*;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
-
-import de.hybris.platform.jalo.JaloSession;
 
 public class EpamTicketDAO extends DefaultTicketDao {
 
@@ -90,20 +86,16 @@ public class EpamTicketDAO extends DefaultTicketDao {
     public Integer getTotalTicketCount() {
         SearchResult result = getFlexibleSearchService().search("SELECT {pk} FROM {CsTicket}");
         int totalCount = result.getTotalCount();
-        LOG.info("Ticket count:" + totalCount);
         return totalCount;
     }
     
-    public TicketCountsResult getTicketCounts() {
-        TicketCountsResult result = new TicketCountsResult();
-        LOG.info(JaloSession.getCurrentSession().getUser().getName());
+    public EpamFilteredTicketsCounts getFilteredTicketsCounts() {
+        EpamFilteredTicketsCounts result = new EpamFilteredTicketsCounts();
         
         for (EpamCsTicketFilter filter : getAvailableFilters()) {
             result.addFilerCategoryCounters(filter.getName(), FilterQueryExecuter.execute(getFlexibleSearchService(), filter.getFilterCriterias()));
         }
         
-        LOG.info("Ticket counts:" + result);
-
         return result;
     }
 
@@ -112,34 +104,6 @@ public class EpamTicketDAO extends DefaultTicketDao {
 
     }
     
-    public class TicketCountsResult implements Serializable {
-        private static final long serialVersionUID = 1L;
-        private final Map<String, Map<String, Integer>> filterCategories = new HashMap<>();
-        public void addFilerCategoryCounters(final String filterCategory, final Map<String, Integer> categoryStates) {
-            filterCategories.put(filterCategory, categoryStates);
-        }
-        
-        public Map<String, Map<String, Integer>> getFilterCategories() {
-            return filterCategories;
-        }
-
-        @Override
-        public String toString() {
-            StringBuilder builder = new StringBuilder();
-            builder.append("TicketCountsResult [filterCategories=\n");
-            for (String category : filterCategories.keySet()) {
-                builder.append("\t" + category + ": ");
-                Map<String, Integer> states = filterCategories.get(category);
-                for (String state : states.keySet()) {
-                    builder.append(state + "-" + states.get(state) + ", ");
-                }
-                builder.append("\n");
-            }
-            builder.append("]");
-            return builder.toString();
-        }
-    }
-
     protected Map<String, EpamCsSort> sorts = new HashMap<>();
 
     public Collection<EpamCsSort> getAvailableSorts() {

@@ -2,8 +2,8 @@ package com.epam.ticket.services;
 
 import java.util.List;
 
-import com.epam.ticket.dao.EpamTicketDAO;
-import com.epam.ticket.facades.EpamTicketSearchCriteria;
+import com.epam.dto.EpamFilteredTicketsCounts;
+import com.epam.dto.EpamTicketSearchCriteria;
 
 import de.hybris.platform.ticket.model.CsTicketModel;
 
@@ -15,5 +15,5 @@ public interface EpamTicketService {
 
     Integer getTotalTicketCount();
     
-    EpamTicketDAO.TicketCountsResult getTicketCounts();
+    EpamFilteredTicketsCounts getFilteredTicketsCounts();
 }

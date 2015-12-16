@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.epam.dto.EpamFilteredTicketsCounts;
 import com.epam.ticket.dao.counters.impl.DefaultAgentCategoryCounterStrategy;
 
 import de.hybris.platform.jalo.JaloSession;
@@ -48,7 +49,7 @@ public class TicketsCountDaoIntegrationTest extends ServicelayerTransactionalTes
     @Test
     public void getTicketCounts_shouldReturnCounts() {
         
-        EpamTicketDAO.TicketCountsResult result = epamTicketDao.getTicketCounts();
+        EpamFilteredTicketsCounts result = epamTicketDao.getFilteredTicketsCounts();
         assertNotNull("TicketCountsResult should not be NULL", result);
         
         Map<String, Integer> priorityCounters = result.getFilterCategories().get("priority");
