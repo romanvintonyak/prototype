@@ -7,9 +7,9 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
+import com.epam.dto.EpamTicketFrontFilter;
+import com.epam.dto.EpamTicketFrontFilterCriteria;
 import com.epam.ticket.dao.counters.impl.DefaultAgentCategoryCounterStrategy;
-import com.epam.ticket.data.EpamTicketFrontFilter;
-import com.epam.ticket.data.EpamTicketFrontFilterCriteria;
 
 import de.hybris.platform.servicelayer.search.FlexibleSearchQuery;
 import de.hybris.platform.servicelayer.search.FlexibleSearchService;

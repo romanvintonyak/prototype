@@ -77,10 +77,9 @@ epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval, $
     $scope.clearTicketSearchCriteria();
 
     $scope.updateTicketStore = function () {
-        //$cookieStore.put('userName', userName);
         $scope.ticketCount = TicketCountResource.get();
         
-        FilteredTicketsCountResource.get({userName: userName}, 
+        FilteredTicketsCountResource.get( 
             function (data, status, headers, config) {
                 $scope.ticketConfig = data;
             },

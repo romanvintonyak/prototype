@@ -1,15 +1,14 @@
 package com.epam.dto;
 
-import java.io.Serializable;
-import java.util.List;
-
 import de.hybris.platform.ticket.enums.CsTicketCategory;
 import de.hybris.platform.ticket.enums.CsTicketPriority;
 import de.hybris.platform.ticket.enums.CsTicketState;
 
+import java.io.Serializable;
+import java.util.List;
+
 public class EpamTicketSearchCriteria implements Serializable {
 
-public class EpamTicketSearchCriteria implements Serializable{
     private List<CsTicketPriority> priority;
     private List<CsTicketState> state;
     private List<CsTicketCategory> category;
@@ -17,8 +16,7 @@ public class EpamTicketSearchCriteria implements Serializable{
     private String sortName;
     private Boolean sortReverse = Boolean.FALSE;
 
-
-    public void setPriority(List<CsTicketPriority> priority) {
+    public void setPriority(final List<CsTicketPriority> priority) {
         this.priority = priority;
     }
 
@@ -38,15 +36,15 @@ public class EpamTicketSearchCriteria implements Serializable{
         return state;
     }
 
-    public void setState(List<CsTicketState> state) {
+    public void setState(final List<CsTicketState> state) {
         this.state = state;
     }
-    
+
     public List<CsTicketCategory> getCategories() {
         return category;
     }
 
-    public void setCategories(List<CsTicketCategory> categories) {
+    public void setCategories(final List<CsTicketCategory> categories) {
         this.category = categories;
     }
 
@@ -68,11 +66,7 @@ public class EpamTicketSearchCriteria implements Serializable{
 
     @Override
     public String toString() {
-        return "EpamTicketSearchCriteria{" +
-                "priorities=" + priority +
-                "states=" + state +
-                ", agentId='" + agentId + '\'' +
-                '}';
+        return "EpamTicketSearchCriteria{" + "priorities=" + priority + "states=" + state + ", agentId='" + agentId + '\'' + '}';
     }
 
 }
