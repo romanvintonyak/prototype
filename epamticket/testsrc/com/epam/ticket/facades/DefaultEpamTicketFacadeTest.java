@@ -4,7 +4,7 @@ import com.epam.dto.EpamTicket;
 import com.epam.ticket.converter.CsCustomerEventConverter;
 import com.epam.ticket.converter.CsTicketConverter;
 import com.epam.ticket.converter.EpamTicketConverter;
-import com.epam.ticket.data.EpamCustomerEvent;
+import com.epam.dto.EpamCustomerEvent;
 import com.epam.ticket.facades.impl.DefaultEpamTicketFacade;
 import com.epam.ticket.services.EpamTicketBusinessService;
 import com.epam.ticket.services.EpamTicketService;

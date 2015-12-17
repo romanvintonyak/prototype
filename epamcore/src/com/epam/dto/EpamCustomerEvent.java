@@ -1,6 +1,4 @@
-package com.epam.ticket.data;
-
-import com.epam.dto.EpamTicketEvent;
+package com.epam.dto;
 
 import java.io.Serializable;
 
