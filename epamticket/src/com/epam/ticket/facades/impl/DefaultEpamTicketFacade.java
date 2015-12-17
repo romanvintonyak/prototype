@@ -43,7 +43,7 @@ public class DefaultEpamTicketFacade implements EpamTicketFacade {
     }
 
     @Override
-    public EpamTicket addTicket(EpamTicket ticket, EpamCustomerEvent event) {
+    public EpamTicket addTicket(final EpamTicket ticket, final EpamCustomerEvent event) {
         ticket.setState(OPEN.getCode());
         return ticketConverter.convert(
                 ticketBusinessService.addTicket(csTicketConverter.convert(ticket), csCustomerEventConverter.convert(event)));
@@ -57,7 +57,7 @@ public class DefaultEpamTicketFacade implements EpamTicketFacade {
     }
 
     @Override
-    public EpamTicket getTicketById(String ticketId) {
+    public EpamTicket getTicketById(final String ticketId) {
         LOG.info("Get ticket by id: " + ticketId);
         CsTicketModel csTicketModel = ticketService.getTicketById(ticketId);
         return ticketConverter.convert(csTicketModel);
@@ -69,7 +69,7 @@ public class DefaultEpamTicketFacade implements EpamTicketFacade {
     }
 
     @Override
-    public EpamTicket changeTicketState(String ticketId, String newState, String comment) throws TicketException {
+    public EpamTicket changeTicketState(final String ticketId, final String newState,final String comment) throws TicketException {
         LOG.info(String.format("Change TicketState with : ticketId=%s, newState=%s.", ticketId, newState));
         Preconditions.checkArgument(!isNullOrEmpty(ticketId), "TicketId cannot be empty");
         return ticketConverter.convert(ticketBusinessService.setTicketState(ticketId, newState, comment));

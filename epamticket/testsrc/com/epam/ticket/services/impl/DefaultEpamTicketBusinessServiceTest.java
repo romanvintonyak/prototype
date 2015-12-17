@@ -28,6 +28,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class DefaultEpamTicketBusinessServiceTest {
 
+    private static final String UNKNOWN_STATE = "false state";
     @Rule
     public ExpectedException thrown = none();
 
@@ -91,13 +92,10 @@ public class DefaultEpamTicketBusinessServiceTest {
         //given
         thrown.expect(TicketException.class);
         thrown.expectMessage("Can not find ticket with id = ticketId");
-        CsTicketModel csTicket = new CsTicketModel();
         when(defaultTicketService.getTicketForTicketId(TICKET_ID)).thenReturn(null);
         //when
         epamTicketBusinessService.setTicketState(TICKET_ID, CLOSED, COMMENT);
         //then
-
     }
-
 
 }

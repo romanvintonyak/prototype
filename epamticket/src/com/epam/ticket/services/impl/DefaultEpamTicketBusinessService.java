@@ -37,8 +37,8 @@ public class DefaultEpamTicketBusinessService implements EpamTicketBusinessServi
         Optional<CsTicketModel> optionTicket = Optional.ofNullable(defaultTicketService.getTicketForTicketId(ticketId));
         if (optionTicket.isPresent()) {
             return defaultTicketBusinessService.setTicketState(optionTicket.get(), CsTicketState.valueOf(newState), comment);
-        }else {
-            throw new TicketException("Can not find ticket with id = "+ticketId);
+        } else {
+            throw new TicketException("Can not find ticket with id = " + ticketId);
         }
 
     }
