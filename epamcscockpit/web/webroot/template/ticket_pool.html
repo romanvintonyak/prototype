@@ -23,9 +23,8 @@
 
         <aside class="sidebar filter">
         
-            <!-- NEW FILTERS -->
             <ul>
-                <li ng-repeat="filter in ticketConfig.filters | orderBy:'name'" class="filter__item">
+                <li ng-repeat="filter in ticketConfig.availableFilters | orderBy:'name'" class="filter__item">
                 <div class="filter__section">
                     <h3 class="filter__title">{{filter.displayName}}</h3>
                     <ul>

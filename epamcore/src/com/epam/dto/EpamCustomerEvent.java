@@ -1,18 +1,18 @@
 package com.epam.dto;
 
-import java.io.Serializable;
-
-public class EpamCustomerEvent extends EpamTicketEvent implements Serializable {
+public class EpamCustomerEvent extends EpamTicketEvent {
 
     private String text;
     private String interventionType;
     private String reason;
 
+    @Override
     public String getText() {
         return text;
     }
 
-    public void setText(String text) {
+    @Override
+    public void setText(final String text) {
         this.text = text;
     }
 
@@ -20,7 +20,7 @@ public class EpamCustomerEvent extends EpamTicketEvent implements Serializable {
         return interventionType;
     }
 
-    public void setInterventionType(String interventionType) {
+    public void setInterventionType(final String interventionType) {
         this.interventionType = interventionType;
     }
 
@@ -28,7 +28,7 @@ public class EpamCustomerEvent extends EpamTicketEvent implements Serializable {
         return reason;
     }
 
-    public void setReason(String reason) {
+    public void setReason(final String reason) {
         this.reason = reason;
     }
 }

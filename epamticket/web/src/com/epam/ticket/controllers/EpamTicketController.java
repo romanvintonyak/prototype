@@ -56,9 +56,9 @@ public class EpamTicketController {
         return ticketCounterHolder;
     }
 
-    @RequestMapping(value = "/filteredTicketsCounts", method = RequestMethod.GET)
-    public EpamFilteredTicketsCounts getFilteredTicketsCounts() {
-        return defaultEpamTicketFacade.getFilteredTicketsCounts();
+    @RequestMapping(value = "/config", method = RequestMethod.GET)
+    public EpamFrontConfig getConfig() {
+        return defaultEpamTicketFacade.getFrontConfigWithCounters();
     }
 
     @RequestMapping(value = "/{ticketId}/changestate", method = RequestMethod.PUT)

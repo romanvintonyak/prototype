@@ -1,8 +1,9 @@
 package com.epam.ticket.dao;
 
-import com.epam.dto.EpamFilteredTicketsCounts;
-import com.epam.dto.EpamTicketSearchCriteria;
+import com.epam.dto.EpamTicketsFilterCriteria;
+
 import de.hybris.platform.servicelayer.exceptions.AmbiguousIdentifierException;
+import de.hybris.platform.servicelayer.search.FlexibleSearchQuery;
 import de.hybris.platform.servicelayer.search.SearchResult;
 import de.hybris.platform.ticket.dao.impl.DefaultTicketDao;
 import de.hybris.platform.ticket.enums.CsTicketCategory;
@@ -12,6 +13,7 @@ import de.hybris.platform.ticket.model.CsTicketModel;
 import org.apache.log4j.Logger;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,11 +23,10 @@ import java.util.TreeMap;
 import static com.google.common.base.Strings.isNullOrEmpty;
 
 public class EpamTicketDAO extends DefaultTicketDao {
-
+    
     public static final Logger LOG = Logger.getLogger(EpamTicketDAO.class);
     public static final String QUERY_STRING = "SELECT {t:pk} FROM {CsTicket AS t} ";
     private StringBuffer query;
-    private Set<EpamCsTicketFilter> availableFilters;
     
     public CsTicketModel getTicketById(String ticketId) {
         List<CsTicketModel> csTicketModels = this.findTicketsById(ticketId);
@@ -93,14 +94,11 @@ public class EpamTicketDAO extends DefaultTicketDao {
         return totalCount;
     }
     
-    public EpamFilteredTicketsCounts getFilteredTicketsCounts() {
-        EpamFilteredTicketsCounts ticketsCounts = new EpamFilteredTicketsCounts();
-        
-        for (EpamCsTicketFilter filter : getAvailableFilters()) {
-            ticketsCounts.addFilter(FilterQueryExecuter.executeFilter(getFlexibleSearchService(), filter));
-        }
-        
-        return ticketsCounts;
+    public List<Integer> getTicketCountWithCriteria(EpamTicketsFilterCriteria criteria) {
+        final FlexibleSearchQuery query = new FlexibleSearchQuery(criteria.getFilterCountQuery());
+        query.setResultClassList(Collections.singletonList(Integer.class));
+        final SearchResult<Integer> searchResult = getFlexibleSearchService().search(query);
+        return searchResult.getResult();
     }
 
     private String getJoiningString() {
@@ -122,11 +120,4 @@ public class EpamTicketDAO extends DefaultTicketDao {
         this.sorts = res;
     }
 
-    public Set<EpamCsTicketFilter> getAvailableFilters() {
-        return availableFilters;
-    }
-
-    public void setAvailableFilters(Set<EpamCsTicketFilter> availableFilters) {
-        this.availableFilters = availableFilters;
-    }
 }

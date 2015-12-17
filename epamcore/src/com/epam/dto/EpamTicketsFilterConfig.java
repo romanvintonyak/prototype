@@ -2,11 +2,18 @@ package com.epam.dto;
 
 import java.util.Set;
 
-public class EpamTicketFrontFilter {
-
+public class EpamTicketsFilterConfig {
     private String name;
     private String displayName;
-    private Set<EpamTicketFrontFilterCriteria> criterias;
+    private Set<EpamTicketsFilterCriteria> criterias;
+
+    public EpamTicketsFilterConfig() {
+    }
+
+    public EpamTicketsFilterConfig(final String name, final String displayName) {
+        this.name = name;
+        this.displayName = displayName;
+    }
 
     public String getName() {
         return name;
@@ -24,11 +31,11 @@ public class EpamTicketFrontFilter {
         this.displayName = displayName;
     }
 
-    public Set<EpamTicketFrontFilterCriteria> getCriterias() {
+    public Set<EpamTicketsFilterCriteria> getCriterias() {
         return criterias;
     }
 
-    public void setCriterias(final Set<EpamTicketFrontFilterCriteria> criterias) {
+    public void setCriterias(final Set<EpamTicketsFilterCriteria> criterias) {
         this.criterias = criterias;
     }
 

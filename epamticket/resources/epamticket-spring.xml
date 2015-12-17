@@ -60,6 +60,14 @@
 
     <bean id="epamTicketService" class="com.epam.ticket.services.impl.DefaultEpamTicketService" scope="tenant">
        <property name="ticketDao" ref="epamTicketDao" />
+       <property name="availableFilters">
+            <set>
+                <ref bean="epamAgentFilter"/>
+                <ref bean="epamGroupFilter"/>
+                <ref bean="epamStateFilter"/>
+                <ref bean="epamPriorityFilter"/>
+            </set>
+        </property>
     </bean>
 
     <bean id="epamTicketDao" class="com.epam.ticket.dao.EpamTicketDAO" parent="abstractItemDao" scope="tenant">
@@ -86,14 +94,6 @@
                     <constructor-arg name="jsonField" value="customerDisplayName"/>
                 </bean>-->
             </list>
-        </property>
-        <property name="availableFilters">
-            <set>
-                <ref bean="epamAgentFilter"/>
-                <ref bean="epamGroupFilter"/>
-                <ref bean="epamStateFilter"/>
-                <ref bean="epamPriorityFilter"/>
-            </set>
         </property>
     </bean>
 

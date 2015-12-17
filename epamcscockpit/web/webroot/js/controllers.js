@@ -55,7 +55,7 @@ epamcscockpit.config(["$routeProvider", "$httpProvider", function ($routeProvide
 }]);
 
 epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval, $filter,
-                                                     TicketsResource, TicketCountResource, FilteredTicketsCountResource) {
+                                                     TicketsResource, TicketCountResource, ConfigResource) {
     fillConstants($scope);
     $scope.errorMsg = "";
 
@@ -79,7 +79,7 @@ epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval, $
     $scope.updateTicketStore = function () {
         $scope.ticketCount = TicketCountResource.get();
         
-        FilteredTicketsCountResource.get( 
+        ConfigResource.get( 
             function (data, status, headers, config) {
                 $scope.ticketConfig = data;
             },
