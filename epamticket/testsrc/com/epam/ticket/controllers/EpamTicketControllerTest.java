@@ -21,7 +21,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
-import static org.hamcrest.Matchers.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -30,14 +29,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -175,6 +173,7 @@ public class EpamTicketControllerTest {
                 .changeTicketState(TICKET_ID, CLOSED, COMMENT);
     }
 
+    @Test
     public void shouldReturnTicketByCriteria() throws Exception {
 
         ArgumentCaptor<EpamTicketSearchCriteria> searchArg = ArgumentCaptor.forClass(EpamTicketSearchCriteria.class);
@@ -205,7 +204,6 @@ public class EpamTicketControllerTest {
         assertEquals(UNEXPECTED_RESPONSE_BODY, 
                 toJsonString(ticketCounterHolder), response.getResponse().getContentAsString());
         verify(defaultEpamTicketFacadeMock, times(1)).getTotalTicketCount();
-        
     }
     
     @Test

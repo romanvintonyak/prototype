@@ -1,6 +1,5 @@
 package com.epam.ticket.services;
 
-import com.epam.dto.EpamFilteredTicketsCounts;
 import com.epam.dto.EpamFrontConfig;
 import com.epam.dto.EpamTicketSearchCriteria;
 import de.hybris.platform.ticket.model.CsTicketModel;

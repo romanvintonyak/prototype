@@ -1,5 +1,10 @@
 package com.epam.ticket.facades.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+
 import com.epam.dto.EpamCustomerEvent;
 import com.epam.dto.EpamFrontConfig;
 import com.epam.dto.EpamTicket;
@@ -13,10 +18,6 @@ import com.epam.ticket.services.EpamTicketService;
 import com.google.common.base.Preconditions;
 import de.hybris.platform.ticket.model.CsTicketModel;
 import de.hybris.platform.ticket.service.TicketException;
-import org.apache.log4j.Logger;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Strings.isNullOrEmpty;
