@@ -4,7 +4,6 @@ import com.epam.dto.EpamTicketChangeEventEntry;
 import com.epam.dto.EpamTicketEvent;
 import com.epam.ticket.converter.EpamTicketChangeEventEntryConverter;
 import com.epam.ticket.converter.EpamTicketEmailConverter;
-
 import de.hybris.platform.converters.Populator;
 import de.hybris.platform.servicelayer.dto.converter.ConversionException;
 import de.hybris.platform.ticket.events.model.CsTicketEventModel;

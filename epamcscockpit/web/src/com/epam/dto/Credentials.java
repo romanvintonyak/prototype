@@ -1,7 +1,8 @@
 package com.epam.dto;
 
-import java.util.Arrays;
 import org.springframework.security.crypto.codec.Base64;
+
+import java.util.Arrays;
 
 public final class Credentials {
 

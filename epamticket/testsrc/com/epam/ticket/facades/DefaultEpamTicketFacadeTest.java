@@ -1,33 +1,39 @@
 package com.epam.ticket.facades;
 
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-
+import com.epam.dto.EpamCustomerEvent;
 import com.epam.dto.EpamTicket;
 import com.epam.ticket.converter.CsCustomerEventConverter;
 import com.epam.ticket.converter.CsTicketConverter;
 import com.epam.ticket.converter.EpamTicketConverter;
-import com.epam.dto.EpamCustomerEvent;
 import com.epam.ticket.facades.impl.DefaultEpamTicketFacade;
 import com.epam.ticket.services.EpamTicketBusinessService;
 import com.epam.ticket.services.EpamTicketService;
-
 import de.hybris.bootstrap.annotations.UnitTest;
 import de.hybris.platform.ticket.events.model.CsCustomerEventModel;
 import de.hybris.platform.ticket.model.CsTicketModel;
+import de.hybris.platform.ticket.service.TicketException;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+
+import static org.junit.rules.ExpectedException.none;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @UnitTest
 @RunWith(MockitoJUnitRunner.class)
 public class DefaultEpamTicketFacadeTest {
 
+    private static final String TICKET_ID = "ticketId";
+    private static final String CLOSED = "Closed";
+    private static final String COMMENT = "comment";
     private DefaultEpamTicketFacade defaultEpamTicketFacade;
 
     @Mock
@@ -44,6 +50,9 @@ public class DefaultEpamTicketFacadeTest {
 
     @Mock
     private CsCustomerEventConverter mockCsCustomerEventConverter;
+
+    @Rule
+    public ExpectedException thrown = none();
 
     @Before
     public void setUp() {
@@ -69,4 +78,25 @@ public class DefaultEpamTicketFacadeTest {
         verify(mockCsTicketConverter, times(1)).convert(dummyTicketDto);
         verify(mockCsCustomerEventConverter, times(1)).convert(dummyEventDto);
     }
+
+    @Test
+    public void shouldCloseTicketWhenItPossible() throws TicketException {
+        CsTicketModel csTicket = new CsTicketModel();
+        when(mockTicketBusinessService.setTicketState(TICKET_ID, CLOSED, COMMENT)).thenReturn(csTicket);
+        //when
+        defaultEpamTicketFacade.changeTicketState(TICKET_ID, CLOSED, COMMENT);
+        //then
+        verify(mockTicketBusinessService, times(1)).setTicketState(TICKET_ID, CLOSED, COMMENT);
+        verify(mockTicketConverter, times(1)).convert(csTicket);
+
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenTicketIdIsEmpty() throws TicketException {
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("TicketId cannot be empty");
+        //when
+        defaultEpamTicketFacade.changeTicketState(null, CLOSED, COMMENT);
+    }
+
 }

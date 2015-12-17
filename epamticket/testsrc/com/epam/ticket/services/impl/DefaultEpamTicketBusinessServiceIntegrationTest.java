@@ -48,17 +48,15 @@ public class DefaultEpamTicketBusinessServiceIntegrationTest extends AbstractTic
     {
         super.setUp();
     }
-
     @Test
-    public void shouldCreateTicket() {
+    public void shouldCreateTicket() throws TicketException {
         //given
         CsTicketModel ticket = prepareTicketWithEvents();
         //when
-
     }
 
     @Test
-    public void shouldCloseTicketWhen() throws TicketException {
+    public void shouldCloseTicketWhenMethodInvoke() throws TicketException {
         //given
         CsTicketModel inTicket = prepareTicketWithEvents();
         //when
@@ -81,7 +79,7 @@ public class DefaultEpamTicketBusinessServiceIntegrationTest extends AbstractTic
         thrown.expect(TicketException.class);
         thrown.expectMessage("The ticket must not have been previously updated before specifically changing the state");
         //when
-        CsTicketModel epamTicket = epamTicketBusinessService.setTicketState(ticket.getTicketID(), CLOSED, COMMENT);
+       epamTicketBusinessService.setTicketState(ticket.getTicketID(), CLOSED, COMMENT);
         //given
     }
 

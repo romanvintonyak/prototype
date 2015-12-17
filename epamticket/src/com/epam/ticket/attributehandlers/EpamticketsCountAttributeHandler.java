@@ -1,12 +1,10 @@
 package com.epam.ticket.attributehandlers;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.epam.ticket.model.EpamCsTicketModel;
 import com.epam.ticket.services.EpamTicketService;
-
 import de.hybris.platform.servicelayer.model.attribute.AbstractDynamicAttributeHandler;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class EpamticketsCountAttributeHandler extends AbstractDynamicAttributeHandler<Integer, EpamCsTicketModel> {

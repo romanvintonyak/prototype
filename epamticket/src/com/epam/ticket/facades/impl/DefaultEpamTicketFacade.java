@@ -1,23 +1,25 @@
 package com.epam.ticket.facades.impl;
 
+import com.epam.dto.EpamCustomerEvent;
+import com.epam.dto.EpamFilteredTicketsCounts;
 import com.epam.dto.EpamTicket;
 import com.epam.dto.EpamTicketSearchCriteria;
-import com.epam.dto.EpamFilteredTicketsCounts;
 import com.epam.ticket.converter.CsCustomerEventConverter;
 import com.epam.ticket.converter.CsTicketConverter;
 import com.epam.ticket.converter.EpamTicketConverter;
-import com.epam.dto.EpamCustomerEvent;
 import com.epam.ticket.facades.EpamTicketFacade;
 import com.epam.ticket.services.EpamTicketBusinessService;
 import com.epam.ticket.services.EpamTicketService;
-
+import com.google.common.base.Preconditions;
 import de.hybris.platform.ticket.model.CsTicketModel;
+import de.hybris.platform.ticket.service.TicketException;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Strings.isNullOrEmpty;
 import static de.hybris.platform.ticket.enums.CsTicketState.OPEN;
 
 public class DefaultEpamTicketFacade implements EpamTicketFacade {
@@ -41,7 +43,7 @@ public class DefaultEpamTicketFacade implements EpamTicketFacade {
     }
 
     @Override
-    public EpamTicket addTicket(EpamTicket ticket, EpamCustomerEvent event) {
+    public EpamTicket addTicket(final EpamTicket ticket, final EpamCustomerEvent event) {
         ticket.setState(OPEN.getCode());
         return ticketConverter.convert(
                 ticketBusinessService.addTicket(csTicketConverter.convert(ticket), csCustomerEventConverter.convert(event)));
@@ -55,7 +57,7 @@ public class DefaultEpamTicketFacade implements EpamTicketFacade {
     }
 
     @Override
-    public EpamTicket getTicketById(String ticketId) {
+    public EpamTicket getTicketById(final String ticketId) {
         LOG.info("Get ticket by id: " + ticketId);
         CsTicketModel csTicketModel = ticketService.getTicketById(ticketId);
         return ticketConverter.convert(csTicketModel);
@@ -64,6 +66,13 @@ public class DefaultEpamTicketFacade implements EpamTicketFacade {
     @Override
     public Integer getTotalTicketCount() {
         return ticketService.getTotalTicketCount();
+    }
+
+    @Override
+    public EpamTicket changeTicketState(final String ticketId, final String newState,final String comment) throws TicketException {
+        LOG.info(String.format("Change TicketState with : ticketId=%s, newState=%s.", ticketId, newState));
+        Preconditions.checkArgument(!isNullOrEmpty(ticketId), "TicketId cannot be empty");
+        return ticketConverter.convert(ticketBusinessService.setTicketState(ticketId, newState, comment));
     }
 
     private List<EpamTicket> getEpamTickets(List<CsTicketModel> csTicketModels) {

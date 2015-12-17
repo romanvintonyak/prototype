@@ -1,7 +1,5 @@
 package com.epam.ticket.services.impl;
 
-import com.epam.dto.EpamTicket;
-import com.epam.ticket.converter.EpamTicketConverter;
 import com.epam.ticket.services.EpamTicketBusinessService;
 import de.hybris.bootstrap.annotations.UnitTest;
 import de.hybris.platform.ticket.enums.CsTicketState;
@@ -21,12 +19,16 @@ import org.mockito.runners.MockitoJUnitRunner;
 import static org.junit.rules.ExpectedException.none;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @UnitTest
 @RunWith(MockitoJUnitRunner.class)
 public class DefaultEpamTicketBusinessServiceTest {
 
+    private static final String UNKNOWN_STATE = "false state";
     @Rule
     public ExpectedException thrown = none();
 
@@ -34,8 +36,6 @@ public class DefaultEpamTicketBusinessServiceTest {
 
     @Mock
     private DefaultTicketBusinessService defaultTicketBusinessService;
-    @Mock
-    private EpamTicketConverter ticketConverter;
     @Mock
     private DefaultTicketService defaultTicketService;
 
@@ -67,27 +67,35 @@ public class DefaultEpamTicketBusinessServiceTest {
     }
 
     @Test
-    public void shouldCloseTicket() throws TicketException {
+    public void shouldCloseTicketWhenMethodInvoke() throws TicketException {
         //given
         CsTicketModel csTicket = new CsTicketModel();
-        EpamTicket epamTicket = new EpamTicket();
-        when(ticketConverter.convert(csTicket)).thenReturn(epamTicket);
         when(defaultTicketService.getTicketForTicketId(TICKET_ID)).thenReturn(csTicket);
         when(defaultTicketBusinessService.setTicketState(any(), any(), eq(COMMENT))).thenReturn(csTicket);
         //when
-        CsTicketModel resultTicket = epamTicketBusinessService.setTicketState(TICKET_ID, CLOSED, COMMENT);
+        epamTicketBusinessService.setTicketState(TICKET_ID, CLOSED, COMMENT);
         //then
         verify(defaultTicketBusinessService).setTicketState(csTicket, CsTicketState.CLOSED, COMMENT);
     }
 
     @Test
-    public void shouldThrowException() throws TicketException {
+    public void shouldThrowExceptionWhenTiketIdIsEmpty() throws TicketException {
+        //given
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("TicketId cannot be empty");
         //when
         epamTicketBusinessService.setTicketState(null, CLOSED, COMMENT);
-        //then
+    }
 
+    @Test
+    public void shouldThrowExceptionWhenTicketNotFound() throws TicketException {
+        //given
+        thrown.expect(TicketException.class);
+        thrown.expectMessage("Can not find ticket with id = ticketId");
+        when(defaultTicketService.getTicketForTicketId(TICKET_ID)).thenReturn(null);
+        //when
+        epamTicketBusinessService.setTicketState(TICKET_ID, CLOSED, COMMENT);
+        //then
     }
 
 }

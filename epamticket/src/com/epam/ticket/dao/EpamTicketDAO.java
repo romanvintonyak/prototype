@@ -2,7 +2,6 @@ package com.epam.ticket.dao;
 
 import com.epam.dto.EpamFilteredTicketsCounts;
 import com.epam.dto.EpamTicketSearchCriteria;
-
 import de.hybris.platform.servicelayer.exceptions.AmbiguousIdentifierException;
 import de.hybris.platform.servicelayer.search.SearchResult;
 import de.hybris.platform.ticket.dao.impl.DefaultTicketDao;
@@ -12,7 +11,12 @@ import de.hybris.platform.ticket.enums.CsTicketState;
 import de.hybris.platform.ticket.model.CsTicketModel;
 import org.apache.log4j.Logger;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
 

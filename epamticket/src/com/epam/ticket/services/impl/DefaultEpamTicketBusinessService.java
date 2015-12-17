@@ -9,6 +9,8 @@ import de.hybris.platform.ticket.service.TicketException;
 import de.hybris.platform.ticket.service.impl.DefaultTicketBusinessService;
 import de.hybris.platform.ticket.service.impl.DefaultTicketService;
 
+import java.util.Optional;
+
 import static com.google.common.base.Strings.isNullOrEmpty;
 
 public class DefaultEpamTicketBusinessService implements EpamTicketBusinessService {
@@ -32,9 +34,13 @@ public class DefaultEpamTicketBusinessService implements EpamTicketBusinessServi
     @Override
     public CsTicketModel setTicketState(final String ticketId, final String newState, final String comment) throws TicketException {
         Preconditions.checkArgument(!isNullOrEmpty(ticketId), "TicketId cannot be empty");
-        CsTicketModel ticket = defaultTicketService.getTicketForTicketId(ticketId);
-        ticket = defaultTicketBusinessService.setTicketState(ticket, CsTicketState.valueOf(newState), comment);
-        return ticket;
+        Optional<CsTicketModel> optionTicket = Optional.ofNullable(defaultTicketService.getTicketForTicketId(ticketId));
+        if (optionTicket.isPresent()) {
+            return defaultTicketBusinessService.setTicketState(optionTicket.get(), CsTicketState.valueOf(newState), comment);
+        } else {
+            throw new TicketException("Can not find ticket with id = " + ticketId);
+        }
+
     }
 
 }
