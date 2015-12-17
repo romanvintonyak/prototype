@@ -1,13 +1,11 @@
 package com.epam.ticket.controllers;
 
 import com.epam.dto.EpamFilteredTicketsCounts;
+import com.epam.dto.EpamNewTicket;
 import com.epam.dto.EpamTicket;
 import com.epam.dto.EpamTicketSearchCriteria;
 import com.epam.dto.TicketCounterHolder;
-import com.epam.ticket.data.EpamNewTicket;
 import com.epam.ticket.data.EpamTicketStateHolder;
-import com.epam.dto.EpamFilteredTicketsCounts;
-import com.epam.dto.EpamNewTicket;
 import com.epam.ticket.facades.impl.DefaultEpamTicketFacade;
 import de.hybris.platform.ticket.service.TicketException;
 import org.slf4j.Logger;

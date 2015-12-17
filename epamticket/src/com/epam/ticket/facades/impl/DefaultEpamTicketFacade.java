@@ -1,13 +1,12 @@
 package com.epam.ticket.facades.impl;
 
+import com.epam.dto.EpamCustomerEvent;
 import com.epam.dto.EpamFilteredTicketsCounts;
 import com.epam.dto.EpamTicket;
 import com.epam.dto.EpamTicketSearchCriteria;
 import com.epam.ticket.converter.CsCustomerEventConverter;
 import com.epam.ticket.converter.CsTicketConverter;
 import com.epam.ticket.converter.EpamTicketConverter;
-import com.epam.ticket.data.EpamCustomerEvent;
-import com.epam.dto.EpamCustomerEvent;
 import com.epam.ticket.facades.EpamTicketFacade;
 import com.epam.ticket.services.EpamTicketBusinessService;
 import com.epam.ticket.services.EpamTicketService;
