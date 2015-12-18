@@ -8,7 +8,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -28,9 +27,6 @@ public class RestAuthServiceTest {
 
     @Mock
     private UserDetailsService userDetailsService;
-
-    @Mock
-    private static Authentication authentication;
 
     private static final String USER = "user";
     private static final char[] PASSWORD = "password".toCharArray();
