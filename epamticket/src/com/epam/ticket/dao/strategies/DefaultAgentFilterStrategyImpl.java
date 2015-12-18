@@ -1,24 +1,20 @@
-package com.epam.ticket.dao.counters.impl;
+package com.epam.ticket.dao.strategies;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
-
-import com.epam.ticket.dao.counters.CategoryCounterStrategy;
-
 import de.hybris.platform.servicelayer.search.FlexibleSearchQuery;
 import de.hybris.platform.servicelayer.search.FlexibleSearchService;
 import de.hybris.platform.servicelayer.search.SearchResult;
 
-public class DefaultAgentCategoryCounterStrategy implements CategoryCounterStrategy {
-    private final static Logger log = Logger.getLogger(DefaultAgentCategoryCounterStrategy.class);
+public class DefaultAgentFilterStrategyImpl implements FilterStrategyStrategy {
+//    private final static Logger log = Logger.getLogger(DefaultAgentFilterStrategy.class);
     private FlexibleSearchService flexibleSearchService;
 
     @Override
-    public Map<String, Integer> countCategory(String categoryName) {
+    public Map<String, Integer> countTickets(String categoryName) {
 
         final String queryAssignedToCurrentAgentString = "SELECT count({c:PK}) "
                 + "FROM {CsTicket AS c JOIN User AS u ON {c.assignedAgent} = {u.PK}} WHERE {u:PK} = (?session.user)";
@@ -64,6 +60,12 @@ public class DefaultAgentCategoryCounterStrategy implements CategoryCounterStrat
 
     public void setFlexibleSearchService(final FlexibleSearchService flexibleSearchService) {
         this.flexibleSearchService = flexibleSearchService;
+    }
+
+    @Override
+    public String buildFilterSubquery(String categoryName) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

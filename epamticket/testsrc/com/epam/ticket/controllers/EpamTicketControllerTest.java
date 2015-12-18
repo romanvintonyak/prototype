@@ -12,11 +12,6 @@ import com.epam.ticket.facades.impl.DefaultEpamTicketFacade;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,6 +24,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.doReturn;
@@ -180,7 +180,7 @@ public class EpamTicketControllerTest {
         doReturn(epamTickets).when(defaultEpamTicketFacadeMock).getTicketsByCriteria(searchArg.capture());
 
         MvcResult response = mockMvc.perform(get(BASE_URL + SEARCH_CRITERIA_PARAMS)
-                .contentType(MediaType.APPLICATION_JSON))
+                .contentType(APPLICATION_JSON))
                 .andExpect(content().string(toJsonString(epamTickets)))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -196,7 +196,7 @@ public class EpamTicketControllerTest {
         doReturn(TOTAL_TICKETS_COUNT).when(defaultEpamTicketFacadeMock).getTotalTicketCount();
         
         MvcResult response = mockMvc.perform(get(BASE_URL + TICKET_COUNT_URL)
-            .contentType(MediaType.APPLICATION_JSON))
+            .contentType(APPLICATION_JSON))
             .andExpect(content().string(toJsonString(ticketCounterHolder)))
             .andExpect(status().isOk())
             .andReturn();
@@ -211,7 +211,7 @@ public class EpamTicketControllerTest {
        doReturn(filterConfig).when(defaultEpamTicketFacadeMock).getFrontConfigWithCounters();
         
        MvcResult response = mockMvc.perform(get(BASE_URL + CONFIG_URL)
-           .contentType(MediaType.APPLICATION_JSON))
+           .contentType(APPLICATION_JSON))
            .andExpect(content().string(toJsonString(filterConfig)))
            .andExpect(status().isOk())
            .andReturn();

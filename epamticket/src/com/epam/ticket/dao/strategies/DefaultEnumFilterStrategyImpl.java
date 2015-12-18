@@ -1,4 +1,4 @@
-package com.epam.ticket.dao.counters.impl;
+package com.epam.ticket.dao.strategies;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -6,17 +6,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import com.epam.ticket.dao.counters.CategoryCounterStrategy;
-
 import de.hybris.platform.servicelayer.search.FlexibleSearchQuery;
 import de.hybris.platform.servicelayer.search.FlexibleSearchService;
 import de.hybris.platform.servicelayer.search.SearchResult;
 
-public class DefaultEnumCategoryCounterStrategy implements CategoryCounterStrategy {
+public class DefaultEnumFilterStrategyImpl implements FilterStrategyStrategy {
     private FlexibleSearchService flexibleSearchService;    
 
     @Override
-    public Map<String, Integer> countCategory(String categoryName) {
+    public Map<String, Integer> countTickets(String categoryName) {
         final String queryString = 
                   "SELECT {e.code}, count({" + categoryName + "}) " 
                 + "FROM {CsTicket AS c JOIN enumerationvalue AS e ON {c."
@@ -39,6 +37,12 @@ public class DefaultEnumCategoryCounterStrategy implements CategoryCounterStrate
     
     public void setFlexibleSearchService(final FlexibleSearchService flexibleSearchService) {
        this.flexibleSearchService = flexibleSearchService;
+    }
+
+    @Override
+    public String buildFilterSubquery(String categoryName) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

@@ -1,13 +1,8 @@
 package com.epam.ticket.dao;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
-import java.util.HashSet;
-import java.util.Set;
+import com.epam.dto.EpamFrontConfig;
+import com.epam.dto.EpamTicketsFilterConfig;
+import com.epam.dto.EpamTicketsFilterCriteria;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,9 +10,14 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import com.epam.dto.EpamFrontConfig;
-import com.epam.dto.EpamTicketsFilterConfig;
-import com.epam.dto.EpamTicketsFilterCriteria;
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import de.hybris.bootstrap.annotations.UnitTest;
 import de.hybris.platform.servicelayer.search.FlexibleSearchService;
