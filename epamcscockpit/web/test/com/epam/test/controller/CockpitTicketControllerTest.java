@@ -3,6 +3,8 @@ package com.epam.test.controller;
 import com.epam.dto.EpamCustomerEvent;
 import com.epam.dto.EpamNewTicket;
 import com.epam.dto.EpamTicket;
+import com.epam.dto.TicketCounterHolder;
+import com.epam.test.helper.RestHelperMock;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +20,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.Assert;
 import org.springframework.web.context.WebApplicationContext;
-
+import java.util.Collections;
+import java.util.List;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -40,10 +43,18 @@ public class CockpitTicketControllerTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
 
+    @Autowired
+    private RestHelperMock restHelperMock;
+
     private MockMvc mockMvc;
+
+    private static TicketCounterHolder ticketCounterHolder;
+    private static List<EpamTicket> epamTicketList;
 
     static {
         initTicket();
+        ticketCounterHolder = new TicketCounterHolder();
+        epamTicketList = Collections.singletonList(epamTicket);
     }
 
     @Before
@@ -54,34 +65,52 @@ public class CockpitTicketControllerTest {
 
     @Test
     public void shouldReturnListOfTickets() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(get(BASE_URL)).andExpect(status().isOk()).andReturn();
-        Assert.notNull(mvcResult.getResponse().getContentAsString());
+        restHelperMock.setMockResponseDto(epamTicketList);
+        MvcResult response = mockMvc.perform(get(BASE_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(OBJECT_MAPPER.writeValueAsString(epamTicketList)))
+                .andExpect(status().isOk())
+                .andReturn();
+        Assert.notNull(response.getResponse().getContentAsString());
     }
 
     @Test
     public void shouldReturnTicketBuId() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(get(BASE_URL + TICKET_ID)).andExpect(status().isOk()).andReturn();
-        Assert.notNull(mvcResult.getResponse().getContentAsString());
+        restHelperMock.setMockResponseDto(epamTicket);
+        String ticketId = "1";
+        MvcResult response = mockMvc.perform(get(BASE_URL + ticketId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(OBJECT_MAPPER.writeValueAsString(epamTicket)))
+                .andExpect(status().isOk())
+                .andReturn();
+        Assert.notNull(response.getResponse().getContentAsString());
     }
 
     @Test
     public void shouldReturnTicketCount() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(get(BASE_URL + TICKET_COUNT)).andExpect(status().isOk()).andReturn();
-        Assert.notNull(mvcResult.getResponse().getContentAsString());
+        ticketCounterHolder.setTotal(100);
+        restHelperMock.setMockResponseDto(ticketCounterHolder);
+        MvcResult response = mockMvc.perform(get(BASE_URL + TICKET_COUNT)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(OBJECT_MAPPER.writeValueAsString(ticketCounterHolder)))
+                .andExpect(status().isOk())
+                .andReturn();
+        Assert.notNull(response.getResponse().getContentAsString());
     }
 
     @Test
     public void shouldCreateTicketAndReturnThisTicket() throws Exception {
+        restHelperMock.setMockResponseDto(epamTicket);
         MvcResult response = mockMvc.perform(post(BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(OBJECT_MAPPER.writeValueAsString(epamNewTicket)))
                 .andExpect(status().isOk())
                 .andReturn();
         Assert.notNull(response.getResponse().getContentAsString());
-
     }
 
     private static void initTicket() {
+
         epamTicket = new EpamTicket();
         epamTicket.setHeadline("headline");
         epamTicket.setCategory("category");
