@@ -1,20 +1,23 @@
 package com.epam.ticket.services.impl;
 
-import com.epam.dto.EpamTicketSearchCriteria;
 import com.epam.ticket.dao.EpamTicketDAO;
-import de.hybris.bootstrap.annotations.UnitTest;
-import de.hybris.platform.ticket.model.CsTicketModel;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import de.hybris.bootstrap.annotations.UnitTest;
+import de.hybris.platform.ticket.model.CsTicketModel;
 
 @UnitTest
 public class DefaultEpamTicketServiceTest {
@@ -39,14 +42,14 @@ public class DefaultEpamTicketServiceTest {
 
         expectedTicketModels = new ArrayList<>();
         expectedTicketModels.add(expectedTicketModel);
-        EpamTicketSearchCriteria dummyCriteria = new EpamTicketSearchCriteria();
-        when(mockTicketDao.findTicketsByCriteria(dummyCriteria)).thenReturn(expectedTicketModels);
+        Map<String,String[]> dummyCriteria = new HashMap<>();
+        when(mockTicketDao.findTicketsByCriteria(dummyCriteria, null)).thenReturn(expectedTicketModels);
 
         List<CsTicketModel> actualTicketModels = ticketService.getTicketsByCriteria(dummyCriteria);
 
         assertEquals("The lists of expected and actual ticket models should be the same",
                 expectedTicketModels, actualTicketModels);
-        verify(mockTicketDao, times(1)).findTicketsByCriteria(dummyCriteria);
+        verify(mockTicketDao, times(1)).findTicketsByCriteria(dummyCriteria, null);
     }
 
     @Test

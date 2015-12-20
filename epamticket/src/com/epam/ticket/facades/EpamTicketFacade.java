@@ -7,12 +7,13 @@ import com.epam.dto.EpamTicketSearchCriteria;
 import de.hybris.platform.ticket.service.TicketException;
 
 import java.util.List;
+import java.util.Map;
 
 public interface EpamTicketFacade {
 
     EpamTicket addTicket(EpamTicket ticket, EpamCustomerEvent event);
 
-    List<EpamTicket> getTicketsByCriteria(EpamTicketSearchCriteria searchCriteria);
+    List<EpamTicket> getTicketsByCriteria(/*EpamTicketSearchCriteria searchCriteria*/ Map<String,String[]> searchCriteria);
 
     EpamTicket getTicketById(String ticketId);
 

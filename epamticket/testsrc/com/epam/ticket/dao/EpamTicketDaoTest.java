@@ -1,7 +1,7 @@
 package com.epam.ticket.dao;
 
 import com.epam.dto.EpamFrontConfig;
-import com.epam.dto.EpamTicketsFilterConfig;
+import com.epam.dto.EpamTicketsFilter;
 import com.epam.dto.EpamTicketsFilterCriteria;
 
 import org.junit.Before;
@@ -31,7 +31,7 @@ public class EpamTicketDaoTest {
 
     private EpamTicketDAO epamTicketDao;
     private EpamTicketsFilterCriteria criteria;
-    private EpamTicketsFilterConfig filter;
+    private EpamTicketsFilter filter;
     private EpamFrontConfig filterConfig;
 
     @Mock
@@ -57,7 +57,7 @@ public class EpamTicketDaoTest {
         criteria.setCount(10);
         criterias.add(criteria);
 
-        filter = new EpamTicketsFilterConfig(filterName, filterDisplayName);
+        filter = new EpamTicketsFilter(filterName, filterDisplayName);
         filter.setCriterias(criterias);
 
         

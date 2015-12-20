@@ -64,4 +64,17 @@ public class EpamTicketsFilterCriteria {
         this.count = count;
     }
 
+    @Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append("\nEpamTicketsFilterCriteria [name=");
+        builder.append(name);
+        builder.append(", displayName=");
+        builder.append(displayName);
+        builder.append(", count=");
+        builder.append(count);
+        builder.append("]");
+        return builder.toString();
+    }
+
 }

@@ -4,14 +4,15 @@ import de.hybris.platform.ticket.enums.CsTicketCategory;
 import de.hybris.platform.ticket.enums.CsTicketPriority;
 import de.hybris.platform.ticket.enums.CsTicketState;
 
-import java.io.Serializable;
 import java.util.List;
 
-public class EpamTicketSearchCriteria implements Serializable {
+public class EpamTicketSearchCriteria {
 
+    // Better would be priorities and states, but there's no simple way to rename it and handle ?priority=. ?state=. requests
     private List<CsTicketPriority> priority;
     private List<CsTicketState> state;
     private List<CsTicketCategory> category;
+    private List<String> group;
     private String agentId;
     private String sortName;
     private Boolean sortReverse = Boolean.FALSE;
@@ -66,7 +67,15 @@ public class EpamTicketSearchCriteria implements Serializable {
 
     @Override
     public String toString() {
-        return "EpamTicketSearchCriteria{" + "priorities=" + priority + "states=" + state + ", agentId='" + agentId + '\'' + '}';
+        return "EpamTicketSearchCriteria{" + "priorities=" + priority + "states=" + state + "groups=" + group + ", agentId='" + agentId + '\'' + '}';
+    }
+
+    public List<String> getGroup() {
+        return group;
+    }
+
+    public void setGroup(final List<String> group) {
+        this.group = group;
     }
 
 }

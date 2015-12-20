@@ -22,6 +22,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -37,8 +41,8 @@ public class EpamTicketController {
     private DefaultEpamTicketFacade defaultEpamTicketFacade;
 
     @RequestMapping(method = GET)
-    public Collection<EpamTicket> getTicketsByCriteria(EpamTicketSearchCriteria searchCriteria) {
-        return defaultEpamTicketFacade.getTicketsByCriteria(searchCriteria);
+    public Collection<EpamTicket> getTicketsByCriteria(/*EpamTicketSearchCriteria searchCriteria*/final HttpServletRequest request) {
+       return defaultEpamTicketFacade.getTicketsByCriteria(request.getParameterMap());
     }
 
     @RequestMapping(method = POST, consumes = APPLICATION_JSON_VALUE)

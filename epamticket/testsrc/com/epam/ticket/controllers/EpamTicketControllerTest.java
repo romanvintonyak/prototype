@@ -4,14 +4,14 @@ import com.epam.dto.EpamCustomerEvent;
 import com.epam.dto.EpamFrontConfig;
 import com.epam.dto.EpamNewTicket;
 import com.epam.dto.EpamTicket;
-import com.epam.dto.EpamTicketSearchCriteria;
-import com.epam.dto.EpamTicketsFilterConfig;
+import com.epam.dto.EpamTicketsFilter;
 import com.epam.dto.EpamTicketsFilterCriteria;
 import com.epam.dto.TicketCounterHolder;
 import com.epam.ticket.facades.impl.DefaultEpamTicketFacade;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,9 +28,11 @@ import org.springframework.web.context.WebApplicationContext;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -47,9 +49,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration(locations = {"file:web/webroot/WEB-INF/springmvc-servlet.xml", "/epamticket-spring-test.xml"})
 @WebAppConfiguration
 public class EpamTicketControllerTest {
+   
+    private static final Logger LOG = Logger.getLogger(EpamTicketControllerTest.class);
 
     public static final String BASE_URL = "/v1/tickets/";
-    public static final String SEARCH_CRITERIA_PARAMS = "?priority=High&sortReverse=true";
+    public static final String SEARCH_CRITERIA_PARAMS = "?priority=High&state=Open&sortReverse=true";
     public static final String TICKET_COUNT_URL = "ticketCount";
     public static final String CONFIG_URL = "config";
     public static final String UNEXPECTED_RESPONSE_BODY = "Unexpected response body";
@@ -66,7 +70,7 @@ public class EpamTicketControllerTest {
     private EpamCustomerEvent epamCustomerEvent;
     private TicketCounterHolder ticketCounterHolder;
     private EpamTicketsFilterCriteria criteria;
-    private EpamTicketsFilterConfig filter;
+    private EpamTicketsFilter filter;
     private EpamFrontConfig filterConfig;
     private List<EpamTicket> epamTickets;
 
@@ -109,8 +113,8 @@ public class EpamTicketControllerTest {
         criteria.setCount(10);
         criterias.add(criteria);
 
-        Set<EpamTicketsFilterConfig> filters = new HashSet<>();
-        filter = new EpamTicketsFilterConfig("priority", "PRIORITY");
+        Set<EpamTicketsFilter> filters = new HashSet<>();
+        filter = new EpamTicketsFilter("priority", "PRIORITY");
         filter.setCriterias(criterias);
         filterConfig = new EpamFrontConfig();
         filterConfig.setAvailableFilters(filters);
@@ -176,7 +180,7 @@ public class EpamTicketControllerTest {
     @Test
     public void shouldReturnTicketByCriteria() throws Exception {
 
-        ArgumentCaptor<EpamTicketSearchCriteria> searchArg = ArgumentCaptor.forClass(EpamTicketSearchCriteria.class);
+        ArgumentCaptor<Map> searchArg = ArgumentCaptor.forClass(Map.class);
         doReturn(epamTickets).when(defaultEpamTicketFacadeMock).getTicketsByCriteria(searchArg.capture());
 
         MvcResult response = mockMvc.perform(get(BASE_URL + SEARCH_CRITERIA_PARAMS)
@@ -185,6 +189,9 @@ public class EpamTicketControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
 
+        Map searchCriteria = searchArg.getAllValues().get(0);
+        assertTrue("Priority criteria should be present", searchCriteria.containsKey("priority"));
+        assertTrue("State criteria should be present", searchCriteria.containsKey("state"));
         assertEquals(UNEXPECTED_RESPONSE_BODY,
                 toJsonString(epamTickets), response.getResponse().getContentAsString());
         verify(defaultEpamTicketFacadeMock, times(1)).getTicketsByCriteria(searchArg.getValue());

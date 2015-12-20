@@ -5,29 +5,30 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans.xsd">
  
-    <bean id="epamAgentFilter" class="com.epam.dto.EpamTicketsFilterConfig">
+    <bean id="epamAgentFilter" class="com.epam.dto.EpamTicketsFilter">
         <constructor-arg name="name" value="agent"/>
         <constructor-arg name="displayName" value="AGENT"/>
+        <property name="filterStrategy" ref="defaultAgentFilterStrategy"/>
         <property name="criterias">
             <set>
                 <bean class="com.epam.dto.EpamTicketsFilterCriteria">
                     <constructor-arg name="name" value="assignedToAgent"/>
                     <constructor-arg name="displayName" value="Assigned to me"/>
-                    <constructor-arg name="filterQuery" value=""/>
+                    <constructor-arg name="filterQuery" value="IN"/>
                     <constructor-arg name="filterCountQuery" value="SELECT count({c:PK}) 
                         FROM {CsTicket AS c JOIN User AS u ON {c.assignedAgent} = {u.PK}} WHERE {u:PK} = (?session.user)"/>
                 </bean>
                 <bean class="com.epam.dto.EpamTicketsFilterCriteria">
                     <constructor-arg name="name" value="assignedToOthers"/>
                     <constructor-arg name="displayName" value="All Group Users"/>
-                    <constructor-arg name="filterQuery" value=""/>
+                    <constructor-arg name="filterQuery" value="NOT IN"/>
                     <constructor-arg name="filterCountQuery" value="SELECT count({c:PK}) 
                         FROM {CsTicket AS c JOIN User AS u ON {c.assignedAgent} = {u.PK}} WHERE {u:PK} != (?session.user)"/>
                 </bean>
                 <bean class="com.epam.dto.EpamTicketsFilterCriteria">
                     <constructor-arg name="name" value="unassigned"/>
                     <constructor-arg name="displayName" value="Unassigned"/>
-                    <constructor-arg name="filterQuery" value=""/>
+                    <constructor-arg name="filterQuery" value="IS NULL"/>
                     <constructor-arg name="filterCountQuery" value="SELECT count({c:PK}) 
                         FROM {CsTicket AS c} WHERE {c.assignedAgent} IS NULL"/>
                     </bean>
@@ -35,15 +36,16 @@
         </property>
     </bean>
            
-    <bean id="epamGroupFilter" class="com.epam.dto.EpamTicketsFilterConfig">
+    <bean id="epamGroupFilter" class="com.epam.dto.EpamTicketsFilter">
         <constructor-arg name="name" value="group"/>
         <constructor-arg name="displayName" value="GROUP"/>
+        <property name="filterStrategy" ref="defaultGroupFilterStrategy"/>
         <property name="criterias">
             <set>
                 <bean class="com.epam.dto.EpamTicketsFilterCriteria">
                     <constructor-arg name="name" value="assignedToGroup"/>
                     <constructor-arg name="displayName" value="My Group"/>
-                    <constructor-arg name="filterQuery" value=""/>
+                    <constructor-arg name="filterQuery" value="IN"/>
                     <constructor-arg name="filterCountQuery" value="SELECT count({c.pk}) FROM { CsTicket AS c } WHERE {c.assignedgroup} IN 
                         ({{ SELECT targetpk FROM { User AS u JOIN PrincipalGroupRelation AS p ON {u.pk} = sourcepk}
                                                     where {u.pk} = (?session.user) }})"/>
@@ -51,7 +53,7 @@
                 <bean class="com.epam.dto.EpamTicketsFilterCriteria">
                     <constructor-arg name="name" value="assignedToOthers"/>
                     <constructor-arg name="displayName" value="All Groups"/>
-                    <constructor-arg name="filterQuery" value=""/>
+                    <constructor-arg name="filterQuery" value="NOT IN"/>
                     <constructor-arg name="filterCountQuery" value="SELECT count({c.pk}) FROM { CsTicket AS c } WHERE {c.assignedgroup} NOT IN 
                         ({{ SELECT targetpk FROM { User AS u JOIN PrincipalGroupRelation AS p ON {u.pk} = sourcepk}
                                                     where {u.pk} = (?session.user) }})"/>
@@ -59,7 +61,7 @@
                 <bean class="com.epam.dto.EpamTicketsFilterCriteria">
                     <constructor-arg name="name" value="unassigned"/>
                     <constructor-arg name="displayName" value="Unassigned"/>
-                    <constructor-arg name="filterQuery" value=""/>
+                    <constructor-arg name="filterQuery" value="IS NULL"/>
                     <constructor-arg name="filterCountQuery" value="SELECT count({c:PK}) 
                         FROM {CsTicket AS c} WHERE {c.assignedGroup} IS NULL"/>
                     </bean>
@@ -67,94 +69,78 @@
         </property>
     </bean>
 
-    <bean id="epamStateFilter" class="com.epam.dto.EpamTicketsFilterConfig">
+    <bean id="epamStateFilter" class="com.epam.dto.EpamTicketsFilter">
         <constructor-arg name="name" value="state"/>
         <constructor-arg name="displayName" value="STATE"/>
+        <property name="filterStrategy" ref="defaultEnumFilterStrategy"/>
         <property name="criterias">
             <set>
                 <bean class="com.epam.dto.EpamTicketsFilterCriteria">
-                    <constructor-arg name="name" value="new"/>
+                    <constructor-arg name="name" value="New"/>
                     <constructor-arg name="displayName" value="New"/>
                     <constructor-arg name="filterQuery" value=""/>
-                    <constructor-arg name="filterCountQuery" value="SELECT count FROM 
-                        (
-                            {{SELECT {e.code} AS code, count({c.PK}) AS count
-                            FROM {CsTicket AS c JOIN enumerationvalue AS e ON {c.state}={e.pk} }
-                            GROUP BY {state}
-                            HAVING {e.code}='New'}}
-                        ) AS cs "/>
+                    <constructor-arg name="filterCountQuery" value=""/>
                 </bean>
                 <bean class="com.epam.dto.EpamTicketsFilterCriteria">
-                    <constructor-arg name="name" value="open"/>
+                    <constructor-arg name="name" value="Open"/>
                     <constructor-arg name="displayName" value="Open"/>
                     <constructor-arg name="filterQuery" value=""/>
-                    <constructor-arg name="filterCountQuery" value="SELECT count FROM 
-                        (
-                            {{SELECT {e.code} AS code, count({c.PK}) AS count
-                            FROM {CsTicket AS c JOIN enumerationvalue AS e ON {c.state}={e.pk} }
-                            GROUP BY {state}
-                            HAVING {e.code}='Open'}}
-                        ) AS cs "/>
+                    <constructor-arg name="filterCountQuery" value=""/>
                 </bean>
                 <bean class="com.epam.dto.EpamTicketsFilterCriteria">
-                    <constructor-arg name="name" value="closed"/>
+                    <constructor-arg name="name" value="Closed"/>
                     <constructor-arg name="displayName" value="Closed"/>
                     <constructor-arg name="filterQuery" value=""/>
-                    <constructor-arg name="filterCountQuery" value="SELECT count FROM 
-                        (
-                            {{SELECT {e.code} AS code, count({c.PK}) AS count
-                            FROM {CsTicket AS c JOIN enumerationvalue AS e ON {c.state}={e.pk} }
-                            GROUP BY {state}
-                            HAVING {e.code}='Closed'}}
-                        ) AS cs "/>
+                    <constructor-arg name="filterCountQuery" value=""/>
                     </bean>
             </set>
         </property>
     </bean>
 
-    <bean id="epamPriorityFilter" class="com.epam.dto.EpamTicketsFilterConfig">
+    <bean id="epamPriorityFilter" class="com.epam.dto.EpamTicketsFilter">
         <constructor-arg name="name" value="priority"/>
         <constructor-arg name="displayName" value="PRIORITY"/>
+        <property name="filterStrategy" ref="defaultEnumFilterStrategy"/>
         <property name="criterias">
             <set>
                 <bean class="com.epam.dto.EpamTicketsFilterCriteria">
-                    <constructor-arg name="name" value="low"/>
+                    <constructor-arg name="name" value="Low"/>
                     <constructor-arg name="displayName" value="Low"/>
                     <constructor-arg name="filterQuery" value=""/>
-                    <constructor-arg name="filterCountQuery" value="SELECT count FROM 
-                        (
-                            {{SELECT {e.code} AS code, count({c.PK}) AS count
-                            FROM {CsTicket AS c JOIN enumerationvalue AS e ON {c.priority}={e.pk} }
-                            GROUP BY {priority}
-                            HAVING {e.code}='Low'}}
-                        ) AS cs "/>
+                    <constructor-arg name="filterCountQuery" value=""/>
                 </bean>
                 <bean class="com.epam.dto.EpamTicketsFilterCriteria">
-                    <constructor-arg name="name" value="medium"/>
+                    <constructor-arg name="name" value="Medium"/>
                     <constructor-arg name="displayName" value="Medium"/>
                     <constructor-arg name="filterQuery" value=""/>
-                    <constructor-arg name="filterCountQuery" value="SELECT count FROM 
-                        (
-                            {{SELECT {e.code} AS code, count({c.PK}) AS count
-                            FROM {CsTicket AS c JOIN enumerationvalue AS e ON {c.priority}={e.pk} }
-                            GROUP BY {priority}
-                            HAVING {e.code}='Medium'}}
-                        ) AS cs "/>
+                    <constructor-arg name="filterCountQuery" value=""/>
                 </bean>
                 <bean class="com.epam.dto.EpamTicketsFilterCriteria">
-                    <constructor-arg name="name" value="high"/>
+                    <constructor-arg name="name" value="High"/>
                     <constructor-arg name="displayName" value="High"/>
                     <constructor-arg name="filterQuery" value=""/>
-                    <constructor-arg name="filterCountQuery" value="SELECT count FROM 
-                        (
-                            {{SELECT {e.code} AS code, count({c.PK}) AS count
-                            FROM {CsTicket AS c JOIN enumerationvalue AS e ON {c.priority}={e.pk} }
-                            GROUP BY {priority}
-                            HAVING {e.code}='High'}}
-                        ) AS cs "/>
+                    <constructor-arg name="filterCountQuery" value=""/>
                     </bean>
             </set>
         </property>
+    </bean>
+
+    <bean id="defaultEnumFilterStrategy" class="com.epam.ticket.strategies.DefaultEnumFilterStrategy" >
+        <property name="ticketDao" ref="epamTicketDao" />
+    </bean>
+
+    <bean id="defaultFilterStrategy" class="com.epam.ticket.strategies.DefaultFilterStrategy" >
+        <property name="ticketDao" ref="epamTicketDao" />
+    </bean>
+
+    <bean id="defaultGroupFilterStrategy" class="com.epam.ticket.strategies.DefaultGroupFilterStrategy" >
+        <property name="ticketDao" ref="epamTicketDao" />
+        <property name="userService" ref="userService" />
+    </bean>
+
+    <bean id="defaultAgentFilterStrategy" class="com.epam.ticket.strategies.DefaultAgentFilterStrategy" >
+        <property name="ticketDao" ref="epamTicketDao" />
+        <property name="userService" ref="userService" />
     </bean>
 
 </beans>

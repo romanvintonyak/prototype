@@ -31,7 +31,7 @@
                         <li ng-repeat="criteria in filter.criterias | orderBy:'name'" class="filter__item">
                             <label class="filter__item-name">
                                 <input class="filter__item-checkbox" type="checkbox"
-                                   checklist-model="ticketSearchCriteria[filter.name]" checklist-value="criteria.displayName"/>
+                                   checklist-model="ticketSearchCriteria[filter.name]" checklist-value="criteria.name"/>
                                 {{criteria.displayName}}
                             </label>
                             <span class="filter__item-counter">{{criteria.count || 0}}</span>
