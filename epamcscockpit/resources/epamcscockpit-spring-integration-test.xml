@@ -5,13 +5,12 @@
 
     <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper"/>
 
-    <bean id="restHelper" class="com.epam.test.helper.RestHelperMock"/>
+    <bean id="restHelper" class="com.epam.helper.RestHelper"/>
 
     <bean id="coreUserDetailsService" class="de.hybris.platform.spring.security.CoreUserDetailsService"
           scope="singleton"/>
 
     <bean id="restAuthService" class="com.epam.test.util.RestAuthServiceMock"/>
-
 
     <bean id="fixation"
           class="de.hybris.platform.servicelayer.security.spring.HybrisSessionFixationProtectionStrategy"/>
