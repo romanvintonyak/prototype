@@ -2,6 +2,7 @@ package com.epam.test.service;
 
 import com.epam.dto.Credentials;
 import com.epam.service.RestAuthServiceImpl;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -34,7 +35,8 @@ public class RestAuthServiceTest {
     private static final Credentials CREDENTIALS = new Credentials(USER, PASSWORD);
     private static final String PASSWORD_STRING = String.valueOf(CREDENTIALS.getPassword());
 
-    static {
+    @Before
+    public void setUp() throws Exception {
         SecurityContextHolder.getContext().setAuthentication(
                 new UsernamePasswordAuthenticationToken(CREDENTIALS.getLogin(), CREDENTIALS.getPassword()));
     }

@@ -21,6 +21,7 @@ import org.springframework.util.Assert;
 import org.springframework.web.context.WebApplicationContext;
 import java.util.Collections;
 import java.util.List;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -33,11 +34,9 @@ public class CockpitTicketControllerTest {
     private static final String TICKET_ID = "0007000";
     private static final String BASE_URL = "/rest/tickets/";
     private static final String TICKET_COUNT = "ticketCount";
-
     private static ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-
-    private static EpamTicket epamTicket;
-    private static EpamNewTicket epamNewTicket;
+    private EpamTicket epamTicket;
+    private EpamNewTicket epamNewTicket;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -47,18 +46,15 @@ public class CockpitTicketControllerTest {
 
     private MockMvc mockMvc;
 
-    private static TicketCounterHolder ticketCounterHolder;
-    private static List<EpamTicket> epamTicketList;
-
-    static {
-        initTicket();
-        ticketCounterHolder = new TicketCounterHolder();
-        epamTicketList = Collections.singletonList(epamTicket);
-    }
+    private TicketCounterHolder ticketCounterHolder;
+    private List<EpamTicket> epamTicketList;
 
     @Before
     public void setUp() throws Exception {
         mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
+        initTicket();
+        ticketCounterHolder = new TicketCounterHolder();
+        epamTicketList = Collections.singletonList(epamTicket);
     }
 
     @Test
@@ -107,7 +103,7 @@ public class CockpitTicketControllerTest {
         Assert.notNull(response.getResponse().getContentAsString());
     }
 
-    private static void initTicket() {
+    private void initTicket() {
 
         epamTicket = new EpamTicket();
         epamTicket.setHeadline("headline");
