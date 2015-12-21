@@ -1,7 +1,6 @@
 package com.epam.ticket.services.impl;
 
 import com.epam.dto.EpamFrontConfig;
-import com.epam.dto.EpamTicketSearchCriteria;
 import com.epam.dto.EpamTicketsFilter;
 import com.epam.dto.EpamTicketsFilterCriteria;
 import com.epam.ticket.dao.EpamTicketDAO;

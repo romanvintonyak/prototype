@@ -51,7 +51,8 @@
         <section class="main">
             <!-- /.ticket -->
 
-            <div ng-repeat="ticket in ticketStore | orderBy:sortFilterField:sortReverse"
+            <!-- | orderBy:sortFilterField:sortReverse -->
+            <div ng-repeat="ticket in ticketStore " 
                  class="ticket ticket_{{ticket.priority | lowercase}}">
                 <div class="ticket__main-info">
                     <div class="ticket__number">

@@ -3,10 +3,13 @@ package com.epam.ticket.strategies;
 import com.epam.dto.EpamTicketsFilter;
 import com.epam.dto.EpamTicketsFilterCriteria;
 import com.epam.strategies.FilterStrategy;
+import com.epam.strategies.FilterSubqueryResult;
 import com.epam.ticket.dao.EpamTicketDAO;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -14,23 +17,26 @@ import de.hybris.platform.servicelayer.search.FlexibleSearchQuery;
 
 public class DefaultEnumFilterStrategy implements FilterStrategy {
     
-    private static final String TYPE = "ENUM";
     private EpamTicketDAO ticketDao;
-
-    @Override
-    public String buildFilterSubquery(String categoryName) {
-        String QUERY = "{%s} IN "
-                + "({{SELECT {e.pk} FROM {CsTicket AS t1 JOIN enumerationvalue AS e ON {t1.%s}={e.pk}} " 
-                + "WHERE {e.code} IN (?%s)}})";
-
-        return String.format(QUERY, categoryName, categoryName, categoryName);
-    }
 
     @Override
     public Set<EpamTicketsFilterCriteria> getFilterCriteriasWithCounts(EpamTicketsFilter configFilter) {
         Map<String, Integer> counts = getCounts(configFilter);
         Set<EpamTicketsFilterCriteria> filterCriteriaCounts = setFilterCounters(configFilter, counts);
         return filterCriteriaCounts;
+    }
+
+    @Override
+    public FilterSubqueryResult buildFilterSubquery(EpamTicketsFilter filter, List<String> criterias) {
+        String QUERY = "{%s} IN "
+                + "({{SELECT {e.pk} FROM {CsTicket AS t1 JOIN enumerationvalue AS e ON {t1.%s}={e.pk}} " 
+                + "WHERE {e.code} IN (?%s)}})";
+        FilterSubqueryResult result = new FilterSubqueryResult();
+        Map<String, List<String>> params = new HashMap<>();
+        params.put(filter.getName(), criterias);
+        result.setQuery(String.format(QUERY, filter.getName(), filter.getName(), filter.getName()));
+        result.setQueryParams(params);
+        return result;
     }
 
     private Set<EpamTicketsFilterCriteria> setFilterCounters(EpamTicketsFilter configFilter, Map<String, Integer> category) {
@@ -65,16 +71,6 @@ public class DefaultEnumFilterStrategy implements FilterStrategy {
 
     public void setTicketDao(EpamTicketDAO ticketDao) {
         this.ticketDao = ticketDao;
-    }
-
-    @Override
-    public String getType() {
-        return TYPE;
-    }
-
-    @Override
-    public Set<?> getParams() {
-        return null;
     }
 
 }

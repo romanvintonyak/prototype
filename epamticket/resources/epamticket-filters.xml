@@ -129,10 +129,6 @@
         <property name="ticketDao" ref="epamTicketDao" />
     </bean>
 
-    <bean id="defaultFilterStrategy" class="com.epam.ticket.strategies.DefaultFilterStrategy" >
-        <property name="ticketDao" ref="epamTicketDao" />
-    </bean>
-
     <bean id="defaultGroupFilterStrategy" class="com.epam.ticket.strategies.DefaultGroupFilterStrategy" >
         <property name="ticketDao" ref="epamTicketDao" />
         <property name="userService" ref="userService" />

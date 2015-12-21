@@ -61,6 +61,8 @@ epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval, $
 
     $scope.ticketStore = [];
     $scope.ticketSearchCriteria = {};
+    $scope.ticketSearchCriteria.sortName = 'ticketId';
+    
 
     $scope.clearTicketSearchCriteria = function () {
         var sc = $scope.ticketSearchCriteria;
@@ -70,7 +72,7 @@ epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval, $
         sc.state = [];
         sc.levels = [];
         sc.priority = [];
-        sc.sortName = [];
+        sc.sortName = ['ticketId'];
         sc.sortReverse = false;
     };
     
