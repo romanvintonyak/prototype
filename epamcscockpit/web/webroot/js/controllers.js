@@ -8,7 +8,7 @@ function fillConstants($scope) { // todo quick and dirty hack, waiting for confi
     $scope.ticketLevels = ['All', 'Sales', 'Service', 'Automated', 'Interactive', 'Physical store CS transfer'];
     $scope.ticketGroup = ['My Group', 'All Groups', 'Unassigned'];
     $scope.ticketAgent = ['Assigned to me', 'All Group Users', 'Unassigned'];
-    $scope.ticketEventReason = ["Complaint","Update","FirstContact"];
+    $scope.ticketEventReason = ["Complaint", "Update", "FirstContact"];
     $scope.ticketInterventions = ['IM', 'E-mail', 'Call'];
     $scope.ticketSorts = {
         'ticketId': 'Ticket ID',
@@ -54,8 +54,8 @@ epamcscockpit.config(["$routeProvider", "$httpProvider", function ($routeProvide
         });
 }]);
 
-epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval, 
-                                    TicketsResource, TicketCountResource, FilteredTicketsCountResource) {
+epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval,
+                                                     TicketsResource, TicketCountResource, FilteredTicketsCountResource) {
     fillConstants($scope);
     $scope.errorMsg = "";
 
@@ -93,21 +93,21 @@ epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval,
     };
 
     $scope.updateTicketStore();
-    
+
     $scope.ticketCount = TicketCountResource.get();
     $scope.filteredTicketsCounts = FilteredTicketsCountResource.get();
 
     // --- sort-related functions
     $scope.sortField = 'ticketId'; // user requested sort
-    $scope.sortFilterField = 'ticketId' ; // real sorter for angular, sort field for server in SC
+    $scope.sortFilterField = 'ticketId'; // real sorter for angular, sort field for server in SC
     $scope.sortReverse = false;
 
-    $scope.isServerSort = function() { // todo total cannot be correct criteria to distinguish
-		return true;//$scope.ticketCount.total > 1;
-	};
+    $scope.isServerSort = function () { // todo total cannot be correct criteria to distinguish
+        return true;//$scope.ticketCount.total > 1;
+    };
 
     $scope.order = function () {
-        if($scope.isServerSort()) {
+        if ($scope.isServerSort()) {
             $scope.ticketSearchCriteria.sortName = $scope.sortField;
             $scope.sortFilterField = [];
             $scope.updateTicketStore();
@@ -117,45 +117,62 @@ epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval,
         }
     };
 
-	$scope.flipSort = function() {
-		$scope.sortReverse = !$scope.sortReverse;
-		$scope.ticketSearchCriteria.sortReverse = $scope.sortReverse;
-		if($scope.isServerSort())
-			$scope.updateTicketStore();
+    $scope.flipSort = function () {
+        $scope.sortReverse = !$scope.sortReverse;
+        $scope.ticketSearchCriteria.sortReverse = $scope.sortReverse;
+        if ($scope.isServerSort())
+            $scope.updateTicketStore();
 
-	};
+    };
 });
 
-epamcscockpit.controller("TicketDetailsCtrl", function ($scope, $http, $routeParams, TicketsResource) {
+epamcscockpit.controller("TicketDetailsCtrl", function ($scope, $http, $routeParams, TicketsResource,
+                                                        TicketChangeStateResource) {
+    fillConstants($scope);
     TicketsResource.get({
             ticketId: $routeParams.ticketId
-        },
-        function (data, status, headers, config) {
+        }, function (data, status, headers, config) {
             $scope.ticket = data;
+            if (data.state == "Open") {
+                $scope.hideCloseButton = false;
+            }
         },
         function () {
             $scope.errorMsg = defaultErrrMsg
         });
 
+    $scope.showCloseForm = function () {
+        $scope.showForm = !$scope.showForm;
+    };
+
+    $scope.closeTicket = function () {
+        $scope.ticketStateHolder = {newState: "Closed", comment: $scope.comment};
+        $scope.ticket = TicketChangeStateResource.update({ticketId: $scope.ticket.ticketId}, $scope.ticketStateHolder);
+        $scope.showForm = false;
+        $scope.hideCloseButton = true;
+    }
+
+    $scope.showForm = false;
+    $scope.hideCloseButton = true;
 });
 
-epamcscockpit.controller("TicketCreateCtrl", function ($scope, $location, $http, TicketCreateResource /*, testconst*/) {
+
+epamcscockpit.controller("TicketCreateCtrl", function ($scope, $location, $http, TicketCreateResource) {
     fillConstants($scope);
     $scope.newTicket = {
         category: $scope.ticketCategories[1],
         priority: $scope.ticketPriorities[1]
     };
-    $scope.newEvent  = {
+    $scope.newEvent = {
         interventionType: $scope.ticketInterventions[1],
         reason: $scope.ticketEventReason[1]
     };
 
 
-    $scope.addTicket = function() {
+    $scope.addTicket = function () {
         TicketCreateResource.save(
             {newTicket: $scope.newTicket, creationEvent: $scope.newEvent},
             function (data, status, headers, config) {
-                //alert(testconst);
                 console.log(data);
                 $location.path("/ticket/" + data.ticketId);
             },

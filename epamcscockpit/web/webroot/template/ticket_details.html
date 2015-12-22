@@ -65,10 +65,37 @@
             <div class="ticket__form_element">
                 <button id="assignToAgentButton" disabled>Assign To Agent</button>
                 <button id="addNoteToTicketButton" disabled>Add Note To Ticket</button>
-                <button id="closeTicketButton">Close Ticket</button>
+                <button ng-hide="hideCloseButton" ng-click="showCloseForm()">Close Ticket</button>
             </div>
         </div>
 
+
+    </div>
+
+    <!--Close ticket-->
+    <div ng-show='showForm' class="ticket__form_close">
+        <form ng-submit="closeTicket()">
+            <div class="ticket__form_element" hidden>
+                <label class="ticket__form_label" for="interventionType">Intervention type</label>
+                <select name="interventionType"
+                        class="ticket__form_input"
+                        ng-model="interventionType"
+                        ng-options="type for type in ticketInterventions"
+                        id="interventionType">
+                </select>
+            </div>
+
+            <div class="ticket__form_element comment">
+                <label class="ticket__form_label" for="comment">Comment</label>
+                <textarea id="comment" name="comment"
+                          class="ticket__form_input"
+                          ng-model="comment"></textarea>
+            </div>
+            <div class="ticket__form_element">
+                <button ng-click="showCloseForm()" type="button">Cancel</button>
+                <button type="submit">Ok</button>
+            </div>
+        </form>
 
     </div>
 
@@ -79,12 +106,12 @@
 
         <div ng-repeat="event in ticket.events">
             <!--populate with fields from CsTicketEventModel-->
-            <div ng-repeat="entry in event.ticketChangeEventEntries">
-                <div class="">{{ entry.alteredAttribute }}</div>
-                <div class="">{{ event.startDateTime }}</div>
-                <div class="">{{ entry.oldStringValue }} -> {{ entry.newStringValue }}</div>
-                <div class="">hardcode - it seems comment message is absent in model, to investigate</div>
-                <div class="">hardcode - to clarify about agent name placed here</div>
+            <div class="ticket_events" ng-repeat="entry in event.ticketChangeEventEntries">
+                <p><span class="ticket_events_label"> Altered attribute: </span> {{ entry.alteredAttribute }}</p>
+                <p><span class="ticket_events_label">Date: </span> {{ event.startDateTime | date:'medium'}}</p>
+                <p><span class="ticket_events_label">Change: </span> {{ entry.oldStringValue }} -> {{ entry.newStringValue }}</p>
+                <p ><span class="ticket_events_label">Comment: </span> {{event.text}}</p>
+                <!--<div class="">hardcode - to clarify about agent name placed here</div>-->
             </div>
         </div>
 

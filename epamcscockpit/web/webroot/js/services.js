@@ -22,22 +22,31 @@ angular.module("epamcscockpitResource", ["ngResource"])
             });
     }])
     .factory("TicketCreateResource", ["$resource", function ($resource) {
-        return $resource("/epamcscockpit/rest/tickets", null, {
-        })
+        return $resource("/epamcscockpit/rest/tickets", null, {})
     }])
+    .factory("TicketChangeStateResource", ["$resource", function ($resource) {
+        return $resource("/epamcscockpit/rest/tickets/" + ':ticketId' + "/changestate",
+            null,
+            {'update': {method: 'PUT'}});
+    }])
+
     .factory("TicketCountResource", ["$resource", function ($resource) {
         var resourseUrl = "/epamcscockpit/rest/tickets/ticketCount";
-        return $resource(resourseUrl,{}, { get: {
-            method: 'GET',
-            responseType: 'text'
-        }});
+        return $resource(resourseUrl, {}, {
+            get: {
+                method: 'GET',
+                responseType: 'text'
+            }
+        });
     }])
     .factory("FilteredTicketsCountResource", ["$resource", function ($resource) {
         var resourseUrl = "/epamcscockpit/rest/tickets/filteredTicketsCounts";
-        return $resource(resourseUrl,{}, { get: {
-            method: 'GET',
-            responseType: 'text'
-        }});
+        return $resource(resourseUrl, {}, {
+            get: {
+                method: 'GET',
+                responseType: 'text'
+            }
+        });
     }])
     .factory("OrdersResource", ["$resource", function ($resource) {
         var resourseUrl = "/epamorder/v1/orders";

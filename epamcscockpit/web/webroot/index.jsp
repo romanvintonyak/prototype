@@ -12,7 +12,7 @@
     <script src="js/lib/angular-resource.js"></script> 
     <script src="js/lib/angular-cookies.js"></script>
     <script src="js/lib/checklist-model.js"></script>
-    
+
     
     
     <script src="js/filters.js"></script> 
