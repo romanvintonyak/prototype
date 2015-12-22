@@ -55,13 +55,13 @@ public abstract class DefaultInNotInFilterStrategy<K> implements FilterStrategy 
                 if (filterCriteria.isRequireParams()) {
                     params.put(filterCriteria.getName(), getParams());
                     query.append("(?" + filterCriteria.getName() + ")");
-                    result.setQueryParams(params);
                 }
             }
         }
         if (query.length() != 0) {
             result.setQuery("(" + query.toString() + ")");
         }
+        result.setQueryParams(params);
         return result;
     }
 

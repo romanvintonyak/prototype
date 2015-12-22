@@ -1,12 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
-<html ng-app="epamcscockpit">
+<html > <!-- ng-app="epamcscockpit" -->
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
     <link rel="stylesheet" href="styles/main.css"/>
     
+    <script src="js/lib/jquery-1.7.2.min.js"></script>
     <script src="js/lib/angular.js"></script> 
     <script src="js/lib/angular-route.js"></script> 
     <script src="js/lib/angular-resource.js"></script> 

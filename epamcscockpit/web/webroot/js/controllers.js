@@ -18,7 +18,6 @@ function fillConstants($scope) { // todo quick and dirty hack, waiting for confi
     };
 }
 
-
 epamcscockpit.config(["$routeProvider", "$httpProvider", function ($routeProvider, $httpProvider) {
     $routeProvider
         .when("/", {
@@ -55,14 +54,14 @@ epamcscockpit.config(["$routeProvider", "$httpProvider", function ($routeProvide
 }]);
 
 epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval, $filter,
-                                                     TicketsResource, TicketCountResource, ConfigResource) {
+                                                     TicketsResource, TicketCountResource, ConfigResource, initialConf) {
+    $scope.ticketConfig = initialConf.data;
     fillConstants($scope);
     $scope.errorMsg = "";
 
     $scope.ticketStore = [];
     $scope.ticketSearchCriteria = {};
     $scope.ticketSearchCriteria.sortName = 'ticketId';
-    
 
     $scope.clearTicketSearchCriteria = function () {
         var sc = $scope.ticketSearchCriteria;
@@ -80,7 +79,6 @@ epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval, $
 
     $scope.updateTicketStore = function () {
         $scope.ticketCount = TicketCountResource.get();
-        
         ConfigResource.get( 
             function (data, status, headers, config) {
                 $scope.ticketConfig = data;
@@ -89,7 +87,6 @@ epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval, $
                 $scope.errorMsg = defaultErrrMsg;
             }
         );
-        
         
         TicketsResource.query(
             $scope.ticketSearchCriteria,
@@ -171,7 +168,7 @@ epamcscockpit.controller("TicketDetailsCtrl", function ($scope, $http, $routePar
 epamcscockpit.controller("TicketCreateCtrl", function ($scope, $location, $http, TicketCreateResource) {
     fillConstants($scope);
     $scope.newTicket = {
-        category: $scope.ticketCategories[1],
+        category: $scope.ticketConfig.availableFilters      //$scope.ticketCategories[1], 
         priority: $scope.ticketPriorities[1]
     };
     $scope.newEvent = {
@@ -219,5 +216,16 @@ epamcscockpit.controller("CustomerDetailsCtrl", function (CustomersResource, $ht
     });
 });
 
-
+$.ajax({
+    url: "/epamcscockpit/rest/tickets/config"
+}).fail(function () {
+    // TODO: must show error on fail
+    epamcscockpit.constant('initialConf', {});
+}).done(function (data) {
+    epamcscockpit.constant('initialConf', {
+        data: data
+    });
+}).always(function () {
+    angular.bootstrap(document, ['epamcscockpit']);
+});
 
