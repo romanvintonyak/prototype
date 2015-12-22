@@ -2,8 +2,6 @@ package com.epam.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-//import org.codehaus.jackson.annotate.JsonIgnore;
-
 public class EpamTicketsFilterCriteria {
     private String name;
     private String displayName;
@@ -11,17 +9,17 @@ public class EpamTicketsFilterCriteria {
     @JsonIgnore
     private String filterQuery;
     @JsonIgnore
-    private String filterCountQuery;
+    private boolean requireParams;
 
     public EpamTicketsFilterCriteria() {
     }
 
-    public EpamTicketsFilterCriteria(final String name, final String displayName, final String filterQuery, final String filterCountQuery) {
+    public EpamTicketsFilterCriteria(final String name, final String displayName, final String filterQuery, final boolean requireParams) {
         this.name = name;
         this.displayName = displayName;
         this.filterQuery = filterQuery;
-        this.filterCountQuery = filterCountQuery;
         this.count = Integer.valueOf(0);
+        this.requireParams = requireParams;
     }
 
     public String getName() {
@@ -48,20 +46,20 @@ public class EpamTicketsFilterCriteria {
         this.filterQuery = filterQuery;
     }
 
-    public String getFilterCountQuery() {
-        return filterCountQuery;
-    }
-
-    public void setFilterCountQuery(final String filterCountQuery) {
-        this.filterCountQuery = filterCountQuery;
-    }
-
     public Integer getCount() {
         return count;
     }
 
     public void setCount(final Integer count) {
         this.count = count;
+    }
+
+    public boolean isRequireParams() {
+        return requireParams;
+    }
+
+    public void setRequireParams(final boolean requireParams) {
+        this.requireParams = requireParams;
     }
 
     @Override

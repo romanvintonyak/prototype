@@ -56,11 +56,13 @@ public class DefaultEpamTicketServiceTest {
     public void shouldReturnTicketModelByAgentId() throws Exception {
 
         String dummyTicketId = "1";
-        when(mockTicketDao.getTicketById(dummyTicketId)).thenReturn(expectedTicketModel);
+        List<CsTicketModel> expectedDaoTicketsResult = new ArrayList<>();
+        expectedDaoTicketsResult.add(expectedTicketModel);
+        when(mockTicketDao.findTicketsById(dummyTicketId)).thenReturn(expectedDaoTicketsResult);
 
         CsTicketModel actualTicketModel = ticketService.getTicketById(dummyTicketId);
 
         assertEquals("Expected and actual ticket models should be the same", expectedTicketModel, actualTicketModel);
-        verify(mockTicketDao, times(1)).getTicketById(dummyTicketId);
+        verify(mockTicketDao, times(1)).findTicketsById(dummyTicketId);
     }
 }

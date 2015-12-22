@@ -14,6 +14,11 @@ public class FilterSubqueryResult {
         Query = query;
     }
 
+    /**
+     * Returns parameters for query. If parameters are empty returns empty map
+     *
+     * @return Map
+     */
     public Map<? extends String, ? extends Object> getQueryParams() {
         return queryParams;
     }

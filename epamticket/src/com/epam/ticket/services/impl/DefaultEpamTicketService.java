@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import de.hybris.platform.servicelayer.exceptions.AmbiguousIdentifierException;
 import de.hybris.platform.ticket.model.CsTicketModel;
 
 public class DefaultEpamTicketService implements EpamTicketService {
@@ -19,13 +20,17 @@ public class DefaultEpamTicketService implements EpamTicketService {
     private Set<EpamTicketsFilter> availableFilters;
 
     @Override
-    public List<CsTicketModel> getTicketsByCriteria(/*EpamTicketSearchCriteria searchCriteria*/ Map<String,String[]> searchCriteria) {
+    public List<CsTicketModel> getTicketsByCriteria(Map<String,String[]> searchCriteria) {
         return ticketDao.findTicketsByCriteria(searchCriteria, getAvailableFilters());
     }
 
     @Override
     public CsTicketModel getTicketById(String ticketId) {
-        return ticketDao.getTicketById(ticketId);
+        List<CsTicketModel> tickets = ticketDao.findTicketsById(ticketId);
+        if (tickets.size() > 1) {
+            throw new AmbiguousIdentifierException("CsTicket with ticketId'" + ticketId + "' is not unique, " + tickets.size() + " results!");
+        }
+        return tickets.size() == 1 ? tickets.get(0) : null;
     }
 
     @Override
@@ -59,7 +64,7 @@ public class DefaultEpamTicketService implements EpamTicketService {
         return filters;
     }
 
-    private Set<EpamTicketsFilterCriteria> getFilterCriteriasWithCount(EpamTicketsFilter configFilter) {
+    private static Set<EpamTicketsFilterCriteria> getFilterCriteriasWithCount(EpamTicketsFilter configFilter) {
         return configFilter.getFilterStrategy().getFilterCriteriasWithCounts(configFilter);
     }
 

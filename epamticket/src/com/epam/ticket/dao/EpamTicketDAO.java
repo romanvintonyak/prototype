@@ -14,6 +14,7 @@ import de.hybris.platform.ticket.enums.CsTicketPriority;
 import de.hybris.platform.ticket.enums.CsTicketState;
 import de.hybris.platform.ticket.model.CsTicketModel;
 import org.apache.log4j.Logger;
+import org.springframework.util.Assert;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -29,18 +30,11 @@ import static com.google.common.base.Strings.isNullOrEmpty;
 
 public class EpamTicketDAO extends DefaultTicketDao {
 
+    public static final String SORT_REVERSE = "sortReverse";
+    public static final String SORT_NAME = "sortName";
     public static final Logger LOG = Logger.getLogger(EpamTicketDAO.class);
     public static final String QUERY_STRING = "SELECT {t:pk} FROM {CsTicket AS t} ";
     protected Map<String, EpamCsSort> sorts = new HashMap<>();
-
-    public CsTicketModel getTicketById(String ticketId) {
-        List<CsTicketModel> csTicketModels = this.findTicketsById(ticketId);
-        if (csTicketModels.size() > 1) {
-            throw new AmbiguousIdentifierException("CsTicket with ticketId'" + ticketId + "' is not unique, " + csTicketModels.size() + " results!");
-        }
-        return csTicketModels.size() == 1 ? csTicketModels.get(0) : null;
-
-    }
 
     public List<CsTicketModel> findTicketsByCriteria(Map<String, String[]> searchCriteria, Set<EpamTicketsFilter> filters) {
         StringBuilder query;
@@ -48,24 +42,21 @@ public class EpamTicketDAO extends DefaultTicketDao {
         Map<String, Object> paramMap = new TreeMap<>();
 
         for (EpamTicketsFilter filter : filters) {
-            if (searchCriteria.containsKey(filter.getName())) {
-                List<String> criterias = Arrays.asList(searchCriteria.get(filter.getName()));
-                if (criterias != null && !criterias.isEmpty()) {
-                    FilterSubqueryResult subQueryResult = filter.getFilterStrategy().buildFilterSubquery(filter, criterias);
-                    query.append(getFilterSubqueryOrEpmptyString(query.length(), subQueryResult));
-                    paramMap.putAll(getFilterSubqueryParamsOrEmptyMap(subQueryResult.getQueryParams()));
-                }
+            List<String> criterias = getCriterias(searchCriteria, filter.getName());
+            if (!criterias.isEmpty()) {
+                FilterSubqueryResult subQueryResult = filter.getFilterStrategy().buildFilterSubquery(filter, criterias);
+                query.append(getFilterSubqueryOrEpmptyString(query.length(), subQueryResult));
+                paramMap.putAll(subQueryResult.getQueryParams());
             }
         }
 
-        String sortName = getFirstParamOrNullByName(searchCriteria, "sortName");
+        String sortName = getFirstParamOrNullByName(searchCriteria, SORT_NAME);
         if (!isNullOrEmpty(sortName)) {
             EpamCsSort sort = sorts.get(sortName);
-            if (sort == null)
-                throw new IllegalArgumentException("Sort " + sortName + " not found");
+            Assert.notNull(sort, "Sort " + sortName + " not found");
             query.append("ORDER BY {t.");
             query.append(sort.getFlexField()).append("} "); // danger, may cause FlexSearch manipulation
-            Boolean sortReverse = Boolean.valueOf(getFirstParamOrNullByName(searchCriteria, "sortReverse"));
+            Boolean sortReverse = Boolean.valueOf(getFirstParamOrNullByName(searchCriteria, SORT_REVERSE));
             query.append(sortReverse ? "DESC" : "ASC");
         }
 
@@ -77,6 +68,13 @@ public class EpamTicketDAO extends DefaultTicketDao {
 
     }
 
+    private static List<String> getCriterias(Map<String, String[]> searchCriteria, String name) {
+        if (searchCriteria.containsKey(name) && searchCriteria.get(name) != null) {
+            return Arrays.asList(searchCriteria.get(name));
+        }
+        return Collections.emptyList();
+    }
+
     private static String getFilterSubqueryOrEpmptyString(int queryLength, FilterSubqueryResult subQueryResult) {
         StringBuilder query = new StringBuilder();
         if (subQueryResult.getQuery() != null && subQueryResult.getQuery().length() != 0) {
@@ -84,14 +82,6 @@ public class EpamTicketDAO extends DefaultTicketDao {
             query.append(subQueryResult.getQuery());
         }
         return query.toString();
-    }
-
-    private static <K, V> Map<K, V> getFilterSubqueryParamsOrEmptyMap(Map<K, V> queryParams) {
-        Map<K, V> params = new HashMap<>();
-        if (queryParams != null && !queryParams.isEmpty()) {
-            params.putAll(queryParams);
-        }
-        return params;
     }
 
     private static String getFirstParamOrNullByName(Map<String, String[]> paramMap, String name) {
@@ -107,7 +97,7 @@ public class EpamTicketDAO extends DefaultTicketDao {
         return getFlexibleSearchService().search("SELECT {pk} FROM {CsTicket}").getTotalCount();
     }
 
-    public List<Integer> getTicketCountsWithQueryParams(String query, Map<String, Set<? extends Object>> params) {
+    public <K> List<Integer> getTicketCountsWithQueryParams(String query, Map<String, Set<K>> params) {
         final FlexibleSearchQuery flexibleSearchQuery = new FlexibleSearchQuery(query);
         flexibleSearchQuery.addQueryParameters(params);
         flexibleSearchQuery.setResultClassList(Collections.singletonList(Integer.class));

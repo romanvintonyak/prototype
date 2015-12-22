@@ -7,7 +7,7 @@ import java.util.Set;
 import de.hybris.platform.core.model.user.UserGroupModel;
 import de.hybris.platform.servicelayer.user.UserService;
 
-public class DefaultGroupFilterStrategy extends DefaultInNotInFilterStrategy {
+public class DefaultGroupFilterStrategy extends DefaultInNotInFilterStrategy <UserGroupModel> {
 
     private EpamTicketDAO ticketDao;
     private UserService userService;

@@ -9,7 +9,7 @@ import de.hybris.platform.ticket.model.CsTicketModel;
 
 public interface EpamTicketService {
 
-    List<CsTicketModel> getTicketsByCriteria(/*EpamTicketSearchCriteria searchCriteria*/ Map<String,String[]> searchCriteria);
+    List<CsTicketModel> getTicketsByCriteria(Map<String,String[]> searchCriteria);
 
     CsTicketModel getTicketById(String ticketId);
 

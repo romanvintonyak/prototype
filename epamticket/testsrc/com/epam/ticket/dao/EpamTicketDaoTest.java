@@ -14,7 +14,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -53,14 +52,13 @@ public class EpamTicketDaoTest {
         Set<EpamTicketsFilterCriteria> criterias = new HashSet<>();
         EpamTicketsFilterCriteria criteria;
 
-        criteria = new EpamTicketsFilterCriteria(criteriaName, criteriaDisplayName, "", "");
+        criteria = new EpamTicketsFilterCriteria(criteriaName, criteriaDisplayName, "", false);
         criteria.setCount(10);
         criterias.add(criteria);
 
         filter = new EpamTicketsFilter(filterName, filterDisplayName);
         filter.setCriterias(criterias);
 
-        
     }
 
     @Test
@@ -79,13 +77,4 @@ public class EpamTicketDaoTest {
         assertEquals(UNEXPECTED_RESULT, fakeResult, result);
     }
     
-    @Test
-    public void shouldReturnFilteredTicketsCounts() {
-//        epamTicketDao.setAvailableFilters(availableFilters);
-//        when(filterQueryExecuter.executeFilter(any(),any()))
-//        EpamFilteredTicketsCounts result = epamTicketDao.getFilteredTicketsCounts();
-       assertTrue(false);
-        
-
-    }
 }

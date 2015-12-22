@@ -12,26 +12,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public abstract class DefaultInNotInFilterStrategy implements FilterStrategy {
+public abstract class DefaultInNotInFilterStrategy<K> implements FilterStrategy {
 
     @Override
     public Set<EpamTicketsFilterCriteria> getFilterCriteriasWithCounts(EpamTicketsFilter configFilter) {
         Set<EpamTicketsFilterCriteria> filterCriteriaCounts = new HashSet<>();
 
         for (EpamTicketsFilterCriteria configCriteria : configFilter.getCriterias()) {
-           Map<String, Set<? extends Object>> params = new HashMap<>();
-           StringBuilder query = new StringBuilder("SELECT count({PK}) FROM {CsTicket} WHERE ");
+            Map<String, Set<K>> params = new HashMap<>();
+            StringBuilder query = new StringBuilder("SELECT count({PK}) FROM {CsTicket} WHERE ");
             query.append(getQueryWhereParam());
             query.append(" " + configCriteria.getFilterQuery() + " ");
-            if (!configCriteria.getFilterQuery().equals("IS NULL")) {
+            if (configCriteria.isRequireParams()) {
                 params.put(configCriteria.getName(), getParams());
                 query.append("(?" + configCriteria.getName() + ")");
             }
-            
+
             List<Integer> counts = getTicketDao().getTicketCountsWithQueryParams(query.toString(), params);
             Integer count = counts.isEmpty() ? Integer.valueOf(0) : counts.get(0);
 
-            EpamTicketsFilterCriteria criteria = new EpamTicketsFilterCriteria(configCriteria.getName(), configCriteria.getDisplayName(), null, null);
+            EpamTicketsFilterCriteria criteria = new EpamTicketsFilterCriteria(configCriteria.getName(), configCriteria.getDisplayName(), null, false);
             criteria.setCount(count);
             filterCriteriaCounts.add(criteria);
         }
@@ -46,12 +46,13 @@ public abstract class DefaultInNotInFilterStrategy implements FilterStrategy {
 
         for (EpamTicketsFilterCriteria filterCriteria : filter.getCriterias()) {
             if (criterias.contains(filterCriteria.getName())) {
-                if (query.length() > 0)
+                if (query.length() > 0) {
                     query.append(" OR ");
+                }
                 query.append(getQueryWhereParam());
                 query.append(" " + filterCriteria.getFilterQuery() + " ");
 
-                if (!filterCriteria.getFilterQuery().equals("IS NULL")) {
+                if (filterCriteria.isRequireParams()) {
                     params.put(filterCriteria.getName(), getParams());
                     query.append("(?" + filterCriteria.getName() + ")");
                     result.setQueryParams(params);
@@ -66,7 +67,7 @@ public abstract class DefaultInNotInFilterStrategy implements FilterStrategy {
 
     protected abstract String getQueryWhereParam();
 
-    protected abstract Set<? extends Object> getParams();
+    protected abstract Set<K> getParams();
 
     public abstract EpamTicketDAO getTicketDao();
 

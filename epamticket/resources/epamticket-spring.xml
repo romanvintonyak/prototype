@@ -71,11 +71,8 @@
     </bean>
 
     <bean id="epamTicketDao" class="com.epam.ticket.dao.EpamTicketDAO" parent="abstractItemDao" scope="tenant">
-        <property name="userService" ref="userService"/>
-        <property name="enumerationService" ref="enumerationService"/>
         <property name="availableSorts">
             <list>
-
                 <bean class="com.epam.ticket.dao.EpamCsSort">
                     <constructor-arg name="field" value="ticketId"/>
                 </bean>

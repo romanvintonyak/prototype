@@ -109,7 +109,7 @@ public class EpamTicketControllerTest {
         ticketCounterHolder.setTotal(TOTAL_TICKETS_COUNT);
         
         Set<EpamTicketsFilterCriteria> criterias = new HashSet<>();
-        criteria = new EpamTicketsFilterCriteria("medium", "Medium", "", "");
+        criteria = new EpamTicketsFilterCriteria("medium", "Medium", "", false);
         criteria.setCount(10);
         criterias.add(criteria);
 
