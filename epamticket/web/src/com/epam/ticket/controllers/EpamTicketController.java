@@ -3,7 +3,6 @@ package com.epam.ticket.controllers;
 import com.epam.dto.EpamFrontConfig;
 import com.epam.dto.EpamNewTicket;
 import com.epam.dto.EpamTicket;
-import com.epam.dto.EpamTicketSearchCriteria;
 import com.epam.dto.EpamTicketStateHolder;
 import com.epam.dto.TicketCounterHolder;
 import com.epam.ticket.facades.impl.DefaultEpamTicketFacade;

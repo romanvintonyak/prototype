@@ -1,6 +1,5 @@
 package com.epam.ticket.dao;
 
-import com.epam.dto.EpamFrontConfig;
 import com.epam.dto.EpamTicketsFilter;
 import com.epam.dto.EpamTicketsFilterCriteria;
 
@@ -15,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
@@ -29,15 +29,13 @@ public class EpamTicketDaoTest {
     public static final String UNEXPECTED_RESULT = "Unexpected result";
 
     private EpamTicketDAO epamTicketDao;
-    private EpamTicketsFilterCriteria criteria;
     private EpamTicketsFilter filter;
-    private EpamFrontConfig filterConfig;
 
     @Mock
     private FlexibleSearchService mockFlexibleSearchService;
 
     @Mock
-    private SearchResult mockSearchResult;
+    private SearchResult<List<Integer>> mockSearchResult;
     
     @Before
     public void setUp() throws Exception {

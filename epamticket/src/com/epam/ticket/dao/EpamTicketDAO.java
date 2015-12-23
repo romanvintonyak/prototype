@@ -3,15 +3,9 @@ package com.epam.ticket.dao;
 import com.epam.dto.EpamTicketsFilter;
 import com.epam.strategies.FilterSubqueryResult;
 
-import de.hybris.platform.enumeration.EnumerationService;
-import de.hybris.platform.servicelayer.exceptions.AmbiguousIdentifierException;
 import de.hybris.platform.servicelayer.search.FlexibleSearchQuery;
 import de.hybris.platform.servicelayer.search.SearchResult;
-import de.hybris.platform.servicelayer.user.UserService;
 import de.hybris.platform.ticket.dao.impl.DefaultTicketDao;
-import de.hybris.platform.ticket.enums.CsTicketCategory;
-import de.hybris.platform.ticket.enums.CsTicketPriority;
-import de.hybris.platform.ticket.enums.CsTicketState;
 import de.hybris.platform.ticket.model.CsTicketModel;
 
 import org.apache.log4j.Logger;
@@ -60,8 +54,6 @@ public class EpamTicketDAO extends DefaultTicketDao {
             Boolean sortReverse = Boolean.valueOf(getFirstParamOrNullByName(searchCriteria, SORT_REVERSE));
             query.append(sortReverse ? "DESC" : "ASC");
         }
-
-        LOG.info("Running query: " + query + " with params: " + paramMap);
 
         SearchResult<CsTicketModel> resultTickets = getFlexibleSearchService().search(query.toString(), paramMap);
 

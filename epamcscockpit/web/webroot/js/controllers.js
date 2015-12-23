@@ -170,13 +170,12 @@ epamcscockpit.controller("TicketDetailsCtrl", function ($scope, $http, $routePar
     $scope.hideCloseButton = true;
 });
 
-epamcscockpit.controller("TicketCreateCtrl", function ($scope, $location, $http, TicketCreateResource /*, testconst*/) {
-    //console.log($scope.getCriterias('state')[1].name);
+epamcscockpit.controller("TicketCreateCtrl", function ($scope, $location, $http, TicketCreateResource) {
     fillConstants($scope);
     $scope.newTicket = {
             
-        category: $scope.ticketCategories[1],  //$scope.getCriterias('category')[0].name, //$scope.ticketCategories[1], 
-        priority: $scope.ticketPriorities[1] //$scope.getCriterias('priority')[0].name  //$scope.ticketPriorities[1]
+        category: $scope.ticketCategories[1],
+        priority: $scope.ticketPriorities[1]
     };
     $scope.newEvent = {
         interventionType: $scope.ticketInterventions[1],
