@@ -38,14 +38,15 @@ public class RestHelper {
      * @param url        requested url
      * @param clazz      mapped class
      * @param jsonObject json object
+     * @param httpMethod HttpMethod (PUT POST)
      * @return object from json
      */
-    public <T, R> T call(final String url, final Class<T> clazz, final R jsonObject) {
+    public <T, R> T call(final String url, final Class<T> clazz, final R jsonObject, HttpMethod httpMethod) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = getHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<R> request = new HttpEntity<>(jsonObject, headers);
-        return restTemplate.exchange(url, HttpMethod.POST, request, clazz).getBody();
+        return restTemplate.exchange(url, httpMethod, request, clazz).getBody();
     }
 
     /**

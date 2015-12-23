@@ -3,6 +3,7 @@ package com.epam.test.controller;
 import com.epam.dto.EpamCustomerEvent;
 import com.epam.dto.EpamNewTicket;
 import com.epam.dto.EpamTicket;
+import com.epam.dto.EpamTicketStateHolder;
 import com.epam.dto.TicketCounterHolder;
 import com.epam.test.helper.RestHelperMock;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,11 +20,13 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.Assert;
 import org.springframework.web.context.WebApplicationContext;
+
 import java.util.Collections;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -36,6 +39,7 @@ public class CockpitTicketControllerTest {
     private static final String TICKET_COUNT = "ticketCount";
     private static ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private EpamTicket epamTicket;
+    private EpamTicketStateHolder stateHolder;
     private EpamNewTicket epamNewTicket;
 
     @Autowired
@@ -69,10 +73,9 @@ public class CockpitTicketControllerTest {
     }
 
     @Test
-    public void shouldReturnTicketBuId() throws Exception {
+    public void shouldReturnTicketById() throws Exception {
         restHelperMock.setMockResponseDto(epamTicket);
-        String ticketId = "1";
-        MvcResult response = mockMvc.perform(get(BASE_URL + ticketId)
+        MvcResult response = mockMvc.perform(get(BASE_URL + TICKET_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(OBJECT_MAPPER.writeValueAsString(epamTicket)))
                 .andExpect(status().isOk())
@@ -87,6 +90,17 @@ public class CockpitTicketControllerTest {
         MvcResult response = mockMvc.perform(get(BASE_URL + TICKET_COUNT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(OBJECT_MAPPER.writeValueAsString(ticketCounterHolder)))
+                .andExpect(status().isOk())
+                .andReturn();
+        Assert.notNull(response.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void shouldCloseTicket() throws Exception {
+        restHelperMock.setMockResponseDto(epamTicket);
+        MvcResult response = mockMvc.perform(put(BASE_URL + TICKET_ID + "/changestate")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(OBJECT_MAPPER.writeValueAsString(stateHolder)))
                 .andExpect(status().isOk())
                 .andReturn();
         Assert.notNull(response.getResponse().getContentAsString());
@@ -120,6 +134,10 @@ public class CockpitTicketControllerTest {
         epamNewTicket = new EpamNewTicket();
         epamNewTicket.setNewTicket(epamTicket);
         epamNewTicket.setCreationEvent(epamCustomerEvent);
+
+        stateHolder = new EpamTicketStateHolder();
+        stateHolder.setNewState("Closed");
+        stateHolder.setComment("Close ticket");
     }
 
 }
