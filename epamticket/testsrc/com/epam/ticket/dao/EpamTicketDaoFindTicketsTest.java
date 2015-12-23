@@ -66,6 +66,7 @@ public class EpamTicketDaoFindTicketsTest {
         searchCriteria.put("state", stateCriterias);
         searchCriteria.put(EpamTicketDAO.SORT_NAME, sortCriteria);
         filters = getAvailableFilters();
+        
     }
     
     @Test
@@ -81,7 +82,7 @@ public class EpamTicketDaoFindTicketsTest {
         assertEquals("State must be 'Closed'", "Closed", paramState.get(0));
         assertTrue("ORDER BY must be present when sortName is set", stringQueryArg.getValue().contains("ORDER BY"));
         assertTrue("ASC must be present when SORT_REVERSE is false or null", stringQueryArg.getValue().contains("ASC"));
-        verify(mockFlexibleSearchService, times(1)).search(stringQueryArg.capture(), queryParamsArg.capture());
+        verify(mockFlexibleSearchService, times(1)).search(stringQueryArg.getValue(), queryParamsArg.getValue());
     }
 
     @Test
@@ -99,7 +100,7 @@ public class EpamTicketDaoFindTicketsTest {
         assertEquals("State must be 'Closed'", "Closed", paramState.get(0));
         assertTrue("ORDER BY must be present when sortName is set", stringQueryArg.getValue().contains("ORDER BY"));
         assertTrue("DESC must be present when SORT_REVERSE is true", stringQueryArg.getValue().contains("DESC"));
-        verify(mockFlexibleSearchService, times(1)).search(stringQueryArg.capture(), queryParamsArg.capture());
+        verify(mockFlexibleSearchService, times(1)).search(stringQueryArg.getValue(), queryParamsArg.getValue());
     }
 
     @Test
@@ -110,7 +111,7 @@ public class EpamTicketDaoFindTicketsTest {
         
         assertTrue("Params should be empty", queryParamsArg.getValue().isEmpty());
         assertFalse("ORDER BY must not be present when sortName is not set", stringQueryArg.getValue().contains("ORDER BY"));
-        verify(mockFlexibleSearchService, times(1)).search(stringQueryArg.capture(), queryParamsArg.capture());
+        verify(mockFlexibleSearchService, times(1)).search(stringQueryArg.getValue(), queryParamsArg.getValue());
     }
     
     private Set<EpamTicketsFilter> getAvailableFilters() {
