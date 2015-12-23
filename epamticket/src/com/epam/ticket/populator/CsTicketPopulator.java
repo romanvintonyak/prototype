@@ -9,23 +9,32 @@ import de.hybris.platform.ticket.enums.CsTicketPriority;
 import de.hybris.platform.ticket.enums.CsTicketState;
 import de.hybris.platform.ticket.model.CsTicketModel;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.Date;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class CsTicketPopulator implements Populator<EpamTicket, CsTicketModel> {
 
+    private DateFormat dateFormatter;
+
+    public CsTicketPopulator(DateFormat dateFormatter) {
+        this.dateFormatter = dateFormatter;
+    }
+
     @Override
     public void populate(EpamTicket source, CsTicketModel target) throws ConversionException {
         checkNotNull(source, "Source model should not be null");
         target.setTicketID(source.getTicketId());
-
+        //TODO populate User,Agent and Group. Cover with test
         /*UserModel customer = new UserModel();
         customer.setUid(source.getCustomerUid());
         customer.setName(source.getCustomerDisplayName());
         target.setCustomer(customer);*/
 
         AbstractOrderModel order = new AbstractOrderModel();
+
         order.setCode(source.getOrder());
         target.setOrder(order);
 
@@ -42,10 +51,19 @@ public class CsTicketPopulator implements Populator<EpamTicket, CsTicketModel> {
         target.setAssignedGroup(group);*/
 
         target.setHeadline(source.getHeadline());
-        target.setCreationtime(new Date());
-
+        target.setCreationtime(convertDate(source.getCreationTime()));
+        target.setModifiedtime(convertDate(source.getModifyTime()));
         target.setCategory(CsTicketCategory.valueOf(source.getCategory()));
         target.setPriority(CsTicketPriority.valueOf(source.getPriority()));
         target.setHeadline(source.getHeadline());
     }
+
+    private Date convertDate(String stringDate) {
+        try {
+            return dateFormatter.parse(stringDate);
+        } catch (ParseException e) {
+            throw new IllegalStateException("Cannot convert date: " + stringDate);
+        }
+    }
+
 }
