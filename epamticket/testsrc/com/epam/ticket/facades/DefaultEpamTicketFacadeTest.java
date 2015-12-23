@@ -21,7 +21,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.junit.rules.ExpectedException.none;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -68,7 +67,6 @@ public class DefaultEpamTicketFacadeTest {
         CsTicketModel dummyTicket = new CsTicketModel();
         CsCustomerEventModel dummyEvent = new CsCustomerEventModel();
 
-        doNothing().when(mockTicketBusinessService).addTicket(dummyTicket, dummyEvent);
         doReturn(dummyTicket).when(mockCsTicketConverter).convert(dummyTicketDto);
         doReturn(dummyEvent).when(mockCsCustomerEventConverter).convert(dummyEventDto);
         //when

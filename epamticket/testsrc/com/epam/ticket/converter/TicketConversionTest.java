@@ -74,33 +74,16 @@ public class TicketConversionTest extends AbstractConversionTest {
 
     @Test
     public void shouldMakeSuccessConvertation() {
-
-        EpamTicket source = new EpamTicket();
-        source.setTicketId(TICKET_ID);
-        source.setCustomerUid(CUSTOMER_ID);
-        source.setCustomerDisplayName(CUSTOMER_NAME);
-        source.setOrder(ORDER_CODE);
-        source.setCategory(CATEGORY.getCode());
-        source.setPriority(PRIORITY.getCode());
-        source.setState(STATE.getCode());
-        source.setAssignedAgent(AGENT_NAME);
-        source.setAssignedGroup(GROUP_NAME);
-        source.setHeadline(HEADLINE);
-        source.setCreationTime(dateFormatter.format(CREATION_TIME));
-        source.setModifyTime(dateFormatter.format(MODIFY_TIME));
-        source.setEvents(new ArrayList<>());
-
+        //given
+        EpamTicket source = prepareEpamTicket();
+        //when
         CsTicketModel target = epamToCsConverter.convert(source);
-
+        //then
         assertEquals(UNEXPECTED_CONVERTED_VALUE, target.getTicketID(), TICKET_ID);
-        assertEquals(UNEXPECTED_CONVERTED_VALUE, target.getCustomer().getUid(), CUSTOMER_ID);
-        assertEquals(UNEXPECTED_CONVERTED_VALUE, target.getCustomer().getDisplayName(), CUSTOMER_NAME);
         assertEquals(UNEXPECTED_CONVERTED_VALUE, target.getOrder().getCode(), ORDER_CODE);
         assertEquals(UNEXPECTED_CONVERTED_VALUE, target.getCategory().getCode(), CATEGORY.getCode());
         assertEquals(UNEXPECTED_CONVERTED_VALUE, target.getPriority().getCode(), PRIORITY.getCode());
         assertEquals(UNEXPECTED_CONVERTED_VALUE, target.getState().getCode(), STATE.getCode());
-        assertEquals(UNEXPECTED_CONVERTED_VALUE, target.getAssignedAgent().getDisplayName(), AGENT_NAME);
-        assertEquals(UNEXPECTED_CONVERTED_VALUE, target.getAssignedGroup().getDisplayName(), GROUP_NAME);
         assertEquals(UNEXPECTED_CONVERTED_VALUE, target.getHeadline(), HEADLINE);
         assertEquals(UNEXPECTED_CONVERTED_VALUE, target.getCreationtime(), CREATION_TIME);
         assertEquals(UNEXPECTED_CONVERTED_VALUE, target.getModifiedtime(), MODIFY_TIME);
@@ -167,5 +150,23 @@ public class TicketConversionTest extends AbstractConversionTest {
         assertEquals(UNEXPECTED_CONVERTED_VALUE, target.getHeadline(), HEADLINE);
         assertEquals(UNEXPECTED_CONVERTED_VALUE, target.getCreationTime(), dateFormatter.format(CREATION_TIME));
         assertEquals(UNEXPECTED_CONVERTED_VALUE, target.getModifyTime(), dateFormatter.format(MODIFY_TIME));
+    }
+
+    private EpamTicket prepareEpamTicket() {
+        EpamTicket source = new EpamTicket();
+        source.setTicketId(TICKET_ID);
+        source.setCustomerUid(CUSTOMER_ID);
+        source.setCustomerDisplayName(CUSTOMER_NAME);
+        source.setOrder(ORDER_CODE);
+        source.setCategory(CATEGORY.getCode());
+        source.setPriority(PRIORITY.getCode());
+        source.setState(STATE.getCode());
+        source.setAssignedAgent(AGENT_NAME);
+        source.setAssignedGroup(GROUP_NAME);
+        source.setHeadline(HEADLINE);
+        source.setCreationTime(dateFormatter.format(CREATION_TIME));
+        source.setModifyTime(dateFormatter.format(MODIFY_TIME));
+        source.setEvents(new ArrayList<>());
+        return source;
     }
 }
