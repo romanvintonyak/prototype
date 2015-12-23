@@ -16,6 +16,7 @@ function fillConstants($scope) { // todo quick and dirty hack, waiting for confi
         /*'customerDisplayName': 'Customer Name',*/
         'modifyTime': "Time Modified"
     };
+
 }
 
 epamcscockpit.config(["$routeProvider", "$httpProvider", function ($routeProvider, $httpProvider) {
@@ -51,13 +52,18 @@ epamcscockpit.config(["$routeProvider", "$httpProvider", function ($routeProvide
         .otherwise({
             redirectTo: "/"
         });
+    
 }]);
 
 epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval, $filter,
-                                                     TicketsResource, TicketCountResource, ConfigResource, initialConf) {
+                                                     TicketsResource, TicketCountResource, ConfigResource, initialConf, criteriasFilter) {
+    
     $scope.ticketConfig = initialConf.data;
     fillConstants($scope);
     $scope.errorMsg = "";
+    
+//    console.log(criteriasFilter($scope.ticketConfig.availableFilters, 'category')[0][0].name);
+    //console.log($filter('filter')($scope.ticketConfig.availableFilters, {name:'state'})[0].criterias);
 
     $scope.ticketStore = [];
     $scope.ticketSearchCriteria = {};
@@ -65,7 +71,7 @@ epamcscockpit.controller("TicketPoolCtrl", function ($scope, $http, $interval, $
 
     $scope.clearTicketSearchCriteria = function () {
         var sc = $scope.ticketSearchCriteria;
-        sc.categories = [];
+        sc.category = [];
         sc.agent = [];
         sc.group = [];
         sc.state = [];
@@ -164,12 +170,13 @@ epamcscockpit.controller("TicketDetailsCtrl", function ($scope, $http, $routePar
     $scope.hideCloseButton = true;
 });
 
-
-epamcscockpit.controller("TicketCreateCtrl", function ($scope, $location, $http, TicketCreateResource) {
+epamcscockpit.controller("TicketCreateCtrl", function ($scope, $location, $http, TicketCreateResource /*, testconst*/) {
+    //console.log($scope.getCriterias('state')[1].name);
     fillConstants($scope);
     $scope.newTicket = {
-        category: $scope.ticketConfig.availableFilters      //$scope.ticketCategories[1], 
-        priority: $scope.ticketPriorities[1]
+            
+        category: $scope.ticketCategories[1],  //$scope.getCriterias('category')[0].name, //$scope.ticketCategories[1], 
+        priority: $scope.ticketPriorities[1] //$scope.getCriterias('priority')[0].name  //$scope.ticketPriorities[1]
     };
     $scope.newEvent = {
         interventionType: $scope.ticketInterventions[1],
@@ -226,6 +233,6 @@ $.ajax({
         data: data
     });
 }).always(function () {
-    angular.bootstrap(document, ['epamcscockpit']);
+    angular.bootstrap(document, ['epamcscockpit', 'epamcscockpitFilters']);
 });
 

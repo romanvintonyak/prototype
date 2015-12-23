@@ -11,11 +11,12 @@ import com.epam.ticket.facades.impl.DefaultEpamTicketFacade;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -50,8 +51,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 public class EpamTicketControllerTest {
    
-    private static final Logger LOG = Logger.getLogger(EpamTicketControllerTest.class);
-
     public static final String BASE_URL = "/v1/tickets/";
     public static final String SEARCH_CRITERIA_PARAMS = "?priority=High&state=Open&sortReverse=true";
     public static final String TICKET_COUNT_URL = "ticketCount";
@@ -82,9 +81,12 @@ public class EpamTicketControllerTest {
 
     @Autowired
     private DefaultEpamTicketFacade defaultEpamTicketFacadeMock;
+    
+    @Captor ArgumentCaptor<Map<String, String[]> > searchArg;
 
     @Before
     public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
 
         mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
 
@@ -180,7 +182,7 @@ public class EpamTicketControllerTest {
     @Test
     public void shouldReturnTicketByCriteria() throws Exception {
 
-        ArgumentCaptor<Map> searchArg = ArgumentCaptor.forClass(Map.class);
+        //ArgumentCaptor<Map> searchArg = ArgumentCaptor.forClass(Map.class);
         doReturn(epamTickets).when(defaultEpamTicketFacadeMock).getTicketsByCriteria(searchArg.capture());
 
         MvcResult response = mockMvc.perform(get(BASE_URL + SEARCH_CRITERIA_PARAMS)
@@ -189,7 +191,7 @@ public class EpamTicketControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
 
-        Map searchCriteria = searchArg.getAllValues().get(0);
+        Map<String, String[]>  searchCriteria = searchArg.getAllValues().get(0);
         assertTrue("Priority criteria should be present", searchCriteria.containsKey("priority"));
         assertTrue("State criteria should be present", searchCriteria.containsKey("state"));
         assertEquals(UNEXPECTED_RESPONSE_BODY,

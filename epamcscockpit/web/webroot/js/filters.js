@@ -4,4 +4,17 @@ angular.module("epamcscockpitFilters", [])
 		return function(text){
 			return Base64.encode(text);
 		};
-	});
+	})
+	.filter('criterias', function() {
+	    function getCriterias(input, filterName) {
+	        var result = [];
+	        for (var i=0; i<input.length; i++) {
+	            if(input[i].name == filterName) {
+	                result.push(input[i].criterias);
+	            }
+	        }
+	        return  result;
+	    }
+	    
+	    return getCriterias;
+	})

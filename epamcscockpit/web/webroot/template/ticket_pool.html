@@ -13,7 +13,6 @@
             <span ng-class="{'sub-header_sortOrder__active': sortReverse}">&#9660;</span
                     ><span ng-class="{'sub-header_sortOrder__active': !sortReverse}">&#9650;</span>
         </span>
-
         <div class="sub-header_ticketCount">
            Total Tickets: <span class="sub-header_ticketCount_title"> {{ticketStore.length}}</span>
         </div>
@@ -22,16 +21,16 @@
     <div class="container">
 
         <aside class="sidebar filter">
-        
+
             <ul>
-                <li ng-repeat="filter in ticketConfig.availableFilters | orderBy:'name'" class="filter__item">
+                <li ng-repeat="tfilter in ticketConfig.availableFilters | filter:{name:'!category'} | orderBy:'name'" class="filter__item">
                 <div class="filter__section">
-                    <h3 class="filter__title">{{filter.displayName}}</h3>
+                    <h3 class="filter__title">{{tfilter.displayName}}</h3>
                     <ul>
-                        <li ng-repeat="criteria in filter.criterias | orderBy:'name'" class="filter__item">
+                        <li ng-repeat="criteria in tfilter.criterias | orderBy:'name'" class="filter__item">
                             <label class="filter__item-name">
                                 <input class="filter__item-checkbox" type="checkbox"
-                                   checklist-model="ticketSearchCriteria[filter.name]" checklist-value="criteria.name"/>
+                                   checklist-model="ticketSearchCriteria[tfilter.name]" checklist-value="criteria.name"/>
                                 {{criteria.displayName}}
                             </label>
                             <span class="filter__item-counter">{{criteria.count || 0}}</span>

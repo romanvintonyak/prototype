@@ -28,7 +28,7 @@
                     <constructor-arg name="displayName" value="Unassigned"/>
                     <constructor-arg name="filterQuery" value="IS NULL"/>
                     <constructor-arg name="requireParams" value="false"/>
-                    </bean>
+                </bean>
             </set>
         </property>
     </bean>
@@ -56,7 +56,7 @@
                     <constructor-arg name="displayName" value="Unassigned"/>
                     <constructor-arg name="filterQuery" value="IS NULL"/>
                     <constructor-arg name="requireParams" value="false"/>
-                    </bean>
+                </bean>
             </set>
         </property>
     </bean>
@@ -84,7 +84,7 @@
                     <constructor-arg name="displayName" value="Closed"/>
                     <constructor-arg name="filterQuery" value=""/>
                     <constructor-arg name="requireParams" value="true"/>
-                    </bean>
+                </bean>
             </set>
         </property>
     </bean>
@@ -112,7 +112,47 @@
                     <constructor-arg name="displayName" value="High"/>
                     <constructor-arg name="filterQuery" value=""/>
                     <constructor-arg name="requireParams" value="true"/>
-                    </bean>
+                </bean>
+            </set>
+        </property>
+    </bean>
+
+    <bean id="epamCategoryFilter" class="com.epam.dto.EpamTicketsFilter">
+        <constructor-arg name="name" value="category"/>
+        <constructor-arg name="displayName" value="CATEGORY"/>
+        <property name="filterStrategy" ref="defaultEnumFilterStrategy"/>
+        <property name="criterias">
+            <set>
+                <bean class="com.epam.dto.EpamTicketsFilterCriteria">
+                    <constructor-arg name="name" value="Problem"/>
+                    <constructor-arg name="displayName" value="Problem"/>
+                    <constructor-arg name="filterQuery" value=""/>
+                    <constructor-arg name="requireParams" value="true"/>
+                </bean>
+                <bean class="com.epam.dto.EpamTicketsFilterCriteria">
+                    <constructor-arg name="name" value="Incident"/>
+                    <constructor-arg name="displayName" value="Incident"/>
+                    <constructor-arg name="filterQuery" value=""/>
+                    <constructor-arg name="requireParams" value="true"/>
+                </bean>
+                <bean class="com.epam.dto.EpamTicketsFilterCriteria">
+                    <constructor-arg name="name" value="Complaint"/>
+                    <constructor-arg name="displayName" value="Complaint"/>
+                    <constructor-arg name="filterQuery" value=""/>
+                    <constructor-arg name="requireParams" value="true"/>
+                </bean>
+                <bean class="com.epam.dto.EpamTicketsFilterCriteria">
+                    <constructor-arg name="name" value="Fraud"/>
+                    <constructor-arg name="displayName" value="Fraud"/>
+                    <constructor-arg name="filterQuery" value=""/>
+                    <constructor-arg name="requireParams" value="true"/>
+                </bean>
+                <bean class="com.epam.dto.EpamTicketsFilterCriteria">
+                    <constructor-arg name="name" value="Note"/>
+                    <constructor-arg name="displayName" value="Note"/>
+                    <constructor-arg name="filterQuery" value=""/>
+                    <constructor-arg name="requireParams" value="true"/>
+                </bean>
             </set>
         </property>
     </bean>
