@@ -4,6 +4,10 @@ import com.epam.dto.EpamFrontConfig;
 import com.epam.dto.EpamTicketsFilter;
 import com.epam.dto.EpamTicketsFilterCriteria;
 
+import de.hybris.bootstrap.annotations.UnitTest;
+import de.hybris.platform.servicelayer.search.FlexibleSearchService;
+import de.hybris.platform.servicelayer.search.SearchResult;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,10 +21,6 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-
-import de.hybris.bootstrap.annotations.UnitTest;
-import de.hybris.platform.servicelayer.search.FlexibleSearchService;
-import de.hybris.platform.servicelayer.search.SearchResult;
 
 @UnitTest
 @RunWith(MockitoJUnitRunner.class)

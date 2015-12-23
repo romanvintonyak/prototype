@@ -13,6 +13,7 @@ import de.hybris.platform.ticket.enums.CsTicketCategory;
 import de.hybris.platform.ticket.enums.CsTicketPriority;
 import de.hybris.platform.ticket.enums.CsTicketState;
 import de.hybris.platform.ticket.model.CsTicketModel;
+
 import org.apache.log4j.Logger;
 import org.springframework.util.Assert;
 

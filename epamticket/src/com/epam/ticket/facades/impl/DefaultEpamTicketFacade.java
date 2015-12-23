@@ -11,6 +11,9 @@ import com.epam.ticket.services.EpamTicketBusinessService;
 import com.epam.ticket.services.EpamTicketService;
 import com.google.common.base.Preconditions;
 
+import de.hybris.platform.ticket.model.CsTicketModel;
+import de.hybris.platform.ticket.service.TicketException;
+
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -20,9 +23,6 @@ import java.util.Map;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static de.hybris.platform.ticket.enums.CsTicketState.OPEN;
-
-import de.hybris.platform.ticket.model.CsTicketModel;
-import de.hybris.platform.ticket.service.TicketException;
 
 public class DefaultEpamTicketFacade implements EpamTicketFacade {
 

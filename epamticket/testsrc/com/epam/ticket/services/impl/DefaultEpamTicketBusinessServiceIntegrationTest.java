@@ -2,20 +2,6 @@ package com.epam.ticket.services.impl;
 
 import com.epam.ticket.services.EpamTicketBusinessService;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-
-import java.util.Date;
-
-import javax.annotation.Resource;
-
-import static de.hybris.platform.ticket.enums.CsTicketCategory.NOTE;
-import static de.hybris.platform.ticket.enums.CsTicketPriority.LOW;
-import static org.junit.Assert.assertEquals;
-import static org.junit.rules.ExpectedException.none;
-
 import de.hybris.platform.core.model.order.OrderModel;
 import de.hybris.platform.servicelayer.model.ModelService;
 import de.hybris.platform.servicelayer.user.UserService;
@@ -26,6 +12,20 @@ import de.hybris.platform.ticket.jalo.AbstractTicketsystemTest;
 import de.hybris.platform.ticket.model.CsTicketModel;
 import de.hybris.platform.ticket.service.TicketBusinessService;
 import de.hybris.platform.ticket.service.TicketException;
+
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import javax.annotation.Resource;
+
+import java.util.Date;
+
+import static de.hybris.platform.ticket.enums.CsTicketCategory.NOTE;
+import static de.hybris.platform.ticket.enums.CsTicketPriority.LOW;
+import static org.junit.Assert.assertEquals;
+import static org.junit.rules.ExpectedException.none;
 
 public class DefaultEpamTicketBusinessServiceIntegrationTest extends AbstractTicketsystemTest {
 

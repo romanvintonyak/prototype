@@ -6,13 +6,13 @@ import com.epam.dto.EpamTicketsFilterCriteria;
 import com.epam.ticket.dao.EpamTicketDAO;
 import com.epam.ticket.services.EpamTicketService;
 
+import de.hybris.platform.servicelayer.exceptions.AmbiguousIdentifierException;
+import de.hybris.platform.ticket.model.CsTicketModel;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import de.hybris.platform.servicelayer.exceptions.AmbiguousIdentifierException;
-import de.hybris.platform.ticket.model.CsTicketModel;
 
 public class DefaultEpamTicketService implements EpamTicketService {
 

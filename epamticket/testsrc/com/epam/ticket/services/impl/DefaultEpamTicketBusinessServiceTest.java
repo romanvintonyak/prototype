@@ -2,6 +2,14 @@ package com.epam.ticket.services.impl;
 
 import com.epam.ticket.services.EpamTicketBusinessService;
 
+import de.hybris.bootstrap.annotations.UnitTest;
+import de.hybris.platform.ticket.enums.CsTicketState;
+import de.hybris.platform.ticket.events.model.CsCustomerEventModel;
+import de.hybris.platform.ticket.model.CsTicketModel;
+import de.hybris.platform.ticket.service.TicketException;
+import de.hybris.platform.ticket.service.impl.DefaultTicketBusinessService;
+import de.hybris.platform.ticket.service.impl.DefaultTicketService;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -17,14 +25,6 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import de.hybris.bootstrap.annotations.UnitTest;
-import de.hybris.platform.ticket.enums.CsTicketState;
-import de.hybris.platform.ticket.events.model.CsCustomerEventModel;
-import de.hybris.platform.ticket.model.CsTicketModel;
-import de.hybris.platform.ticket.service.TicketException;
-import de.hybris.platform.ticket.service.impl.DefaultTicketBusinessService;
-import de.hybris.platform.ticket.service.impl.DefaultTicketService;
 
 @UnitTest
 @RunWith(MockitoJUnitRunner.class)

@@ -2,6 +2,9 @@ package com.epam.ticket.services.impl;
 
 import com.epam.ticket.dao.EpamTicketDAO;
 
+import de.hybris.bootstrap.annotations.UnitTest;
+import de.hybris.platform.ticket.model.CsTicketModel;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,9 +18,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import de.hybris.bootstrap.annotations.UnitTest;
-import de.hybris.platform.ticket.model.CsTicketModel;
 
 @UnitTest
 public class DefaultEpamTicketServiceTest {

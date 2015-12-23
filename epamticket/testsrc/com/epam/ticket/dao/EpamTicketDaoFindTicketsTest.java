@@ -4,6 +4,11 @@ import com.epam.dto.EpamTicketsFilter;
 import com.epam.dto.EpamTicketsFilterCriteria;
 import com.epam.ticket.strategies.DefaultEnumFilterStrategy;
 
+import de.hybris.bootstrap.annotations.UnitTest;
+import de.hybris.platform.servicelayer.search.FlexibleSearchService;
+import de.hybris.platform.servicelayer.search.SearchResult;
+import de.hybris.platform.ticket.model.CsTicketModel;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,11 +31,6 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-
-import de.hybris.bootstrap.annotations.UnitTest;
-import de.hybris.platform.servicelayer.search.FlexibleSearchService;
-import de.hybris.platform.servicelayer.search.SearchResult;
-import de.hybris.platform.ticket.model.CsTicketModel;
 
 @UnitTest
 @RunWith(MockitoJUnitRunner.class)
