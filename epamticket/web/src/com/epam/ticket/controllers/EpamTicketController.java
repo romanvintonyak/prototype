@@ -38,7 +38,7 @@ public class EpamTicketController {
     private DefaultEpamTicketFacade defaultEpamTicketFacade;
 
     @RequestMapping(method = GET)
-    public Collection<EpamTicket> getTicketsByCriteria(/*EpamTicketSearchCriteria searchCriteria*/final HttpServletRequest request) {
+    public Collection<EpamTicket> getTicketsByCriteria(final HttpServletRequest request) {
        return defaultEpamTicketFacade.getTicketsByCriteria(request.getParameterMap());
     }
 

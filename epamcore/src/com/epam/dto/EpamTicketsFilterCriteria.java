@@ -13,7 +13,7 @@ public class EpamTicketsFilterCriteria {
 
     public EpamTicketsFilterCriteria() {
     }
-
+    
     public EpamTicketsFilterCriteria(final String name, final String displayName, final String filterQuery, final boolean requireParams) {
         this.name = name;
         this.displayName = displayName;

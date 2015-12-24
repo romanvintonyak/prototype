@@ -13,7 +13,7 @@ public interface EpamTicketFacade {
 
     EpamTicket addTicket(EpamTicket ticket, EpamCustomerEvent event);
 
-    List<EpamTicket> getTicketsByCriteria(Map<String,String[]> searchCriteria);
+    List<EpamTicket> getTicketsByCriteria(Map<String, String[]> searchCriteria);
 
     EpamTicket getTicketById(String ticketId);
 

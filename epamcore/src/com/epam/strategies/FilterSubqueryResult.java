@@ -3,15 +3,19 @@ package com.epam.strategies;
 import java.util.Map;
 
 public class FilterSubqueryResult {
-    private String Query;
+    private String query;
     private Map<? extends String, ? extends Object> queryParams;
 
     public String getQuery() {
-        return Query;
+        return query;
     }
 
     public void setQuery(final String query) {
-        Query = query;
+        this.query = query;
+    }
+    
+    public boolean isEmpty() {
+        return query == null || query.isEmpty();
     }
 
     /**

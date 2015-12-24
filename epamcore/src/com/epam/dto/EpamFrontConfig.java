@@ -13,7 +13,7 @@ public class EpamFrontConfig {
         return availableFilters;
     }
 
-    public void setAvailableFilters(final Set<EpamTicketsFilter> availableFilters) {
+    public void setAvailableFilters(Set<EpamTicketsFilter> availableFilters) {
         this.availableFilters = availableFilters;
     }
 

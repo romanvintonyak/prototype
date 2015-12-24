@@ -15,7 +15,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -36,21 +35,20 @@ public class EpamTicketDAO extends DefaultTicketDao {
         query = new StringBuilder(QUERY_STRING);
         Map<String, Object> paramMap = new TreeMap<>();
 
-        for (EpamTicketsFilter filter : filters) {
+        filters.stream().forEach(filter -> {
             List<String> criterias = getCriterias(searchCriteria, filter.getName());
             if (!criterias.isEmpty()) {
                 FilterSubqueryResult subQueryResult = filter.getFilterStrategy().buildFilterSubquery(filter, criterias);
                 query.append(getFilterSubqueryOrEpmptyString(query.length(), subQueryResult));
                 paramMap.putAll(subQueryResult.getQueryParams());
             }
-        }
-
+        });
+        
         String sortName = getFirstParamOrNullByName(searchCriteria, SORT_NAME);
         if (!isNullOrEmpty(sortName)) {
             EpamCsSort sort = sorts.get(sortName);
             Assert.notNull(sort, "Sort " + sortName + " not found");
-            query.append("ORDER BY {t.");
-            query.append(sort.getFlexField()).append("} "); // danger, may cause FlexSearch manipulation
+            query.append("ORDER BY {t.").append(sort.getFlexField()).append("} "); // danger, may cause FlexSearch manipulation
             Boolean sortReverse = Boolean.valueOf(getFirstParamOrNullByName(searchCriteria, SORT_REVERSE));
             query.append(sortReverse ? "DESC" : "ASC");
         }
@@ -70,9 +68,8 @@ public class EpamTicketDAO extends DefaultTicketDao {
 
     private static String getFilterSubqueryOrEpmptyString(int queryLength, FilterSubqueryResult subQueryResult) {
         StringBuilder query = new StringBuilder();
-        if (subQueryResult.getQuery() != null && subQueryResult.getQuery().length() != 0) {
-            query.append(getJoiningString(queryLength));
-            query.append(subQueryResult.getQuery());
+        if ( !subQueryResult.isEmpty()) {
+            query.append(getJoiningString(queryLength)).append(subQueryResult.getQuery());
         }
         return query.toString();
     }
@@ -108,10 +105,7 @@ public class EpamTicketDAO extends DefaultTicketDao {
         List<List> queryResult = searchResult.getResult();
 
         Map<String, Integer> filterCounts = new HashMap<>();
-        for (Iterator<List> iter = queryResult.iterator(); iter.hasNext();) {
-            List row = iter.next();
-            filterCounts.put((String) row.get(0), (Integer) row.get(1));
-        }
+        queryResult.stream().forEach(row ->  filterCounts.put((String) row.get(0), (Integer) row.get(1)));
         return filterCounts;
     }
 
@@ -121,9 +115,7 @@ public class EpamTicketDAO extends DefaultTicketDao {
 
     public void setAvailableSorts(Collection<EpamCsSort> sorts) {
         Map<String, EpamCsSort> res = new HashMap<>();
-        for (EpamCsSort sort : sorts) {
-            res.put(sort.getName(), sort);
-        }
+        sorts.stream().forEach(sort -> res.put(sort.getName(), sort));
         this.sorts = res;
     }
 

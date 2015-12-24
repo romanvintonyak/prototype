@@ -12,7 +12,7 @@ public class EpamCustomerEvent extends EpamTicketEvent {
     }
 
     @Override
-    public void setText(final String text) {
+    public void setText(String text) {
         this.text = text;
     }
 
@@ -20,7 +20,7 @@ public class EpamCustomerEvent extends EpamTicketEvent {
         return interventionType;
     }
 
-    public void setInterventionType(final String interventionType) {
+    public void setInterventionType(String interventionType) {
         this.interventionType = interventionType;
     }
 
@@ -28,7 +28,7 @@ public class EpamCustomerEvent extends EpamTicketEvent {
         return reason;
     }
 
-    public void setReason(final String reason) {
+    public void setReason(String reason) {
         this.reason = reason;
     }
 }

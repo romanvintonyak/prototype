@@ -52,7 +52,7 @@ public class DefaultEpamTicketFacade implements EpamTicketFacade {
     }
 
     @Override
-    public List<EpamTicket> getTicketsByCriteria(Map<String,String[]> searchCriteria) {
+    public List<EpamTicket> getTicketsByCriteria(Map<String, String[]> searchCriteria) {
         LOG.info("Search by criteria: " + searchCriteria);
         List<CsTicketModel> csTicketModels = ticketService.getTicketsByCriteria(searchCriteria);
         return getEpamTickets(csTicketModels);
