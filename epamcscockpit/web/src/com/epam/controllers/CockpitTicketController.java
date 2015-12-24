@@ -1,17 +1,19 @@
 package com.epam.controllers;
 
-import com.epam.dto.EpamFilteredTicketsCounts;
+import com.epam.dto.EpamFrontConfig;
 import com.epam.dto.EpamNewTicket;
 import com.epam.dto.EpamTicket;
 import com.epam.dto.EpamTicketStateHolder;
 import com.epam.dto.TicketCounterHolder;
 import com.epam.helper.RestHelper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -51,9 +53,10 @@ public class CockpitTicketController {
         return restHelper.call(PATH + "ticketCount", TicketCounterHolder.class);
     }
 
-    @RequestMapping(value = "/filteredTicketsCounts", method = RequestMethod.GET)
-    public EpamFilteredTicketsCounts getTicketCounts() {
-        return restHelper.call(PATH + "filteredTicketsCounts", EpamFilteredTicketsCounts.class);
+    @RequestMapping(value = "/config", method = RequestMethod.GET)
+    @ResponseBody
+    public EpamFrontConfig getConfig() {
+        return restHelper.call(PATH + "config", EpamFrontConfig.class);
     }
 
     @RequestMapping(value = "/{ticketId}/changestate", method = RequestMethod.PUT, consumes = APPLICATION_JSON_VALUE)

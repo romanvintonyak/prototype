@@ -1,4 +1,4 @@
-package com.epam.test.controller;
+package com.epam.controllers;
 
 import com.epam.dto.EpamCustomerEvent;
 import com.epam.dto.EpamNewTicket;
@@ -7,6 +7,7 @@ import com.epam.dto.EpamTicketStateHolder;
 import com.epam.dto.TicketCounterHolder;
 import com.epam.test.helper.RestHelperMock;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +17,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.Assert;
 import org.springframework.web.context.WebApplicationContext;

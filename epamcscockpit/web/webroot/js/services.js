@@ -39,14 +39,9 @@ angular.module("epamcscockpitResource", ["ngResource"])
             }
         });
     }])
-    .factory("FilteredTicketsCountResource", ["$resource", function ($resource) {
-        var resourseUrl = "/epamcscockpit/rest/tickets/filteredTicketsCounts";
-        return $resource(resourseUrl, {}, {
-            get: {
-                method: 'GET',
-                responseType: 'text'
-            }
-        });
+    .factory("ConfigResource", ["$resource", function ($resource) {
+        var resourseUrl = "/epamcscockpit/rest/tickets/config";
+        return $resource(resourseUrl);
     }])
     .factory("OrdersResource", ["$resource", function ($resource) {
         var resourseUrl = "/epamorder/v1/orders";

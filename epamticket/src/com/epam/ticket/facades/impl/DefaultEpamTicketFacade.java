@@ -1,9 +1,8 @@
 package com.epam.ticket.facades.impl;
 
 import com.epam.dto.EpamCustomerEvent;
-import com.epam.dto.EpamFilteredTicketsCounts;
+import com.epam.dto.EpamFrontConfig;
 import com.epam.dto.EpamTicket;
-import com.epam.dto.EpamTicketSearchCriteria;
 import com.epam.ticket.converter.CsCustomerEventConverter;
 import com.epam.ticket.converter.CsTicketConverter;
 import com.epam.ticket.converter.EpamTicketConverter;
@@ -11,12 +10,15 @@ import com.epam.ticket.facades.EpamTicketFacade;
 import com.epam.ticket.services.EpamTicketBusinessService;
 import com.epam.ticket.services.EpamTicketService;
 import com.google.common.base.Preconditions;
+
 import de.hybris.platform.ticket.model.CsTicketModel;
 import de.hybris.platform.ticket.service.TicketException;
+
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Strings.isNullOrEmpty;
@@ -50,7 +52,7 @@ public class DefaultEpamTicketFacade implements EpamTicketFacade {
     }
 
     @Override
-    public List<EpamTicket> getTicketsByCriteria(EpamTicketSearchCriteria searchCriteria) {
+    public List<EpamTicket> getTicketsByCriteria(Map<String, String[]> searchCriteria) {
         LOG.info("Search by criteria: " + searchCriteria);
         List<CsTicketModel> csTicketModels = ticketService.getTicketsByCriteria(searchCriteria);
         return getEpamTickets(csTicketModels);
@@ -82,8 +84,8 @@ public class DefaultEpamTicketFacade implements EpamTicketFacade {
     }
 
     @Override
-    public EpamFilteredTicketsCounts getFilteredTicketsCounts() {
-        return ticketService.getFilteredTicketsCounts();
+    public EpamFrontConfig getFrontConfigWithCounters() {
+        return ticketService.getFrontConfigWithCounters();
     }
 
 }

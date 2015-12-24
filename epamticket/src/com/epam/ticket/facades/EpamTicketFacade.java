@@ -1,18 +1,19 @@
 package com.epam.ticket.facades;
 
 import com.epam.dto.EpamCustomerEvent;
-import com.epam.dto.EpamFilteredTicketsCounts;
+import com.epam.dto.EpamFrontConfig;
 import com.epam.dto.EpamTicket;
-import com.epam.dto.EpamTicketSearchCriteria;
+
 import de.hybris.platform.ticket.service.TicketException;
 
 import java.util.List;
+import java.util.Map;
 
 public interface EpamTicketFacade {
 
     EpamTicket addTicket(EpamTicket ticket, EpamCustomerEvent event);
 
-    List<EpamTicket> getTicketsByCriteria(EpamTicketSearchCriteria searchCriteria);
+    List<EpamTicket> getTicketsByCriteria(Map<String, String[]> searchCriteria);
 
     EpamTicket getTicketById(String ticketId);
 
@@ -20,6 +21,5 @@ public interface EpamTicketFacade {
 
     EpamTicket changeTicketState(String ticketId, String newState, String comment) throws TicketException;
     
-    EpamFilteredTicketsCounts getFilteredTicketsCounts();
-
+    EpamFrontConfig getFrontConfigWithCounters();
 }

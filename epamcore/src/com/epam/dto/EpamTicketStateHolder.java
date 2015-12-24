@@ -1,8 +1,6 @@
 package com.epam.dto;
 
-import java.io.Serializable;
-
-public class EpamTicketStateHolder implements Serializable {
+public class EpamTicketStateHolder {
     private String newState;
     private String comment;
 
