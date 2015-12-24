@@ -1,8 +1,10 @@
 package com.epam.ticket.controllers;
 
 import com.epam.dto.EpamCustomerEvent;
+import com.epam.dto.EpamFilteredTicketsCounts;
 import com.epam.dto.EpamNewTicket;
 import com.epam.dto.EpamTicket;
+import com.epam.dto.TicketCounterHolder;
 import com.epam.ticket.facades.impl.DefaultEpamTicketFacade;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -41,6 +43,7 @@ public class EpamTicketControllerTest {
     private static final String TICKET_ID = "ticketId";
     private static final String CLOSED = "Closed";
     private static final String COMMENT = "comment";
+    private static final Integer COUNT = 42;
 
     private MockMvc mockMvc;
 
@@ -59,39 +62,44 @@ public class EpamTicketControllerTest {
 
     @Before
     public void setUp() throws Exception {
-
         mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
-
-        epamTicket = new EpamTicket();
-        epamTicket.setHeadline("headline");
-        epamTicket.setCategory("category");
-        epamTicket.setPriority("priority");
-
-        epamCustomerEvent = new EpamCustomerEvent();
-        epamCustomerEvent.setReason("reason");
-        epamCustomerEvent.setInterventionType("interventionType");
-        epamCustomerEvent.setText("text");
-
-        epamNewTicket = new EpamNewTicket();
-        epamNewTicket.setNewTicket(epamTicket);
-        epamNewTicket.setCreationEvent(epamCustomerEvent);
+        createTicket();
+        createEvent();
+        createNewTicket();
     }
 
     @Test
-    public void shouldAddAndReturnNewTicket() throws Exception {
+    public void shouldGetTicketListByCriteria() throws Exception {
+        //given
+        doReturn(epamTicket).when(defaultEpamTicketFacadeMock).getTicketById(TICKET_ID);
+        //when
+        MvcResult response = mockMvc.perform(get(BASE_URL + TICKET_ID)
+                .contentType(APPLICATION_JSON))
+                .andExpect(content().string(toJsonString(epamTicket)))
+                .andExpect(status().isOk())
+                .andReturn();
+        //then
+        assertEquals(UNEXPECTED_RESPONSE_BODY,
+                toJsonString(epamTicket), response.getResponse().getContentAsString());
+        verify(defaultEpamTicketFacadeMock, times(1)).getTicketById(TICKET_ID);
+    }
 
+
+    @Test
+    public void shouldAddAndReturnNewTicket() throws Exception {
+        //given
         ArgumentCaptor<EpamTicket> ticketArg = ArgumentCaptor.forClass(EpamTicket.class);
         ArgumentCaptor<EpamCustomerEvent> eventArg = ArgumentCaptor.forClass(EpamCustomerEvent.class);
         doReturn(epamNewTicket.getNewTicket()).when(defaultEpamTicketFacadeMock)
                 .addTicket(ticketArg.capture(), eventArg.capture());
-
+        //when
         MvcResult response = mockMvc.perform(post(BASE_URL)
                 .contentType(APPLICATION_JSON)
                 .content(toJsonString(epamNewTicket)))
                 .andExpect(content().string(toJsonString(epamTicket)))
                 .andExpect(status().isOk())
                 .andReturn();
-
+        //then
         assertEquals(UNEXPECTED_RESPONSE_BODY,
                 toJsonString(epamNewTicket.getNewTicket()), response.getResponse().getContentAsString());
         verify(defaultEpamTicketFacadeMock, times(1))
@@ -100,19 +108,18 @@ public class EpamTicketControllerTest {
 
     @Test
     public void shouldReturnTicketById() throws Exception {
-
-        String ticketId = "1";
-        doReturn(epamTicket).when(defaultEpamTicketFacadeMock).getTicketById(ticketId);
-
-        MvcResult response = mockMvc.perform(get(BASE_URL + ticketId)
+        //given
+        doReturn(epamTicket).when(defaultEpamTicketFacadeMock).getTicketById(TICKET_ID);
+        //when
+        MvcResult response = mockMvc.perform(get(BASE_URL + TICKET_ID)
                 .contentType(APPLICATION_JSON))
                 .andExpect(content().string(toJsonString(epamTicket)))
                 .andExpect(status().isOk())
                 .andReturn();
-
+        //then
         assertEquals(UNEXPECTED_RESPONSE_BODY,
                 toJsonString(epamTicket), response.getResponse().getContentAsString());
-        verify(defaultEpamTicketFacadeMock, times(1)).getTicketById(ticketId);
+        verify(defaultEpamTicketFacadeMock, times(1)).getTicketById(TICKET_ID);
     }
 
     @Test
@@ -134,7 +141,62 @@ public class EpamTicketControllerTest {
                 .changeTicketState(TICKET_ID, CLOSED, COMMENT);
     }
 
+    @Test
+    public void shouldGetTotalCountTickets() throws  Exception{
+        //given
+        TicketCounterHolder counterHolder = new TicketCounterHolder();
+        counterHolder.setTotal(COUNT);
+        when(defaultEpamTicketFacadeMock.getTotalTicketCount()).thenReturn(COUNT);
+        //when
+        MvcResult response = mockMvc.perform(get(BASE_URL + "/ticketCount")
+                .contentType(APPLICATION_JSON))
+                .andExpect(content().string(toJsonString(counterHolder)))
+                .andExpect(status().isOk())
+                .andReturn();
+        //then
+        assertEquals(UNEXPECTED_RESPONSE_BODY,
+                toJsonString(counterHolder), response.getResponse().getContentAsString());
+        verify(defaultEpamTicketFacadeMock, times(1)).getTotalTicketCount();
+    }
+
+    @Test
+    public void shouldGetFilteredCountTickets() throws  Exception{
+        //given
+        EpamFilteredTicketsCounts counterHolder = new EpamFilteredTicketsCounts();
+        when(defaultEpamTicketFacadeMock.getFilteredTicketsCounts()).thenReturn(counterHolder);
+        //when
+        MvcResult response = mockMvc.perform(get(BASE_URL + "/filteredTicketsCounts")
+                .contentType(APPLICATION_JSON))
+                .andExpect(content().string(toJsonString(counterHolder)))
+                .andExpect(status().isOk())
+                .andReturn();
+        //then
+        assertEquals(UNEXPECTED_RESPONSE_BODY,
+                toJsonString(counterHolder), response.getResponse().getContentAsString());
+        verify(defaultEpamTicketFacadeMock, times(1)).getFilteredTicketsCounts();
+    }
+
     protected String toJsonString(Object object) throws JsonProcessingException {
         return objectMapper.writeValueAsString(object);
     }
+    private void createNewTicket() {
+        epamNewTicket = new EpamNewTicket();
+        epamNewTicket.setNewTicket(epamTicket);
+        epamNewTicket.setCreationEvent(epamCustomerEvent);
+    }
+
+    private void createEvent() {
+        epamCustomerEvent = new EpamCustomerEvent();
+        epamCustomerEvent.setReason("reason");
+        epamCustomerEvent.setInterventionType("interventionType");
+        epamCustomerEvent.setText("text");
+    }
+
+    private void createTicket() {
+        epamTicket = new EpamTicket();
+        epamTicket.setHeadline("headline");
+        epamTicket.setCategory("category");
+        epamTicket.setPriority("priority");
+    }
+
 }
