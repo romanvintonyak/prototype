@@ -60,7 +60,7 @@ public class EpamTicketController {
             ticket = defaultEpamTicketFacade.changeTicketState(ticketId, stateHolder.getNewState(), stateHolder.getComment());
         } catch (TicketException e) {
             LOG.error("Ticket change state exception:" + e.getMessage());
-            throw new TicketNotFoundException(e);
+            throw new TicketNotFoundException(e, "Ticket change state exception:");
         }
         return ticket;
     }
@@ -68,8 +68,9 @@ public class EpamTicketController {
     @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Cannot change ticket state")
     public class TicketNotFoundException extends RuntimeException {
         //TODO replace Global controller error handling. Use @ControllerAdvice approach
-        public TicketNotFoundException(Throwable exception) {
+        public TicketNotFoundException(Throwable exception, String message) {
             LOG.debug("sonar", exception);
+            LOG.debug("sonar", message);
         }
     }
 }
