@@ -1,10 +1,11 @@
 package com.epam.dto;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-public class EpamTicketEvent {
+public class EpamTicketEvent implements Serializable {
 
     private Date startDateTime;
     private Date endDateTime;
