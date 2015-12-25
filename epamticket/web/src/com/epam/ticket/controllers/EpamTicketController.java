@@ -6,6 +6,7 @@ import de.hybris.platform.ticket.service.TicketException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -54,12 +55,21 @@ public class EpamTicketController {
     @RequestMapping(value = "/{ticketId}/changestate", method = RequestMethod.PUT)
     public EpamTicket changeTicketState(@PathVariable("ticketId") String ticketId, @RequestBody EpamTicketStateHolder stateHolder) {
         LOG.info(String.format("Invoke the changestate with ticketId=%s.", ticketId));
-
+        EpamTicket ticket;
         try {
-            return defaultEpamTicketFacade.changeTicketState(ticketId, stateHolder.getNewState(), stateHolder.getComment());
+            ticket = defaultEpamTicketFacade.changeTicketState(ticketId, stateHolder.getNewState(), stateHolder.getComment());
         } catch (TicketException e) {
             LOG.error("Ticket change state exception:" + e.getMessage());
+            throw new TicketNotFoundException(e);
         }
-        return null;
+        return ticket;
+    }
+
+    @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Cannot change ticket state")
+    public class TicketNotFoundException extends RuntimeException {
+        //TODO replace Global controller error handling. Use @ControllerAdvice approach
+        public TicketNotFoundException(Throwable exception) {
+            LOG.debug("sonar", exception);
+        }
     }
 }
