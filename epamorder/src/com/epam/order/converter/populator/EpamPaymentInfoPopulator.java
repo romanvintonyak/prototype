@@ -22,7 +22,7 @@ public class EpamPaymentInfoPopulator implements Populator<PaymentInfoModel, Epa
         if (itemModel != null) {
             if (itemModel instanceof CreditCardPaymentInfoModel) {
                 CreditCardPaymentInfoModel paymentInfoModel = (CreditCardPaymentInfoModel) itemModel;
-                target.setType((paymentInfoModel.getType() != null ? paymentInfoModel.getType().getType() : null));
+                target.setType(paymentInfoModel.getType() != null ? paymentInfoModel.getType().getType() : null);
                 target.setCardOwner(paymentInfoModel.getCcOwner());
                 target.setAccountNumber(paymentInfoModel.getNumber());
                 target.setExpirationDate(paymentInfoModel.getValidToMonth() + " " + paymentInfoModel.getValidToYear());

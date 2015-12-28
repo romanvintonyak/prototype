@@ -21,7 +21,7 @@ public class DefaultEpamOrderDAO extends DefaultOrderDao implements EpamOrderDAO
     public OrderModel getOrderByCode(String itemCode) {
         LOG.info(String.format("Invoke the #getOrderByCode() with parameter code=%s.", itemCode));
 
-        HashMap params = new HashMap();
+        HashMap<String, String> params = new HashMap<>();
         params.put("itemCode", itemCode);
         String query = "SELECT DISTINCT {o:pk} FROM {Order AS o } WHERE {o:code} = ?itemCode";
         LOG.info("Running query: " + query + " with params: " + params);
@@ -39,7 +39,7 @@ public class DefaultEpamOrderDAO extends DefaultOrderDao implements EpamOrderDAO
     public List<OrderModel> getOrderByCriteria(EpamOrderSearchCriteria searchCriteria) {
         LOG.info(String.format("Invoke the #getOrderByCriteria() with parameter searchCriteria=%s.", searchCriteria));
 
-        HashMap params = new HashMap();
+        HashMap<String, String> params = new HashMap<>();
         StringBuilder query = new StringBuilder("SELECT {o:pk} FROM {Order AS o ");
         boolean isPersonalDataParamsInQuery = StringUtils.hasText(searchCriteria.getFirstName()) || StringUtils.hasText(searchCriteria.getLastName()) ||
                 StringUtils.hasText(searchCriteria.getEmail()) || StringUtils.hasText(searchCriteria.getPhone());

@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class FilterSubqueryResult {
     private String query;
-    private Map<? extends String, ? extends Object> queryParams;
+    private Map<? extends String, ?> queryParams;
 
     public String getQuery() {
         return query;
@@ -23,11 +23,11 @@ public class FilterSubqueryResult {
      *
      * @return Map
      */
-    public Map<? extends String, ? extends Object> getQueryParams() {
+    public Map<? extends String, ?> getQueryParams() {
         return queryParams;
     }
 
-    public void setQueryParams(final Map<? extends String, ? extends Object> queryParams) {
+    public void setQueryParams(final Map<? extends String, ?> queryParams) {
         this.queryParams = queryParams;
     }
 
