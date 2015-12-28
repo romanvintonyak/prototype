@@ -19,6 +19,7 @@ public class DefaultEpamOrderService extends AbstractBusinessService implements 
 
     private EpamOrderDAO epamOrderDAO;
 
+    @Override
     public OrderModel getOrderByCode(String itemCode) {
         LOG.info(String.format("Invoke the #getOrderByCode() with parameter code=%s.", itemCode));
 

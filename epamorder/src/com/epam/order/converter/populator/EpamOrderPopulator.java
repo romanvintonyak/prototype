@@ -37,7 +37,6 @@ public class EpamOrderPopulator implements Populator<OrderModel, EpamOrderData> 
 
         target.setCreatedDate(formatter.format(source.getCreationtime()));
         Long deliveryAddressId = source.getDeliveryAddress() != null ? source.getDeliveryAddress().getPk().getLong() : null;
-        ;
         target.setDeliveryAddressId(String.valueOf(deliveryAddressId));
 
         target.setDeliveryStatus(source.getDeliveryStatus() != null ? source.getDeliveryStatus().getCode() != null ? source.getDeliveryStatus().getCode() : null : null);

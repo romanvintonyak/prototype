@@ -34,6 +34,7 @@ public class DefaultEpamOrderFacade implements EpamOrderFacade {
         this.epamOrderConverter = epamOrderConverter;
     }
 
+    @Override
     public EpamOrderData getOrderByCode(String itemCode) {
         ServicesUtil.validateParameterNotNullStandardMessage("OrderCode", itemCode);
 
