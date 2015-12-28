@@ -7,8 +7,6 @@ import java.util.Set;
 
 public class EpamTicketEvent implements Serializable {
 
-    private static final long serialVersionUID = 2602461437712001432L;
-
     private Date startDateTime;
     private Date endDateTime;
     private List<EpamTicketEmail> emails;
@@ -19,7 +17,7 @@ public class EpamTicketEvent implements Serializable {
         return startDateTime;
     }
 
-    public void setStartDateTime(Date startDateTime) {
+    public void setStartDateTime(final Date startDateTime) {
         this.startDateTime = startDateTime;
     }
 
@@ -27,7 +25,7 @@ public class EpamTicketEvent implements Serializable {
         return endDateTime;
     }
 
-    public void setEndDateTime(Date endDateTime) {
+    public void setEndDateTime(final Date endDateTime) {
         this.endDateTime = endDateTime;
     }
 
@@ -35,7 +33,7 @@ public class EpamTicketEvent implements Serializable {
         return emails;
     }
 
-    public void setEmails(List<EpamTicketEmail> emails) {
+    public void setEmails(final List<EpamTicketEmail> emails) {
         this.emails = emails;
     }
 
@@ -43,7 +41,7 @@ public class EpamTicketEvent implements Serializable {
         return ticketChangeEventEntries;
     }
 
-    public void setTicketChangeEventEntries(Set<EpamTicketChangeEventEntry> ticketChangeEventEntries) {
+    public void setTicketChangeEventEntries(final Set<EpamTicketChangeEventEntry> ticketChangeEventEntries) {
         this.ticketChangeEventEntries = ticketChangeEventEntries;
     }
 
@@ -51,7 +49,7 @@ public class EpamTicketEvent implements Serializable {
         return text;
     }
 
-    public void setText(String text) {
+    public void setText(final String text) {
         this.text = text;
     }
 }

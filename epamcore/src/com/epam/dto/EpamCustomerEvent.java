@@ -1,17 +1,17 @@
 package com.epam.dto;
 
-import java.io.Serializable;
-
-public class EpamCustomerEvent extends EpamTicketEvent implements Serializable {
+public class EpamCustomerEvent extends EpamTicketEvent {
 
     private String text;
     private String interventionType;
     private String reason;
 
+    @Override
     public String getText() {
         return text;
     }
 
+    @Override
     public void setText(String text) {
         this.text = text;
     }

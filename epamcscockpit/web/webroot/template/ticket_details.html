@@ -105,12 +105,13 @@
         <div class="ticket__form_header">Ticket Events</div>
 
         <div ng-repeat="event in ticket.events">
+
+            <p><span class="ticket_events_label">Date: </span> {{ event.startDateTime | date:'medium'}}</p>
+            <p ><span class="ticket_events_label">Comment: </span> {{event.text}}</p>
             <!--populate with fields from CsTicketEventModel-->
             <div class="ticket_events" ng-repeat="entry in event.ticketChangeEventEntries">
                 <p><span class="ticket_events_label"> Altered attribute: </span> {{ entry.alteredAttribute }}</p>
-                <p><span class="ticket_events_label">Date: </span> {{ event.startDateTime | date:'medium'}}</p>
                 <p><span class="ticket_events_label">Change: </span> {{ entry.oldStringValue }} -> {{ entry.newStringValue }}</p>
-                <p ><span class="ticket_events_label">Comment: </span> {{event.text}}</p>
                 <!--<div class="">hardcode - to clarify about agent name placed here</div>-->
             </div>
         </div>
