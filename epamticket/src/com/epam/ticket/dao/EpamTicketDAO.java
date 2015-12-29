@@ -2,12 +2,10 @@ package com.epam.ticket.dao;
 
 import com.epam.dto.EpamTicketsFilter;
 import com.epam.strategies.FilterSubqueryResult;
-
 import de.hybris.platform.servicelayer.search.FlexibleSearchQuery;
 import de.hybris.platform.servicelayer.search.SearchResult;
 import de.hybris.platform.ticket.dao.impl.DefaultTicketDao;
 import de.hybris.platform.ticket.model.CsTicketModel;
-
 import org.apache.log4j.Logger;
 import org.springframework.util.Assert;
 
@@ -43,7 +41,7 @@ public class EpamTicketDAO extends DefaultTicketDao {
                 paramMap.putAll(subQueryResult.getQueryParams());
             }
         });
-        
+
         String sortName = getFirstParamOrNullByName(searchCriteria, SORT_NAME);
         if (!isNullOrEmpty(sortName)) {
             EpamCsSort sort = sorts.get(sortName);
@@ -59,6 +57,38 @@ public class EpamTicketDAO extends DefaultTicketDao {
 
     }
 
+    public Integer getTotalTicketCount() {
+        return getFlexibleSearchService().search("SELECT {pk} FROM {CsTicket}").getTotalCount();
+    }
+
+    public <K> List<Integer> getTicketCountsWithQueryParams(String query, Map<String, Set<K>> params) {
+        final FlexibleSearchQuery flexibleSearchQuery = new FlexibleSearchQuery(query);
+        flexibleSearchQuery.addQueryParameters(params);
+        flexibleSearchQuery.setResultClassList(Collections.singletonList(Integer.class));
+        final SearchResult<Integer> searchResult = getFlexibleSearchService().search(flexibleSearchQuery);
+        return searchResult.getResult();
+    }
+
+    @SuppressWarnings("rawtypes")
+    public Map<String, Integer> getFilterCounts(FlexibleSearchQuery query) {
+        SearchResult<List> searchResult = getFlexibleSearchService().search(query);
+        List<List> queryResult = searchResult.getResult();
+
+        Map<String, Integer> filterCounts = new HashMap<>();
+        queryResult.stream().forEach(row -> filterCounts.put((String) row.get(0), (Integer) row.get(1)));
+        return filterCounts;
+    }
+
+    public Collection<EpamCsSort> getAvailableSorts() {
+        return sorts.values();
+    }
+
+    public void setAvailableSorts(Collection<EpamCsSort> sorts) {
+        Map<String, EpamCsSort> res = new HashMap<>();
+        sorts.stream().forEach(sort -> res.put(sort.getName(), sort));
+        this.sorts = res;
+    }
+
     private static List<String> getCriterias(Map<String, String[]> searchCriteria, String name) {
         if (searchCriteria.containsKey(name) && searchCriteria.get(name) != null) {
             return Arrays.asList(searchCriteria.get(name));
@@ -68,7 +98,7 @@ public class EpamTicketDAO extends DefaultTicketDao {
 
     private static String getFilterSubqueryOrEpmptyString(int queryLength, FilterSubqueryResult subQueryResult) {
         StringBuilder query = new StringBuilder();
-        if ( !subQueryResult.isEmpty()) {
+        if (!subQueryResult.isEmpty()) {
             query.append(getJoiningString(queryLength)).append(subQueryResult.getQuery());
         }
         return query.toString();
@@ -83,40 +113,8 @@ public class EpamTicketDAO extends DefaultTicketDao {
         return firstParam;
     }
 
-    public Integer getTotalTicketCount() {
-        return getFlexibleSearchService().search("SELECT {pk} FROM {CsTicket}").getTotalCount();
-    }
-
-    public <K> List<Integer> getTicketCountsWithQueryParams(String query, Map<String, Set<K>> params) {
-        final FlexibleSearchQuery flexibleSearchQuery = new FlexibleSearchQuery(query);
-        flexibleSearchQuery.addQueryParameters(params);
-        flexibleSearchQuery.setResultClassList(Collections.singletonList(Integer.class));
-        final SearchResult<Integer> searchResult = getFlexibleSearchService().search(flexibleSearchQuery);
-        return searchResult.getResult();
-    }
-
     private static String getJoiningString(int queryLength) {
         return queryLength == QUERY_STRING.length() ? " WHERE " : " AND ";
-    }
-
-    @SuppressWarnings("rawtypes")
-    public Map<String, Integer> getFilterCounts(FlexibleSearchQuery query) {
-        SearchResult<List> searchResult = getFlexibleSearchService().search(query);
-        List<List> queryResult = searchResult.getResult();
-
-        Map<String, Integer> filterCounts = new HashMap<>();
-        queryResult.stream().forEach(row ->  filterCounts.put((String) row.get(0), (Integer) row.get(1)));
-        return filterCounts;
-    }
-
-    public Collection<EpamCsSort> getAvailableSorts() {
-        return sorts.values();
-    }
-
-    public void setAvailableSorts(Collection<EpamCsSort> sorts) {
-        Map<String, EpamCsSort> res = new HashMap<>();
-        sorts.stream().forEach(sort -> res.put(sort.getName(), sort));
-        this.sorts = res;
     }
 
 }

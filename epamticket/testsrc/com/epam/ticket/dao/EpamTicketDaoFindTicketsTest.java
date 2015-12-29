@@ -3,12 +3,10 @@ package com.epam.ticket.dao;
 import com.epam.dto.EpamTicketsFilter;
 import com.epam.dto.EpamTicketsFilterCriteria;
 import com.epam.ticket.strategies.DefaultEnumFilterStrategy;
-
 import de.hybris.bootstrap.annotations.UnitTest;
 import de.hybris.platform.servicelayer.search.FlexibleSearchService;
 import de.hybris.platform.servicelayer.search.SearchResult;
 import de.hybris.platform.ticket.model.CsTicketModel;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -72,9 +70,9 @@ public class EpamTicketDaoFindTicketsTest {
     @Test
     public void shouldFindTicketsByCriteria() {
         doReturn(mockSearchResult).when(mockFlexibleSearchService).search(stringQueryArg.capture(), queryParamsArg.capture());
-        
+        //when
         epamTicketDao.findTicketsByCriteria(searchCriteria, filters);
-        
+        //then
         assertFalse("Params should not be empty", queryParamsArg.getValue().isEmpty());
         assertEquals("There must be only state param", 1,  queryParamsArg.getValue().size());
         assertTrue("Param 'state' not present", queryParamsArg.getValue().containsKey("state"));
@@ -90,9 +88,9 @@ public class EpamTicketDaoFindTicketsTest {
         String sortReverse[] = {"true"};
         searchCriteria.put(EpamTicketDAO.SORT_REVERSE, sortReverse);
         doReturn(mockSearchResult).when(mockFlexibleSearchService).search(stringQueryArg.capture(), queryParamsArg.capture());
-        
+        //when
         epamTicketDao.findTicketsByCriteria(searchCriteria, filters);
-        
+        //then
         assertFalse("Params should not be empty", queryParamsArg.getValue().isEmpty());
         assertEquals("There must be only state param", 1,  queryParamsArg.getValue().size());
         assertTrue("Param 'state' not present", queryParamsArg.getValue().containsKey("state"));
@@ -106,9 +104,9 @@ public class EpamTicketDaoFindTicketsTest {
     @Test
     public void shouldFindTicketsWithoutCriteria() {
         doReturn(mockSearchResult).when(mockFlexibleSearchService).search(stringQueryArg.capture(), queryParamsArg.capture());
-        
+        //when
         epamTicketDao.findTicketsByCriteria(new HashMap<String, String[]>(), filters);
-        
+        //then
         assertTrue("Params should be empty", queryParamsArg.getValue().isEmpty());
         assertFalse("ORDER BY must not be present when sortName is not set", stringQueryArg.getValue().contains("ORDER BY"));
         verify(mockFlexibleSearchService, times(1)).search(stringQueryArg.getValue(), queryParamsArg.getValue());
